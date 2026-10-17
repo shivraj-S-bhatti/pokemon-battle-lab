@@ -1,0 +1,12 @@
+node_modules/
+.cache/
+.artifacts/
+.env
+.portfolio/*
+!.portfolio/publish/
+.DS_Store
+
+# Private writing notes and session routing receipts
+*.quill.md
+research/evidence/claude-project-handoff.json
+research/evidence/local-claude-sessions.json

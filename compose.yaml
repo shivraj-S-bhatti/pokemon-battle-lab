@@ -1,0 +1,15 @@
+services:
+  graph:
+    image: falkordb/falkordb@sha256:b0bdcac2cbaff989e77cb0610439b7a9289e86de033ccbbd4368b66fb680ae7a
+    ports:
+      - "127.0.0.1:6388:6379"
+    volumes:
+      - graph-data:/data
+    command: ["redis-server", "--loadmodule", "/FalkorDB/bin/src/falkordb.so", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+volumes:
+  graph-data:

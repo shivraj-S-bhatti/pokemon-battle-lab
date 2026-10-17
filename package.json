@@ -1,0 +1,17 @@
+{
+  "name": "pokemon-core-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:data": "node scripts/prepare.mjs",
+    "export:data": "node scripts/export.mjs",
+    "ingest": "node scripts/ingest.mjs",
+    "experiment": "node scripts/experiment.mjs",
+    "demo:plans": "node scripts/plan-demo.mjs"
+  },
+  "dependencies": {
+    "esbuild": "0.25.12",
+    "redis": "5.9.0",
+    "ts-chacha20": "1.2.0"
+  }
+}
