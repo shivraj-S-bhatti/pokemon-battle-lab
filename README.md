@@ -1,34 +1,66 @@
-# pokemon-battle-lab
+# Pokémon Battle Lab
 
-Research + build workspace for the Pokémon battle-AI track: the RL/ML, game theory,
-and complexity science behind competitive Pokémon bots.
+An ingestion experiment for finding uncommon Pokémon cores with FalkorDB. The first result is that five mechanical retrieval queries give identical answers in the graph and in plain JavaScript. Graph storage has not yet demonstrated a discovery advantage.
 
-Tracked in the SSB agency: issue #5 (Pokémon battle AI — RL/ML research and build).
+See [the measured results](research/INGESTION_RESULT.md) and the [experiment log](research/EXPERIMENT_LOG.md). The local working folder is still named `pokemon-core-lab`; its GitHub home is `shivraj-S-bhatti/pokemon-battle-lab`. Earlier [reading](research/reading-list.md), [complexity](research/complexity-notes.md), and [bot-history](research/bot-history.md) notes are preserved. This is separate from Hivemind; the ContextPlane implementation and research remain there.
 
-## Research notes
+## Small evidence demo
 
-- `research/complexity-notes.md` — NP vs PPAD, mixed strategies as distributions,
-  CFR as the principled solver.
-- `research/bot-history.md` — bot timeline: poke-env → PokéLLMon → PokéChamp →
-  Metamon → Jaxcalibur → Champions VGC bots.
-- `research/reading-list.md` — key papers with arXiv IDs, in suggested reading order.
+After the catalog import below, run `npm run demo:plans`. It stores four manually extracted Clawitzer team-plan claims in a separate graph, removes Sceptile in a counterfactual query, and finds candidate replacements for the two lost support roles. The graph result determines which role checks matter. It preserves source links and conditional wording; it does not establish a matchup win rate or a complete replacement team.
 
-## Build directions (pick one)
+The local run found Pikachu and Raichu with Lightning Rod and Upper Hand. Both passed the pinned simulator's partial-set validator. See [the result](research/evidence/plan-demo.json). This is a deterministic development fixture; automated video extraction and an autonomous analysis loop are still unfinished.
 
-1. **Open Jaxcalibur-style reimplementation** (randbats) — self-play PPO + pUCT on
-   poke-env, published training curves + exploitability. Teaches AlphaZero search,
-   league training, Elo eval.
-2. **(Deep/MC)CFR for VGC doubles with team preview** — tabular CFR on an abstracted
-   game → DeepCFR, eval on VGC-Bench. Direct continuation of the PPAD/CFR thread.
-3. **LLM + search hybrid for Champions VGC** — PokéChamp-style for doubles; LLM
-   infers hidden sets and preview intent, search handles tactics. Timely with the
-   2026 format.
-4. **Benchmark/eval contributions** — forced-win puzzles, team-diversity suites,
-   public leaderboard entry. Fastest route to a visible artifact.
+## Run locally
 
-## Standing references
+Requires Node 22.18+ and Docker Compose. Tested on Node 23.11.0.
 
-- [poke-env](https://github.com/hsahovic/poke-env) — Python Showdown interface + Gym API
-- [VGC-Bench](https://github.com/smashllc/vgc-bench) (UT Austin) — doubles benchmark
-- [awesome-pokemon-papers](https://github.com/sethkarten/awesome-pokemon-papers)
-- Pokémon Showdown — the battle arena
+```sh
+npm ci --ignore-scripts
+npm run prepare:data
+npm run export:data
+docker compose up -d --wait
+npm run ingest
+npm run experiment
+```
+
+FalkorDB listens on localhost port 6388, with persistence in the Compose volume. Stop it with `docker compose stop`; resume with `docker compose start`.
+
+The default graph is `pokemon_mc_202609`. Importing the same dataset twice preserves node and edge counts. Import is an upsert, not a reconciliation that removes old data: use a new `GRAPH_NAME=pokemon_...` for a changed snapshot, and use the same name for the experiment. `GRAPH_URL` can override the local connection.
+
+## Data
+
+| Source | What we keep |
+|---|---|
+| [Pokémon Showdown, pinned revision](https://github.com/smogon/pokemon-showdown/tree/a833737d8408322c8b1e821dee16af07b1fd9234) | Champions species/forms, moves, abilities, items, stats, types and resolved learnsets |
+| [Official regulation roster](https://web-view.app.pokemonchampions.jp/battle/pages/events/rs178955680104qaiodg/en/pokemon.html) | 262 roster entries, including form names |
+| [September 2026 Showdown M-C usage, cutoff 1500](https://www.smogon.com/stats/2026-09/chaos/gen9championsvgc2026regmc-1500.json) | Usage, teammates, move/item/ability weights, spread distributions and checks/counters; complete per-species source records retained as JSON |
+
+`prepare:data` downloads and hashes sources into `.cache/` and records provenance in `.artifacts/source-manifest.json`. Existing cache files are reused. The official roster and statistics URLs can change; compare their hashes with `research/evidence/source-manifest.json` when reproducing this run. Downloaded third-party source and data retain their original licenses and attribution; they are not included in Git.
+
+```text
+Species --LEARNS---------> Move --OF_TYPE--> Type
+   |--HAS_ABILITY-------> Ability
+   |--OF_TYPE-----------> Type
+   ^
+   | OBSERVED_FOR
+ Usage --IN_SNAPSHOT----> Snapshot
+   |--OBSERVED_MOVE-----> Move
+   |--OBSERVED_ITEM-----> Item
+   |--OBSERVED_ABILITY--> Ability
+   |--OBSERVED_TEAMMATE-> Species
+```
+
+Source and official roster records are retained separately. Roster membership currently matches national numbers, not exact form identifiers. A sample-set validator gate narrows queries, but does not certify every form, move combination or team. The full catalog includes unavailable entities; query the availability fields rather than assuming every stored record is legal.
+
+Usage weights describe observations, not causal synergy. Missing usage remains unknown. Historical marginals do not reconstruct complete teams or joint sets. Mechanics implemented as simulator callbacks remain source code, not executable causal edges. This import excludes battle replays, an exhaustive set/EV enumeration, damage calculations and battle simulation.
+
+## Files
+
+- `scripts/prepare.mjs`: fetch and transpile pinned simulator data.
+- `scripts/export.mjs`: export catalog and dated observations; reject dangling edges and duplicate node IDs.
+- `scripts/ingest.mjs`: import into an isolated FalkorDB graph and verify counts.
+- `scripts/experiment.mjs`: compare five Cypher queries with indexed JavaScript retrieval, including positive and negative checks.
+- `queries/`: readable Cypher produced by the experiment.
+- `.artifacts/`: full local dataset and current machine-readable results.
+
+The next experiment should compare candidate generation against a flat-data baseline on withheld mechanical combinations, measuring valid unusual cores, explanations and failure cases. More imported rows alone cannot establish that the graph helps.

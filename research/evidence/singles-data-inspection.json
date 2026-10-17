@@ -1,0 +1,228 @@
+{
+  "url": "https://www.smogon.com/stats/2026-09/chaos/gen9championsbssregmc-1500.json",
+  "inspectedAt": "2026-10-17T04:36:44.045Z",
+  "cached": true,
+  "bytes": 3773627,
+  "sha256": "d274cc77924924b00aedbb89b9f2d87d75add6676ddbdaa43b096636f429f26e",
+  "info": {
+    "metagame": "gen9championsbssregmc",
+    "cutoff": 1500,
+    "cutoff deviation": 0,
+    "team type": null,
+    "number of battles": 69462
+  },
+  "usageEntriesIncludingForms": 323,
+  "distinctNationalNumbersInUsage": 229,
+  "cachedOfficialRosterRows": 262,
+  "cachedOfficialRosterNationalNumbers": 231,
+  "examples": [
+    {
+      "name": "Sableye-Mega",
+      "weightedUsageFraction": 0.0037051000000000002,
+      "rawCount": 726,
+      "availableFields": [
+        "Raw count",
+        "Viability Ceiling",
+        "Abilities",
+        "Items",
+        "Spreads",
+        "Moves",
+        "Tera Types",
+        "Happiness",
+        "Teammates",
+        "Checks and Counters",
+        "usage"
+      ],
+      "leadingTeammatesByAggregateWeight": [
+        [
+          "Corviknight",
+          197.82454238788227
+        ],
+        [
+          "Toxapex",
+          131.0801121823863
+        ],
+        [
+          "Dragalge-Mega",
+          88.23647621929847
+        ],
+        [
+          "Slowking-Galar",
+          82.51415765602937
+        ],
+        [
+          "Garchomp",
+          60.55039130771107
+        ]
+      ]
+    },
+    {
+      "name": "Slowking-Galar",
+      "weightedUsageFraction": 0.021617,
+      "rawCount": 3657,
+      "availableFields": [
+        "Raw count",
+        "Viability Ceiling",
+        "Abilities",
+        "Items",
+        "Spreads",
+        "Moves",
+        "Tera Types",
+        "Happiness",
+        "Teammates",
+        "Checks and Counters",
+        "usage"
+      ],
+      "leadingTeammatesByAggregateWeight": [
+        [
+          "Corviknight",
+          589.2581955548214
+        ],
+        [
+          "Garchomp",
+          384.73644349034595
+        ],
+        [
+          "Baxcalibur-Mega",
+          364.10722472534917
+        ],
+        [
+          "Golisopod-Mega",
+          358.70786221643453
+        ],
+        [
+          "Umbreon",
+          268.6795522804513
+        ]
+      ]
+    },
+    {
+      "name": "Banette-Mega",
+      "weightedUsageFraction": 0.0348857,
+      "rawCount": 4326,
+      "availableFields": [
+        "Raw count",
+        "Viability Ceiling",
+        "Abilities",
+        "Items",
+        "Spreads",
+        "Moves",
+        "Tera Types",
+        "Happiness",
+        "Teammates",
+        "Checks and Counters",
+        "usage"
+      ],
+      "leadingTeammatesByAggregateWeight": [
+        [
+          "Pawmot",
+          2332.9815969165143
+        ],
+        [
+          "Basculegion",
+          1933.5596569449938
+        ],
+        [
+          "Primarina",
+          674.9447881347346
+        ],
+        [
+          "Victreebel-Mega",
+          666.9636452790464
+        ],
+        [
+          "Corviknight",
+          597.5254212637373
+        ]
+      ]
+    },
+    {
+      "name": "Pawmot",
+      "weightedUsageFraction": 0.078353,
+      "rawCount": 11486,
+      "availableFields": [
+        "Raw count",
+        "Viability Ceiling",
+        "Abilities",
+        "Items",
+        "Spreads",
+        "Moves",
+        "Tera Types",
+        "Happiness",
+        "Teammates",
+        "Checks and Counters",
+        "usage"
+      ],
+      "leadingTeammatesByAggregateWeight": [
+        [
+          "Basculegion",
+          3456.4724386937337
+        ],
+        [
+          "Banette-Mega",
+          2332.9815969165143
+        ],
+        [
+          "Salamence-Mega",
+          2039.1863826848153
+        ],
+        [
+          "Golisopod-Mega",
+          1679.719486472797
+        ],
+        [
+          "Kingambit",
+          1261.0229942527449
+        ]
+      ]
+    },
+    {
+      "name": "Basculegion",
+      "weightedUsageFraction": 0.11424659999999999,
+      "rawCount": 18431,
+      "availableFields": [
+        "Raw count",
+        "Viability Ceiling",
+        "Abilities",
+        "Items",
+        "Spreads",
+        "Moves",
+        "Tera Types",
+        "Happiness",
+        "Teammates",
+        "Checks and Counters",
+        "usage"
+      ],
+      "leadingTeammatesByAggregateWeight": [
+        [
+          "Pawmot",
+          3456.4724386937337
+        ],
+        [
+          "Salamence-Mega",
+          2885.620234735969
+        ],
+        [
+          "Archaludon",
+          2430.5795718154973
+        ],
+        [
+          "Golisopod-Mega",
+          2246.062447069667
+        ],
+        [
+          "Banette-Mega",
+          1933.5596569449938
+        ]
+      ]
+    }
+  ],
+  "boundaries": [
+    "Historical Showdown BSS usage; not official Champions ladder usage.",
+    "Source number of battles is metadata; no corresponding full battle-log corpus was downloaded.",
+    "Usage entries include distinct forms; national numbers collapse these entries into species.",
+    "Aggregate teammate weights are not conditional win rates or complete teams.",
+    "Moves, items and spreads are marginal distributions, not joint sets.",
+    "This is a separate raw singles snapshot; the existing FalkorDB graph remains doubles."
+  ]
+}

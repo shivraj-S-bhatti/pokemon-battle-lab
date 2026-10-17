@@ -1,0 +1,38 @@
+{
+  "source": "https://www.youtube.com/watch?v=zQQH_5liolE",
+  "model": "google/gemini-3.1-pro-preview",
+  "request": {
+    "max_tokens": 32768,
+    "reasoning_effort": "high",
+    "prompt": "research/video-extraction-prompt.txt",
+    "temperature": 0.2
+  },
+  "finish_reason": "length",
+  "native_finish_reason": "MAX_TOKENS",
+  "usage": {
+    "prompt_tokens": 144154,
+    "completion_tokens": 32764,
+    "total_tokens": 176918,
+    "cost": 0.681476,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 143685
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.681476,
+      "upstream_inference_prompt_cost": 0.288308,
+      "upstream_inference_completions_cost": 0.393168
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 31455,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "visible_output_tokens": 1309,
+  "json_valid": false,
+  "verification": "Incomplete model output; no independent frame validation"
+}

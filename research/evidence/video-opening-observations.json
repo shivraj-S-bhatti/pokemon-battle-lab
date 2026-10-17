@@ -1,0 +1,82 @@
+{
+  "strategic_explanation_paraphrase": "The player introduces an 'anti-meta' team featuring Galarian Slowking, Dragonite, and Mega Sableye. He notes the team is somewhat weak to Sylveon and Florges, but Slowking helps cover that, and he considers Mega Sableye to be exceptionally strong in the current meta.",
+  "observations": [
+    {
+      "timestamp_seconds": 8,
+      "visible_pokemon": [
+        "Gyarados",
+        "Dragonite",
+        "Gengar",
+        "Hydreigon",
+        "Slowking",
+        "Sableye"
+      ],
+      "visible_action_or_text": "Player's team composition is displayed on the 'Manage Battle Team Sharing' screen.",
+      "uncertainty": "low"
+    },
+    {
+      "timestamp_seconds": 47,
+      "visible_pokemon": [
+        "Pidgeot",
+        "Metagross",
+        "Crabominable",
+        "Slowbro",
+        "Garchomp",
+        "Arcanine"
+      ],
+      "visible_action_or_text": "Opponent's team is revealed on the 'Select 3 Pokemon' screen.",
+      "uncertainty": "low"
+    },
+    {
+      "timestamp_seconds": 69,
+      "visible_pokemon": [
+        "Gengar"
+      ],
+      "visible_action_or_text": "Gengar's moveset is shown: Shadow Ball, Sludge Wave, Icy Wind, Destiny Bond.",
+      "uncertainty": "low"
+    },
+    {
+      "timestamp_seconds": 100,
+      "visible_pokemon": [
+        "Pidgeot",
+        "Gengar"
+      ],
+      "visible_action_or_text": "The battle begins. Opponent sends out Pidgeot, player sends out Gengar.",
+      "uncertainty": "low"
+    },
+    {
+      "timestamp_seconds": 106,
+      "visible_pokemon": [
+        "Gengar",
+        "Pidgeot"
+      ],
+      "visible_action_or_text": "Battle interface is visible, showing Gengar's moves and both Pokemon's HP bars.",
+      "uncertainty": "low"
+    },
+    {
+      "timestamp_seconds": 114,
+      "visible_pokemon": [
+        "Pidgeot"
+      ],
+      "visible_action_or_text": "Text indicates Pidgeot is reacting to an Omni Ring, initiating Mega Evolution.",
+      "uncertainty": "low"
+    },
+    {
+      "timestamp_seconds": 118,
+      "visible_pokemon": [
+        "Mega Pidgeot"
+      ],
+      "visible_action_or_text": "Mega Pidgeot is fully revealed after Mega Evolution animation.",
+      "uncertainty": "low"
+    }
+  ],
+  "_verification": {
+    "status": "unverified_model_observations",
+    "source": "https://www.youtube.com/watch?v=zQQH_5liolE",
+    "requestedIntervalSeconds": [
+      0,
+      120
+    ],
+    "requestId": "gen-1792212098-ncCVntaJEGpIlSCUJLx8"
+  }
+}

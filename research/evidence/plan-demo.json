@@ -1,0 +1,180 @@
+{
+  "generatedAt": "2026-10-17T23:51:08.977Z",
+  "graph": "pokemon_plan_demo_v1",
+  "catalog": "pokemon_mc_202609",
+  "source": "https://www.reddit.com/r/PokemonChampions/comments/1wwsk73/after_a_million_calculations_and_practice_games_i/",
+  "formatForCandidateValidation": "gen9championsvgc2026regmc",
+  "before": [
+    {
+      "id": "electric-cover",
+      "name": "Protect Clawitzer from an Electric attack",
+      "missingRoles": [],
+      "documentedSupportAvailable": true
+    },
+    {
+      "id": "garchomp-pressure",
+      "name": "Pressure Garchomp with Dragon Pulse",
+      "missingRoles": [],
+      "documentedSupportAvailable": true
+    },
+    {
+      "id": "gholdengo-pressure",
+      "name": "Pressure Gholdengo with Dark Pulse",
+      "missingRoles": [],
+      "documentedSupportAvailable": true
+    },
+    {
+      "id": "priority-cover",
+      "name": "Interrupt an opposing priority move",
+      "missingRoles": [],
+      "documentedSupportAvailable": true
+    }
+  ],
+  "scenario": {
+    "kind": "counterfactual",
+    "removedMember": "sceptile"
+  },
+  "after": [
+    {
+      "id": "electric-cover",
+      "name": "Protect Clawitzer from an Electric attack",
+      "missingRoles": [
+        "lightning-rod"
+      ],
+      "documentedSupportAvailable": false
+    },
+    {
+      "id": "garchomp-pressure",
+      "name": "Pressure Garchomp with Dragon Pulse",
+      "missingRoles": [],
+      "documentedSupportAvailable": true
+    },
+    {
+      "id": "gholdengo-pressure",
+      "name": "Pressure Gholdengo with Dark Pulse",
+      "missingRoles": [],
+      "documentedSupportAvailable": true
+    },
+    {
+      "id": "priority-cover",
+      "name": "Interrupt an opposing priority move",
+      "missingRoles": [
+        "upper-hand"
+      ],
+      "documentedSupportAvailable": false
+    }
+  ],
+  "affected": [
+    {
+      "id": "electric-cover",
+      "name": "Protect Clawitzer from an Electric attack",
+      "missingRoles": [
+        "lightning-rod"
+      ],
+      "documentedSupportAvailable": false
+    },
+    {
+      "id": "priority-cover",
+      "name": "Interrupt an opposing priority move",
+      "missingRoles": [
+        "upper-hand"
+      ],
+      "documentedSupportAvailable": false
+    }
+  ],
+  "evidencePaths": [
+    [
+      "Interrupt an opposing priority move",
+      "upper-hand",
+      "Author describes Upper Hand support against Grassy Glide.",
+      "https://www.reddit.com/r/PokemonChampions/comments/1wwsk73/after_a_million_calculations_and_practice_games_i/"
+    ],
+    [
+      "Protect Clawitzer from an Electric attack",
+      "lightning-rod",
+      "Author describes Sceptile providing Lightning Rod support against Raichu.",
+      "https://www.reddit.com/r/PokemonChampions/comments/1wwsk73/after_a_million_calculations_and_practice_games_i/"
+    ]
+  ],
+  "candidates": [
+    {
+      "species": "Pikachu",
+      "partialSet": {
+        "species": "Pikachu",
+        "name": "Pikachu",
+        "ability": "Lightning Rod",
+        "moves": [
+          "Upper Hand"
+        ],
+        "item": "",
+        "level": 50,
+        "nature": "Serious",
+        "evs": {
+          "hp": 32,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 2,
+          "spe": 32
+        },
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        }
+      },
+      "validationErrors": [],
+      "passesPinnedSimulatorSetValidator": true
+    },
+    {
+      "species": "Raichu",
+      "partialSet": {
+        "species": "Raichu",
+        "name": "Raichu",
+        "ability": "Lightning Rod",
+        "moves": [
+          "Upper Hand"
+        ],
+        "item": "",
+        "level": 50,
+        "nature": "Serious",
+        "evs": {
+          "hp": 32,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 2,
+          "spe": 32
+        },
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": 31,
+          "spd": 31,
+          "spe": 31
+        }
+      },
+      "validationErrors": [],
+      "passesPinnedSimulatorSetValidator": true
+    }
+  ],
+  "nextAction": "Compare candidate speed, bulk, damage and lost Sceptile roles before proposing any team substitution.",
+  "checks": {
+    "allFourInitiallySupported": true,
+    "onlyTwoDependentPlansAffected": true,
+    "unrelatedDamagePlanPreserved": true,
+    "raichuPartialSetValid": true
+  },
+  "limits": [
+    "Manual source extraction; no video pipeline or autonomous agent implemented by this script.",
+    "Support availability is not proof a plan succeeds. Conditions and counterplay remain explicit.",
+    "Candidate validation uses a pinned community simulator and one-move partial sets, not full-team legality or game parity.",
+    "Source regulation/publication time are unconfirmed; M-C is an explicit candidate-validation assumption.",
+    "This counterfactual is not a historical event. No meta time series or win rate is inferred.",
+    "Graph traversal equals a simple in-memory dependency check here; no graph-specific quality/speed advantage claimed."
+  ]
+}
