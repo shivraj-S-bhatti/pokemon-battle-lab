@@ -46,3 +46,44 @@ test('graph roundtrip preserves expression structure and budgeted candidate orde
  assert.deepEqual(stored.candidateEdits,original.candidateEdits);
  }
 });
+
+test('outcomes belong to actual routes and shared facts retain every owner',async()=>{
+ const b=await app.store.load('simplebeam-torterra');
+ const {viewGraph}=await import('./store.mjs');const v=viewGraph(b);
+ for(const r of b.model.routes){
+  const yielded=v.edges.filter(e=>e.source==='route:'+r.id&&e.type==='YIELDS').map(e=>v.nodes.find(n=>n.id===e.target).label);
+  assert.deepEqual(yielded,r.outcomes||[]);
+ }
+ assert(!v.edges.some(e=>e.type==='YIELDS'&&v.nodes.find(n=>n.id===e.source)?.kind==='plan'));
+ const c=v.nodes.find(n=>n.id==='move:torterra:shellsmash');
+ assert(c.planIds.includes('beam-smash'));assert(c.planIds.includes('purpose:boost-torterra'));assert(c.planIds.includes('purpose:restore-smash-defenses'));assert(c.routeIds.length>=3);assert.equal(c.planId,undefined);
+});
+
+test('load remains on its captured scope during concurrent publication',async()=>{
+ const id='simplebeam-torterra',scope=await app.store.scope(id),q=app.store.q.bind(app.store);
+ let switched=false;
+ app.store.q=async(c,p)=>{const result=await q(c,p);if(c.includes('RETURN m.json')&&!switched){switched=true;await q('MATCH (c:WBNode {key:$key}) SET c.activeScope="unpublished-scope"',{key:'case:'+id});}return result;};
+ try{const b=await app.store.load(id);assert(switched);assert(b.model.routes.every(r=>Object.keys(r.requirements).length));assert(scope.endsWith(b.version));}
+ finally{app.store.q=q;await q('MATCH (c:WBNode {key:$key}) SET c.activeScope=$scope',{key:'case:'+id,scope});}
+});
+
+test('exports label historical analysis and stale clients must reload before analysis',async()=>{
+ const id='simplebeam-torterra';const result=await(await post({caseId:id})).json();
+ assert.match(result.graph.evaluatorRevision,/^[a-f0-9]{64}$/);
+ let c=await(await fetch(base+'/api/context?case='+id)).json();assert.equal(c.latestRun.stale,false);assert.deepEqual(c.latestRun.result.graph,result.graph);
+ const wrong=await post({caseId:id,expectedGraphRevision:'old-version'});assert.equal(wrong.status,409);
+ assert.equal((await app.store.latestRun(id)).runId,result.run.runId);
+ result.graph.revision='historical-version';await app.store.recordRun(id,{caseId:id},result);
+ c=await(await fetch(base+'/api/context?case='+id)).json();assert.equal(c.latestRun.stale,true);assert.equal(c.latestRun.result.graph.revision,'historical-version');assert.notEqual(c.meta.graphRevision,'historical-version');
+});
+
+test('engine provenance changes publish a different scope',async()=>{
+ const {mkdtemp,writeFile,rm}=await import('node:fs/promises');const {tmpdir}=await import('node:os');const {join}=await import('node:path');
+ const bank=JSON.parse(await readFile(new URL('../../data/workbench-cases.json',import.meta.url)));const id=bank.cases[0].id;
+ const original=await app.store.load(id),dir=await mkdtemp(join(tmpdir(),'gimmikghoul-test-'));
+ try{bank.engineRevision='different-declared-engine';const path=join(dir,'cases.json');await writeFile(path,JSON.stringify(bank));await assert.rejects(app.store.seed(path),/Engine provenance differs/);
+ for(const source of bank.sources)if(source.id==='engine')source.revision=bank.engineRevision;
+ for(const c of bank.cases)for(const set of c.sets)if(set.legality?.engineRevision)set.legality.engineRevision=bank.engineRevision;
+ await writeFile(path,JSON.stringify(bank));await app.store.seed(path);const updated=await app.store.load(id);assert.notEqual(updated.version,original.version);assert.equal(updated.engineRevision,bank.engineRevision);}
+ finally{await app.store.seed();await rm(dir,{recursive:true,force:true});}
+});

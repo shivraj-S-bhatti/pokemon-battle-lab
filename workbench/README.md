@@ -79,3 +79,9 @@ The Torterra / Mega Raichu Y / Milotic case is VGC doubles. Mega Raichu Y's No G
 The three case adapters are authored models. The workbench evaluates their conditions and small repair candidate pools; it does not discover arbitrary strategies, simulate battles, optimize spreads, certify edited-team legality or estimate win rates. Usage is a dated September Showdown snapshot. No claim of superior competitive performance has been established.
 
 Codex implemented integration and reasoning; Claude implemented UI/UX and adversarially reviewed the logic. Shivraj supplied the problem framing, candidate cores and product direction. See `LOGIC_REVIEW_CLAUDE.md`, `logic/REVIEW_NOTES.md`, and `logic/PROGRESS.md` for review findings and dispositions.
+
+## Revision and proposal safety
+
+Analysis responses identify both the stored model revision and the evaluator code hash. Send `expectedGraphRevision` from the graph/context response when submitting a proposal; a mismatch returns HTTP 409. Context labels an older run as `stale` when either revision differs. A shared latest run can belong to another agent, so browser exports separately preserve the exact accepted UI run and its proposal results.
+
+Pins protect explicit proposals and repair search. A rejected edit remains in the proposal history but does not change the displayed or exported accepted team. Condition assumptions are invalidated when a saved graph revision changes. Each route exposes its own conditional outcomes; the shared goal does not imply all alternative outcomes occur together.

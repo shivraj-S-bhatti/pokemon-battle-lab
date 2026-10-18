@@ -153,6 +153,51 @@ test('Source reconstruction and a new hypothesis retain different evidence categ
   const proposed=plan(analyzeCase(caseById('torterra-raichuy-milotic')),'wideguard-window').evidence;
   assert.equal(proposed.hypothesis.status,'mechanics_grounded_hypothesis');assert.deepEqual(proposed.staticMechanics,['engine']);
 });
+test('Compact route options retain each alternative’s own claims and provenance',()=>{
+  const model=buildCaseModel(caseById('simplebeam-torterra'));
+  const routes=model.routes.filter(r=>r.goalId==='purpose:boost-torterra');
+  assert.ok(new Set(routes.map(r=>JSON.stringify(r.outcomes))).size>1);
+  routes[0].sourceIds=['route-specific-fixture'];
+  const result=analyzeModel(model);
+  for(const route of routes){
+    const option=plan(result,'purpose:boost-torterra').routeOptions.find(r=>r.id===route.id);
+    assert.deepEqual(option.outcomes,route.outcomes);
+    assert.deepEqual(option.tradeoffs,route.tradeoffs);
+    assert.deepEqual(option.evidence,route.evidence);
+    assert.deepEqual(option.sourceIds,route.sourceIds || []);
+  }
+  const empty=base(),option=assessModel(empty,initialScenario(empty)).plans[0].routeOptions[0];
+  assert.deepEqual(option.outcomes,[]);assert.deepEqual(option.sourceIds,[]);assert.equal(option.evidence,null);
+});
+test('Source-plan outcome additions never propagate into executable route claims',()=>{
+  for(const record of bank.cases){
+    const changed=structuredClone(record);
+    for(const p of changed.plans)p.outcomes=['Unmodeled source-only result'];
+    const expected=buildCaseModel(record),actual=buildCaseModel(changed);
+    assert.deepEqual(actual.routes.map(r=>[r.id,r.outcomes]),expected.routes.map(r=>[r.id,r.outcomes]));
+    assert.ok(actual.routes.every(r=>r.outcomes.length>0));
+  }
+  const unsupported={...structuredClone(caseById('sableye-slowking-bss')),id:'unmodeled-case'};
+  assert.ok(buildCaseModel(unsupported).routes.every(r=>r.unmodeled && r.outcomes.length===0));
+});
+test('BSS alternatives and Trick Room claim only the mechanism required by that route',()=>{
+  const c=structuredClone(caseById('sableye-slowking-bss'));
+  for(const s of c.sets)s.moveIds=s.moveIds.filter(m=>!['chillyreception','willowisp'].includes(m));
+  const m=buildCaseModel(c),conditions=Object.fromEntries(m.conditions.filter(c=>c.predicate==='condition').map(c=>[c.id,true]));
+  const r=analyzeModel(m,{conditions}),route=id=>r.routes.find(r=>r.id===id);
+  assert.equal(route('fairy-pivot:switch').truth,true);assert.equal(route('fairy-pivot:reception').truth,false);
+  assert.match(route('fairy-pivot:switch').outcomes.join(' '),/Regenerator/);
+  assert.doesNotMatch(route('fairy-pivot:switch').outcomes.join(' '),/Chilly Reception/);
+  assert.equal(route('physical-control:foulplay').truth,true);assert.equal(route('physical-control:burn').truth,false);
+  assert.match(route('physical-control:foulplay').outcomes.join(' '),/Foul Play/);
+  assert.doesNotMatch(route('physical-control:foulplay').outcomes.join(' '),/burn|Reflect/i);
+  assert.doesNotMatch(route('physical-control:burn').outcomes.join(' '),/Foul Play|Reflect/);
+  const room=analyzeCase(caseById('simplebeam-torterra'),{team:['farigiraf','torterra'],conditions:{'trickroom-fallback:order':true,'trickroom-fallback:execution':true}});
+  const farigiraf=room.routes.find(r=>r.id==='trickroom-fallback:farigiraf');
+  assert.equal(farigiraf.truth,true);
+  assert.match(farigiraf.outcomes.join(' '),/Farigiraf establishes Trick Room/);
+  for(const route of room.routes.filter(r=>r.goalId==='trickroom-fallback'))assert.doesNotMatch(route.outcomes.join(' '),/Simple|Coil/);
+});
 test('Invalidating an unfavorable runtime assumption alone is not a repair',()=>{
   const m=base();m.candidateEdits=[{type:'set_item',setId:'a-set',itemId:'berry'}];
   const r=findRepairs(m,initialScenario(m,{conditions:{timing:false}}));

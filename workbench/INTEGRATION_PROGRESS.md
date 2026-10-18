@@ -27,3 +27,21 @@ Claude desktop was inaccessible during this heartbeat because the Mac was locked
 Focus on Track 01, Agents That Act on Connected Data. The strongest short story is changing an uncommon core and tracing which plan survives, followed by an agent using graph context to propose a typed repair.
 
 The [official rules](https://www.wemakedevs.org/hackathons/falkordb/rules), read October 18, require central FalkorDB use, a public repo, setup and graph model, dependent queries/algorithms, a working demo video, track identification and disclosure of AI coding assistants. Local setup is allowed. Deadline: October 18 at 14:29 America/New_York (23:59 IST). No numerical scoring rubric was found on that page. Registration and submission remain unverified.
+
+## Review integration: October 18, 07:20 UTC
+
+The backend now reconstructs every analysis from one captured immutable scope. Context retains the evaluated graph and evaluator revisions, labels historical runs, and rejects analysis requests with a mismatched expected graph revision. Import versions include engine provenance, with consistency checks against sources and checked sets. Catalog responses identify their source snapshot.
+
+Route outcomes now come from each route. The logic collaborator removed source-plan outcome inheritance that incorrectly carried Chilly Reception into manual switching, or combined Burn/Foul Play and Trick Room effects. Shared condition nodes expose all owning goals and routes.
+
+Parent applied narrow correctness changes to Claude's frontend: accepted scenario drives team and sets; rejected edits stay in the proposal log; recursive explanations preserve AND/OR/NOT; route blockers, scope and tradeoffs remain visible; exports preserve evidence, accepted state and exact run identity. Request generations prevent stale graph, analysis and export responses from replacing newer input. Loading guards protect per-case saved state. Saved assumptions require rechecking after a graph revision change. Design/layout ownership remains Claude's.
+
+Browser evidence against the real server:
+
+- Pin Sableye, attempt removal: the checkbox stays selected and the log records the rejection. JSON export retains Sableye and the rejected proposal, with graph/evaluator/run identities.
+- Remove Farfetch'd: amplified setup is blocked while ordinary Shell Smash and Decorate remain conditional alternatives with their own outcomes.
+- Collect the Shell Smash condition: export contains all three dependent goals, their route trees and evidence. Screenshot: `.artifacts/workbench/reviewed-shared-condition.png`.
+
+The final suite passed 56 tests: 44 reasoning, ten backend, and two frontend boundary checks. The scoped reviewer reproduced and then verified the loading callback fix: old repair/tray actions cannot mutate or save while another case loads. No material findings remain open from that scoped review; see `logic/UI_FIX_HANDOFF.md`.
+
+Remaining delivery work: Claude's final design review, a clearer presentation frame, demo video and submission package. Native Claude is inaccessible while the Mac is locked; the IAB workbench remains testable. The heartbeat stays active. This checkpoint does not establish competitive efficacy or complete the hackathon submission.

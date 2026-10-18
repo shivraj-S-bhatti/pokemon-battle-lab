@@ -214,7 +214,9 @@ export function assessModel(model, scenario) {
     const value = or(alternatives.map(r => r.truth));
     const unique = values => [...new Map(values.map(v => [v.id, v])).values()];
     return { ...clone(goal), truth: value, status: stateName(value), routes: alternatives,
-      routeOptions: alternatives.map(r=>({id:r.id,label:r.label,truth:r.truth,status:r.status,explanation:r.explanation,missing:r.missing,unknown:r.unknown,blockers:r.blockers})),
+      routeOptions: alternatives.map(r=>({id:r.id,label:r.label,truth:r.truth,status:r.status,
+        outcomes:clone(r.outcomes || []),tradeoffs:clone(r.tradeoffs || []),evidence:clone(r.evidence ?? null),sourceIds:clone(r.sourceIds || []),
+        explanation:r.explanation,missing:r.missing,unknown:r.unknown,blockers:r.blockers})),
       missing: value === true ? [] : unique(alternatives.flatMap(r => r.missing)),
       unknown: value === true ? [] : unique(alternatives.flatMap(r => [...r.unknown, ...r.unresolvedBlockers])),
       blockers: value === true ? [] : unique(alternatives.flatMap(r => r.blockers)),

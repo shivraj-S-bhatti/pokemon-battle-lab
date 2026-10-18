@@ -39,8 +39,9 @@ async function api(path, opts) {
 const store = {
   load(id) { try { return JSON.parse(localStorage.getItem(`gk:${id}`)) || null; } catch { return null; } },
   save() {
+    if(S.loadingCase || S.graph?.case?.id !== S.caseId)return;
     try {
-      localStorage.setItem(`gk:${S.caseId}`, JSON.stringify({ interventions: S.interventions, pinned: [...S.pinned], collected: [...S.collected] }));
+      localStorage.setItem(`gk:${S.caseId}`, JSON.stringify({ graphRevision: S.graph.meta.graphRevision, interventions: S.interventions, pinned: [...S.pinned], collected: [...S.collected] }));
     } catch { /* storage unavailable */ }
   },
 };
@@ -55,37 +56,28 @@ function roster() {
   for (const e of S.interventions) if (e.type === 'add_member' && !ids.includes(e.speciesId)) ids.push(e.speciesId);
   return ids;
 }
-function currentTeam() {
-  let team = [...baseTeam()];
-  for (const e of S.interventions) {
-    if (e.type === 'remove_member') team = team.filter(s => s !== e.speciesId);
-    if (e.type === 'add_member' && !team.includes(e.speciesId)) team.push(e.speciesId);
-  }
-  return team;
-}
+function currentTeam() { return [...(S.analysis?.scenario?.team || baseTeam())]; }
 function setFor(speciesId) {
-  const base = (S.graph?.sets || []).find(s => s.speciesId === speciesId || s.speciesId === speciesId.replace(/mega.*$/, '') || speciesId.startsWith(s.speciesId));
-  if (!base) return null;
-  const set = { ...base, moveIds: [...(base.moveIds || [])], edited: new Set() };
-  for (const e of S.interventions) {
-    if (e.setId !== set.id) continue;
-    if (e.type === 'set_item') { set.itemId = e.itemId; set.edited.add('item'); }
-    if (e.type === 'set_ability') { set.abilityId = e.abilityId; set.edited.add('ability'); }
-    if (e.type === 'replace_move') { const i = set.moveIds.indexOf(e.from); if (i >= 0) { set.moveIds[i] = e.to; set.edited.add(`move:${e.to}`); } }
-  }
-  return set;
+  const member = S.analysis?.model?.members?.find(m => m.id === speciesId);
+  const sets = S.analysis?.scenario?.sets || S.graph?.sets || [];
+  const set = sets.find(s => member?.setId ? s.id === member.setId : s.speciesId === speciesId || speciesId.startsWith(s.speciesId));
+  if (!set) return null;
+  const original = (S.graph?.sets || []).find(s => s.id === set.id);
+  const edited = new Set();
+  if (original?.itemId !== set.itemId) edited.add('item');
+  if (original?.abilityId !== set.abilityId) edited.add('ability');
+  for (const m of set.moveIds || []) if (!original?.moveIds?.includes(m)) edited.add(`move:${m}`);
+  return { ...set, moveIds: [...(set.moveIds || [])], edited };
 }
+const isFresh = () => !S.analyzing && !S.analysisError && S.analysis && S.analysisSeq === S.seq;
 // Effective truth: the analysis scenario (after invalidation) when fresh, else the latest toggle.
-function truthOf(id) {
-  if (!S.analyzing && S.leafTruth?.has(id)) return S.leafTruth.get(id);
-  const c = !S.analyzing && S.analysis?.scenario?.conditions?.[id];
-  if (c !== undefined && c !== false) return typeof c === 'object' && c !== null ? c.truth : c;
-  const last = [...S.interventions].reverse().find(e => e.type === 'set_condition' && e.conditionId === id);
-  if (last) return last.truth;
-  return S.analysis && !S.analyzing ? 'unknown' : S.nodes.get(id)?.truth ?? 'unknown';
-}
-const planResult = id => (S.analysis?.plans || []).find(p => p.id === id);
-const planOf = nodeId => S.nodes.get(nodeId)?.planId || (S.graph.edges.find(e => e.target === nodeId && S.nodes.get(e.source)?.kind === 'plan') || {}).source;
+function truthOf(id) { return isFresh() ? S.analysis.conditionStates?.[id]?.truth ?? 'unknown' : 'unknown'; }
+const planResult = id => isFresh() ? (S.analysis?.plans || []).find(p => p.id === id) : null;
+const plansOf = nodeId => {
+  const n = S.nodes.get(nodeId);
+  return [...new Set([...(n?.planIds || []), ...(n?.planId ? [n.planId] : []), ...(S.graph?.edges || []).filter(e => e.target === nodeId && S.nodes.get(e.source)?.kind === 'plan').map(e => e.source)])];
+};
+const planOf = nodeId => plansOf(nodeId)[0];
 const targets = (from, type) => (S.out.get(from) || []).filter(e => !type || e.type === type).map(e => e.target);
 const participants = planId => targets(planId, 'USES').filter(id => S.nodes.get(id)?.kind === 'member' || species(id));
 const plansUsing = memberId => S.graph.nodes.filter(n => n.kind === 'plan' && participants(n.id).includes(memberId)).map(n => n.id);
@@ -104,7 +96,7 @@ function describeEdit(e) {
     case 'set_item': return `${setLabel(e.setId)} holds ${e.itemId}`;
     case 'set_ability': return `${setLabel(e.setId)} ability → ${e.abilityId}`;
     case 'replace_move': return `${setLabel(e.setId)}: ${e.from} → ${e.to}`;
-    case 'set_condition': return `Assume “${refLabel(e.conditionId)}” is ${e.truth}`;
+    case 'set_condition': return `Assume “${refLabel(e.conditionId)}” is ${e.truth}${e.invalidatedBy ? ' (graph changed; recheck)' : ''}`;
     default: return JSON.stringify(e);
   }
 }
@@ -139,53 +131,57 @@ function shortTitle(c) {
 
 async function openCase(id) {
   if (!id) { fatal('No cases returned by /api/cases.', boot); return; }
+  const generation = ++S.seq; clearTimeout(analyzeTimer); S.analyzing = true; S.loadingCase = true; $('export-open').disabled = true; $('tray-export').disabled = true;
   S.caseId = id; S.selected = null; S.analysis = null; S.analysisError = null;
   history.replaceState(null, '', `#${encodeURIComponent(id)}`);
   renderTabs();
   $('banner').replaceChildren(el('p', { class: 'muted' }, 'Loading case…'));
   try {
-    S.graph = await api(`/api/graph?case=${encodeURIComponent(id)}`);
-  } catch (err) { fatal(`Could not load the case graph: ${err.message}`, () => openCase(id)); return; }
+    const graph = await api(`/api/graph?case=${encodeURIComponent(id)}`);
+    if (generation !== S.seq || id !== S.caseId) return;
+    S.graph = graph;
+  } catch (err) { if (generation !== S.seq) return; fatal(`Could not load the case graph: ${err.message}`, () => openCase(id)); return; }
   S.nodes = new Map(S.graph.nodes.map(n => [n.id, n]));
   for (const s of S.graph.species || []) if (!S.nodes.has(s.id)) S.nodes.set(s.id, { id: s.id, kind: 'member', label: s.name });
   S.out = new Map();
   for (const e of S.graph.edges || []) { if (!S.out.has(e.source)) S.out.set(e.source, []); S.out.get(e.source).push(e); }
+  S.loadingCase = false;
   const saved = store.load(id) || {};
-  S.interventions = saved.interventions || [];
-  for (const [conditionId, truth] of Object.entries(saved.conditions || {})) S.interventions.push({ type: 'set_condition', conditionId, truth }); // older saves
+  S.interventions = [...Object.entries(saved.conditions || {}).map(([conditionId, truth]) => ({type:'set_condition',conditionId,truth})), ...(saved.interventions || [])]; // Old condition bags preceded edits.
+  if(saved.graphRevision !== S.graph.meta.graphRevision) S.interventions = S.interventions.map(e => e.type === 'set_condition' ? {...e,previousTruth:e.truth,truth:'unknown',invalidatedBy:'graph_revision_change'} : e);
   S.pinned = new Set(saved.pinned || []);
   S.collected = new Set(saved.collected || []);
-  $('export-open').disabled = false;
+  $('export-open').disabled = true;
   renderAll();
   analyze();
 }
 
 // ---------- analysis ----------
 let analyzeTimer = null;
-function changed() { store.save(); renderAll(); clearTimeout(analyzeTimer); analyzeTimer = setTimeout(analyze, 160); }
+function changed() { if(S.loadingCase)return; ++S.seq; S.analyzing = true; S.analysisError = null; store.save(); renderAll(); $('export-open').disabled = true; $('tray-export').disabled = true; clearTimeout(analyzeTimer); analyzeTimer = setTimeout(analyze, 160); }
 async function analyze() {
-  const seq = ++S.seq;
-  S.analyzing = true; renderAnalysis();
+  const seq = S.seq, caseId = S.caseId, request = (S.requestSeq = (S.requestSeq || 0) + 1);
+  S.analyzing = true; $('export-open').disabled = true; $('tray-export').disabled = true; renderAnalysis();
   try {
     const res = await api('/api/analyze', {
       method: 'POST', headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ caseId: S.caseId, team: baseTeam(), conditions: {}, interventions: S.interventions, pinned: [...S.pinned] }),
+      body: JSON.stringify({ caseId, expectedGraphRevision: S.graph.meta.graphRevision, team: baseTeam(), conditions: {}, interventions: S.interventions, pinned: [...S.pinned] }),
     });
-    if (seq !== S.seq) return; // a newer revision is in flight
-    S.analysis = res; S.analysisError = null;
+    if (seq !== S.seq || caseId !== S.caseId || request !== S.requestSeq) return; // a newer revision is in flight
+    S.analysis = res; S.analysisSeq = seq; S.analysisError = null;
     // Every condition's effective truth, read from the route explanation trees (covers computed team/set facts).
     S.leafTruth = new Map(asList(res.plans).flatMap(p => asList(p.routeOptions).flatMap(r => leaves(r.explanation))).map(l => [l.id, l.truth]));
   } catch (err) {
-    if (seq !== S.seq) return;
+    if (seq !== S.seq || caseId !== S.caseId || request !== S.requestSeq) return;
     S.analysisError = err.message;
   }
   S.analyzing = false;
-  renderMap(); renderAnalysis(); renderEdits(); renderInspector();
+  renderAll(); $('export-open').disabled = !isFresh(); $('tray-export').disabled = !isFresh();
 }
 
 // ---------- edits ----------
-function pushEdit(e) { S.interventions.push(e); changed(); }
-function undoEdit(i) { S.interventions.splice(i, 1); changed(); }
+function pushEdit(e) { if(S.loadingCase)return; S.interventions.push(e); changed(); }
+function undoEdit(i) { if(S.loadingCase)return; S.interventions.splice(i, 1); changed(); }
 function toggleMember(id) {
   const inTeam = currentTeam().includes(id);
   const want = inTeam ? 'remove_member' : 'add_member', opposite = inTeam ? 'add_member' : 'remove_member';
@@ -194,13 +190,14 @@ function toggleMember(id) {
 }
 // Assumptions go into the edit list in order, so a later edit can invalidate them and a later check can restore them.
 function setCondition(id, v) {
+  if(S.loadingCase)return;
   const last = S.interventions[S.interventions.length - 1];
   if (last && last.type === 'set_condition' && last.conditionId === id) S.interventions.pop(); // re-toggling the same need
   S.interventions.push({ type: 'set_condition', conditionId: id, truth: v });
   changed();
 }
-function togglePin(id) { S.pinned.has(id) ? S.pinned.delete(id) : S.pinned.add(id); changed(); }
-function toggleCollect(id) { S.collected.has(id) ? S.collected.delete(id) : S.collected.add(id); store.save(); renderMap(); renderTray(); renderInspector(); }
+function togglePin(id) { if(S.loadingCase)return; S.pinned.has(id) ? S.pinned.delete(id) : S.pinned.add(id); changed(); }
+function toggleCollect(id) { if(S.loadingCase)return; S.collected.has(id) ? S.collected.delete(id) : S.collected.add(id); store.save(); renderMap(); renderTray(); renderInspector(); }
 function select(id) { S.selected = S.selected === id ? null : id; renderMap(); renderInspector(); }
 
 // ---------- render ----------
@@ -239,7 +236,7 @@ function memberCard(id, inTeam) {
       sprite(id),
       el('div', {}, el('button', { class: 'linklike member-name', type: 'button', onclick: () => select(id) }, speciesName(id)),
         el('div', { class: 'types' }, (sp?.types || []).map(t => el('span', { class: 'type' }, t)))),
-      el('button', { class: 'icon-btn', type: 'button', title: 'Pin: repairs may not change this member', 'aria-pressed': String(S.pinned.has(id)), onclick: () => togglePin(id) }, '📌'),
+      el('button', { class: 'icon-btn', type: 'button', title: 'Pin: protects this member and set from proposed edits and repairs', 'aria-pressed': String(S.pinned.has(id)), onclick: () => togglePin(id) }, '📌'),
     ));
   if (set) {
     card.append(el('div', { class: 'member-set' },
@@ -284,7 +281,7 @@ function renderBench() {
 }
 
 function renderEdits() {
-  const results = S.analysis?.interventionResults || [];
+  const results = isFresh() ? S.analysis?.interventionResults || [] : [];
   const rows = S.interventions.map((e, i) => {
     const r = results[i];
     return el('li', { class: r && r.applied === false ? 'rej' : '' }, describeEdit(e),
@@ -302,7 +299,7 @@ function related(id) {
   if (!n) return set;
   if (n.kind === 'member') for (const p of plansUsing(id)) set.add(p);
   if (n.kind === 'plan') { participants(id).forEach(x => set.add(x)); targets(id).forEach(x => set.add(x)); }
-  if (n.kind === 'condition' || n.kind === 'counter' || n.kind === 'outcome') { const p = planOf(id); if (p) { set.add(p); participants(p).forEach(x => set.add(x)); } }
+  if (n.kind === 'condition' || n.kind === 'counter' || n.kind === 'outcome') { for (const p of plansOf(id)) { set.add(p); participants(p).forEach(x => set.add(x)); } }
   if (n.kind === 'alternative') for (const s of n.speciesIds || []) set.add(s);
   return set;
 }
@@ -416,18 +413,22 @@ function inspectMember(id) {
   return out;
 }
 function inspectPlan(id) {
-  const res = planResult(id), out = [el('div', {}, statusPill(res?.status))];
+  const res = planResult(id), routes = res?.routes || res?.routeOptions || [], out = [el('div', {}, statusPill(res?.status))];
   out.push(block('Who', list(participants(id), jump)));
   const mech = targets(id, 'USES').filter(t => S.nodes.get(t)?.kind === 'mechanism');
   if (mech.length) out.push(block('Mechanisms', el('div', { class: 'chips' }, mech.map(m => el('span', { class: 'chip' }, refLabel(m))))));
   out.push(block('Requirements across alternative routes', list(targets(id, 'REQUIRES'), c => el('span', {}, `${glyph(truthOf(c))} `, jump(c)))));
-  out.push(block('Gets you', list(targets(id, 'YIELDS'), refLabel)));
   out.push(block('Breaks if', list(targets(id, 'BREAKS_IF'), refLabel)));
-  if (res && asList(res.routeOptions).length) {
-    // Each route is an AND; the plan needs any one route. Never merge routes into one list.
-    out.push(block(`Routes · any one of ${res.routeOptions.length}`, ...res.routeOptions.map(r => el('div', { class: 'route' },
+  if (routes.length) {
+    // Keep nested AND/OR/NOT and expected truth intact.
+    out.push(block(`Routes · any one of ${routes.length}`, ...routes.map(r => el('div', { class: 'route' },
       el('div', { class: 'route-head' }, el('span', { class: 'node-label' }, r.label || r.id), statusPill(r.status)),
-      list(leaves(r.explanation).filter(l => !l.satisfied), l => el('span', {}, `${glyph(l.truth)} `, S.nodes.has(l.id) ? jump(l.id) : (l.label || l.id)))))));
+      renderExplanation(r.explanation),
+      r.scopeTruth !== undefined && r.scopeTruth !== true ? el('p', {}, `Format/scope check: ${String(r.scopeTruth)}`) : null,
+      asList(r.blockers).length ? block('Active blockers', list(r.blockers, refLabel)) : null,
+      asList(r.unresolvedBlockers).length ? block('Unchecked blockers', list(r.unresolvedBlockers, refLabel)) : null,
+      asList(r.tradeoffs).length ? block('Tradeoffs', list(r.tradeoffs, refLabel)) : null,
+      block('Outcome if these requirements hold', list(r.outcomes || S.analysis?.model?.routes.find(x => x.id === r.id)?.outcomes || [], refLabel))))));
   } else if (res) {
     const why = [...asList(res.blockers).map(b => ['blocked by', b]), ...asList(res.missing).map(b => ['missing', b]), ...asList(res.unknown).map(b => ['unchecked', b])];
     if (why.length) out.push(block('Why this status', list(why, ([k, r]) => el('span', {}, `${k}: `, refId(r) && S.nodes.has(refId(r)) ? jump(refId(r)) : refLabel(r)))));
@@ -435,17 +436,26 @@ function inspectPlan(id) {
   out.push(block('Evidence', sourceList(asList(S.nodes.get(id).sourceIds).concat(targets(id, 'SUPPORTED_BY')))));
   const fixes = repairsFor(id);
   out.push(el('div', { class: 'insp-actions' },
-    el('button', { class: 'btn small', type: 'button', onclick: () => { for (const c of targets(id, 'REQUIRES').filter(c => S.nodes.get(c)?.assumable !== false)) S.interventions.push({ type: 'set_condition', conditionId: c, truth: true }); changed(); } }, 'Assume scenario checks hold'),
     fixes.length ? el('button', { class: 'btn small', type: 'button', onclick: () => $('repairs')?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }, `${fixes.length} repair${fixes.length > 1 ? 's' : ''}`) : null));
   return out;
 }
 function inspectCondition(id) {
-  const p = planOf(id), t = truthOf(id), n = S.nodes.get(id);
+  const owners = plansOf(id), t = truthOf(id), n = S.nodes.get(id);
   const out = [el('div', {}, n?.assumable === false ? el('span', { class: 'chip' }, `${glyph(t)} computed from the team and sets`) : tri(id, String(t)))];
-  if (p) out.push(block('Needed by', jump(p)));
+  if (owners.length) out.push(block('Used by these goals', list(owners, jump)));
   const checks = asList(S.graph.case?.nextCalculations);
   if (checks.length) out.push(block('Checks that could settle it', list(checks, c => (typeof c === 'string' ? c : refLabel(c)))));
   return out;
+}
+function renderExplanation(node) {
+  if (!node) return el('p', {}, 'No explanation available');
+  if (node.operator === 'condition') return el('div', {class:'requirement'},
+    `${node.satisfied ? '✓' : '?'} Requires ${String(node.expectedTruth)}: `,
+    S.nodes.has(node.condition.id) ? jump(node.condition.id) : node.condition.label,
+    ` (currently ${String(node.truth)})`);
+  const label = `${String(node.operator).toUpperCase()} must be ${String(node.expectedTruth)} · ${node.satisfied ? 'satisfied' : 'unresolved'}`;
+  if (node.satisfied) return el('details', {}, el('summary', {}, label), ...asList(node.children).map(renderExplanation));
+  return el('div', {class:'requirement-group'}, el('strong', {}, label), el('ul', {}, asList(node.children).map(c => el('li', {}, renderExplanation(c)))));
 }
 // Condition leaves of an explanation tree, with whether each meets what its route expects.
 function leaves(node, outList = []) {
@@ -537,7 +547,7 @@ function repairCard(r) {
     el('div', { class: 'chips' }, edits.map(e => el('span', { class: 'edit-chip' }, describeEdit(e)))),
     kv('Restores', r.restored), kv('Improves', r.improved), kv('Reopens route', asList(r.routeImprovements).map(x => x.label || x.id)), kv('Loses', r.lost), kv('Still unchecked', r.unresolved), kv('Tradeoffs', r.tradeoffs),
     el('div', { class: 'insp-actions' },
-      edits.length ? el('button', { class: 'btn small', type: 'button', onclick: () => { S.interventions.push(...edits); changed(); } }, 'Try it') : null,
+      edits.length ? el('button', { class: 'btn small', type: 'button', onclick: () => { if(S.loadingCase)return; S.interventions.push(...edits); changed(); } }, 'Try it') : null,
       el('button', { class: 'btn small', type: 'button', onclick: () => toggleCollect(cid) }, S.collected.has(cid) ? 'Uncollect' : 'Collect')));
 }
 
@@ -549,7 +559,7 @@ function collectedItems() {
       return { id, kind: 'repair', label: r?.label || id, data: r || null };
     }
     const n = S.nodes.get(id);
-    return { id, kind: n?.kind || 'unknown', label: n?.label || speciesName(id), planId: n?.planId || (n && planOf(id)) || undefined };
+    return { id, kind: n?.kind || 'unknown', label: n?.label || speciesName(id), planIds: plansOf(id), routeIds: n?.routeIds || (n?.routeId ? [n.routeId] : []) };
   });
 }
 function renderTray() {
@@ -559,23 +569,20 @@ function renderTray() {
 }
 
 async function buildExport(scope) {
-  let context = null;
-  if (scope === 'all') {
-    if (!S.contextCache.has(S.caseId)) {
-      try { S.contextCache.set(S.caseId, await api(`/api/context?case=${encodeURIComponent(S.caseId)}`)); }
-      catch (err) { S.contextCache.set(S.caseId, { error: `context unavailable: ${err.message}` }); }
-    }
-    context = S.contextCache.get(S.caseId);
-  }
-  const c = S.graph.case || {}, a = S.analysis || {};
-  const planIds = new Set(collectedItems().flatMap(i => (i.kind === 'plan' ? [i.id] : i.planId ? [i.planId] : [])));
-  const plans = asList(a.plans).filter(p => scope === 'all' || planIds.has(p.id)).map(p => ({ id: p.id, label: p.label, status: p.status, missing: asList(p.missing).map(refLabel), unknown: asList(p.unknown).map(refLabel), blockers: asList(p.blockers).map(refLabel) }));
+  if (!isFresh()) throw Error('Wait for the current proposal to finish checking.');
+  const seq = S.seq, caseId = S.caseId, c = S.graph.case || {}, a = S.analysis;
+  const context = await api(`/api/context?case=${encodeURIComponent(caseId)}`);
+  if (seq !== S.seq || caseId !== S.caseId || !isFresh()) throw Error('Inputs changed while exporting. Check again.');
+  if (context.meta.graphRevision !== a.graph.revision || context.meta.evaluatorRevision !== a.graph.evaluatorRevision) throw Error('Graph changed. Reload and recheck before exporting.');
+  // The server latestRun may belong to another agent. Export this browser's exact accepted run separately.
+  const planIds = new Set(collectedItems().flatMap(i => i.kind === 'plan' ? [i.id] : i.planIds || []));
+  const plans = asList(a.plans).filter(p => scope === 'all' || planIds.has(p.id));
   return {
     tool: 'gimmikghoul-workbench', exportedAt: new Date().toISOString(), scope,
     case: { id: c.id, title: c.title, format: c.format, battleMode: c.battleMode, bringSize: c.bringSize, question: c.question },
-    revision: { edits: S.interventions.length, team: currentTeam(), pinned: [...S.pinned], interventions: S.interventions, effectiveConditions: a.scenario?.conditions || {} },
+    revision: { graph: a.graph, run: a.run, edits: S.interventions.length, team: a.scenario.team, pinned: [...S.pinned], interventions: S.interventions, interventionResults: a.interventionResults, acceptedScenario: a.scenario, effectiveConditions: a.scenario.conditions || {} },
     collected: collectedItems(),
-    analysis: { summary: a.summary ?? null, plans, comparison: a.comparison || null, repairs: scope === 'all' ? mergedRepairs() : undefined },
+    analysis: { summary: a.summary ?? null, plans, continuations: a.continuations, conditionStates: a.conditionStates, comparison: a.comparison || null, repairs: scope === 'all' ? mergedRepairs() : undefined },
     replyFormat: 'Propose changes as interventions: remove_member{speciesId}, add_member{speciesId}, set_item{setId,itemId}, set_ability{setId,abilityId}, replace_move{setId,from,to}, set_condition{conditionId,truth}. Cite a source or name the check that would confirm each claim.',
     context,
   };
@@ -585,19 +592,20 @@ function toMarkdown(x) {
   L.push(`# Gimmikghoul context: ${x.case.title}`, '', `**Question:** ${x.case.question || '(none)'}`, `**Format:** ${x.case.format} · ${x.case.battleMode}${x.case.bringSize ? ` · bring ${x.case.bringSize}` : ''}`, '');
   L.push('## Current revision', `- Team: ${x.revision.team.map(speciesName).join(', ')}`);
   if (x.revision.pinned.length) L.push(`- Pinned: ${x.revision.pinned.map(speciesName).join(', ')}`);
-  for (const e of x.revision.interventions) L.push(`- Edit: ${describeEdit(e)}`);
+  for (const [i,e] of x.revision.interventions.entries()) { const result=x.revision.interventionResults?.[i]; L.push(`- Proposal (${result?.applied ? 'applied' : 'rejected'}): ${describeEdit(e)}${result?.reason ? ` — ${result.reason}` : ''}`); }
   L.push('', '## Plans');
   for (const p of x.analysis.plans) {
     L.push(`- **${p.label}**: ${p.status || 'not analyzed'}`);
-    if (p.blockers.length) L.push(`  - blocked by: ${p.blockers.join('; ')}`);
-    if (p.missing.length) L.push(`  - missing: ${p.missing.join('; ')}`);
-    if (p.unknown.length) L.push(`  - unchecked: ${p.unknown.join('; ')}`);
+    if (p.blockers.length) L.push(`  - blocked by: ${p.blockers.map(refLabel).join('; ')}`);
+    if (p.missing.length) L.push(`  - missing: ${p.missing.map(refLabel).join('; ')}`);
+    if (p.unknown.length) L.push(`  - unchecked: ${p.unknown.map(refLabel).join('; ')}`);
   }
   if (x.collected.length) { L.push('', '## Collected by the player'); for (const i of x.collected) L.push(`- ${i.kind}: ${i.label} (\`${i.id}\`)`); }
   if (x.analysis.repairs?.length) {
     L.push('', '## Repairs proposed');
     for (const r of x.analysis.repairs) L.push(`- ${r.undo ? '(undo) ' : ''}${r.label || r.id} [${r.purposes.join(' · ')}]: ${asList(r.edits).map(describeEdit).join('; ')}${asList(r.lost).length ? ` · loses ${asList(r.lost).map(refLabel).join('; ')}` : ''}`);
   }
+  L.push('', '## Evaluated routes, accepted state and provenance', '```json', JSON.stringify({revision:x.revision,analysis:x.analysis}, null, 2), '```');
   L.push('', '## Reply format', x.replyFormat);
   if (x.context) L.push('', '## Case context (from /api/context)', '```json', JSON.stringify(x.context, null, 2), '```');
   return L.join('\n');
@@ -609,10 +617,15 @@ async function openExport(scope) {
   await refreshExport();
 }
 async function refreshExport() {
+  const exportSeq = S.exportSeq = (S.exportSeq || 0) + 1;
   const dlg = $('export-dialog');
   const fmt = dlg.querySelector('input[name=fmt]:checked').value, scope = dlg.querySelector('input[name=scope]:checked').value;
   $('export-status').textContent = 'Building…';
-  const x = await buildExport(scope);
+  $('export-text').value = ''; $('export-copy').disabled = true; $('export-download').disabled = true;
+  let x; try { x = await buildExport(scope); } catch (err) { if(exportSeq === S.exportSeq) $('export-status').textContent = err.message; return; }
+  if(exportSeq !== S.exportSeq)return;
+  S.completedExport = {fmt,caseId:x.case.id};
+  $('export-copy').disabled = false; $('export-download').disabled = false;
   $('export-text').value = fmt === 'json' ? JSON.stringify(x, null, 2) : toMarkdown(x);
   $('export-status').textContent = `${x.collected.length} collected · revision ${x.revision.edits}`;
 }
@@ -620,7 +633,7 @@ async function refreshExport() {
 // ---------- wiring ----------
 $('export-open').addEventListener('click', () => openExport());
 $('tray-export').addEventListener('click', () => openExport('collected'));
-$('tray-clear').addEventListener('click', () => { S.collected.clear(); store.save(); renderMap(); renderTray(); renderInspector(); });
+$('tray-clear').addEventListener('click', () => { if(S.loadingCase)return; S.collected.clear(); store.save(); renderMap(); renderTray(); renderInspector(); });
 $('export-dialog').addEventListener('change', refreshExport);
 $('export-copy').addEventListener('click', async () => {
   const t = $('export-text');
@@ -628,12 +641,12 @@ $('export-copy').addEventListener('click', async () => {
   catch { t.select(); $('export-status').textContent = 'Selected; press ⌘C'; }
 });
 $('export-download').addEventListener('click', () => {
-  const fmt = $('export-dialog').querySelector('input[name=fmt]:checked').value;
+  const {fmt,caseId} = S.completedExport;
   const blob = new Blob([$('export-text').value], { type: fmt === 'json' ? 'application/json' : 'text/markdown' });
-  const a = el('a', { href: URL.createObjectURL(blob), download: `gimmikghoul-${S.caseId}.${fmt === 'json' ? 'json' : 'md'}` });
+  const a = el('a', { href: URL.createObjectURL(blob), download: `gimmikghoul-${caseId}.${fmt === 'json' ? 'json' : 'md'}` });
   document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 });
-$('reset-all').addEventListener('click', () => { S.interventions = []; changed(); });
+$('reset-all').addEventListener('click', () => { if(S.loadingCase)return; S.interventions = []; changed(); });
 $('show-breaks').addEventListener('change', ev => { S.showBreaks = ev.target.checked; renderMap(); });
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && S.selected && !$('export-dialog').open) select(S.selected); });
 window.addEventListener('resize', () => requestAnimationFrame(drawStrings));

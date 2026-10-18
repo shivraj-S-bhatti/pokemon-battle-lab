@@ -11,9 +11,11 @@ export class GraphStore {
   async q(c,p={}){return rows(await query(this.client,this.graph,c,p));}
   async seed(path=new URL('../../data/workbench-cases.json',import.meta.url)){
     const bank=JSON.parse(await readFile(path,'utf8'));
+    const declarations=[...bank.sources.filter(s=>s.id==='engine').map(s=>s.revision),...bank.cases.flatMap(c=>c.sets.map(s=>s.legality?.engineRevision).filter(Boolean))];
+    if(declarations.some(r=>r!==bank.engineRevision))throw Error('Engine provenance differs between bank, source, or checked set; update evidence together.');
     try{await this.q('CREATE INDEX FOR (n:WBNode) ON (n.key)');}catch(e){if(!/already indexed/i.test(e.message))throw e;}
     for(const record of bank.cases){
-      const model=buildCaseModel(record),version=hash({storageSchema:3,record,model,bankSources:bank.sources,species:bank.species,snapshots:bank.metaSnapshots});
+      const model=buildCaseModel(record),version=hash({storageSchema:4,engineRevision:bank.engineRevision,record,model,bankSources:bank.sources,species:bank.species,snapshots:bank.metaSnapshots});
       const root=`case:${record.id}`,scope=`${root}:${version}`;
       if((await this.q('MATCH (c:WBNode {key:$key}) RETURN c.version',{key:root}))[0]?.[0]===version)continue;
       const entries=[],links=[];
@@ -50,13 +52,14 @@ export class GraphStore {
   }
   async cases(){return (await this.q('MATCH (c:WBNode {kind:"case"}) RETURN c.json ORDER BY c.caseId')).map(([s])=>JSON.parse(s));}
   async load(id){
-    const result=await this.q('MATCH (c:WBNode {key:$key}), (m:WBNode) WHERE m.key=c.activeScope MATCH (m)-[:HAS_COMPONENT]->(n) RETURN m.json,n.kind,n.json ORDER BY n.kind,n.ordinal',{key:`case:${id}`});
+    const result=await this.q('MATCH (c:WBNode {key:$key}), (m:WBNode) WHERE m.key=c.activeScope MATCH (m)-[:HAS_COMPONENT]->(n) RETURN m.json,n.kind,n.json,m.key ORDER BY n.kind,n.ordinal',{key:`case:${id}`});
     if(!result.length){const e=Error('Unknown or uninitialized case');e.status=404;throw e;}
+    const scope=result[0][3];
     const header=JSON.parse(result[0][0]);const {record,engineRevision,snapshot,species,sources,version,...base}=header;
     const model={...base,...Object.fromEntries(fields.map(f=>[f,[]]))};
     for(const [,kind,json]of result)if(fields.includes(kind))model[kind].push(JSON.parse(json));
     // The executable expression comes from graph edges, including argument order.
-    const exprRows=await this.q('MATCH (a:WBNode)-[e:HAS_EXPRESSION|ARG]->(b:WBNode) WHERE a.scope=$scope RETURN a.key,type(e),e.position,b.key,b.kind,b.json',{scope:await this.scope(id)});
+    const exprRows=await this.q('MATCH (a:WBNode)-[e:HAS_EXPRESSION|ARG]->(b:WBNode) WHERE a.scope=$scope RETURN a.key,type(e),e.position,b.key,b.kind,b.json',{scope});
     const childMap=new Map(),values=new Map();
     for(const [parent,type,position,key,kind,json] of exprRows){if(!childMap.has(parent))childMap.set(parent,[]);childMap.get(parent).push({key,position,type});values.set(key,{kind,payload:JSON.parse(json)});}
     const decode=(key,seen=new Set())=>{
@@ -65,12 +68,13 @@ export class GraphStore {
       const next=new Set(seen);next.add(key);const children=(childMap.get(key)||[]).sort((a,b)=>a.position-b.position).map(c=>decode(c.key,next));
       return node.payload.operator==='not'?{not:children[0]}:['all','any'].includes(node.payload.operator)?{[node.payload.operator]:children}:{};
     };
-    const scope=await this.scope(id);
     for(const route of model.routes){const root=childMap.get(`${scope}/routes/${route.id}`)?.find(x=>x.type==='HAS_EXPRESSION');route.requirements=root?decode(root.key):{};}
     return {model,record,engineRevision,snapshot,species,sources,version};
   }
   async neighborhood(id,memberId){
-    const result=await this.q('MATCH (c:WBNode {key:$key}), (g:WBNode)-[:HAS_ROUTE]->(r:WBNode)-[:REQUIRES]->(p:WBNode)-[:DEPENDS_ON|READS_SET]->(m:WBNode) WHERE g.scope=c.activeScope AND (m.key=$member OR m.key=$set) RETURN DISTINCT g.json,r.json,p.json',{key:`case:${id}`,member:(await this.scope(id))+`/members/${memberId}`,set:(await this.scope(id))+`/sets/${memberId}`});
+    const scope=await this.scope(id);
+    if(!scope)throw Object.assign(Error('Unknown case'),{status:404});
+    const result=await this.q('MATCH (g:WBNode)-[:HAS_ROUTE]->(r:WBNode)-[:REQUIRES]->(p:WBNode)-[:DEPENDS_ON|READS_SET]->(m:WBNode) WHERE g.scope=$scope AND (m.key=$member OR m.key=$set) RETURN DISTINCT g.json,r.json,p.json',{scope,member:scope+`/members/${memberId}`,set:scope+`/sets/${memberId}`});
     return result.map(([goal,route,condition])=>({goal:JSON.parse(goal),route:JSON.parse(route),condition:JSON.parse(condition)}));
   }
   async scope(id){return (await this.q('MATCH (c:WBNode {key:$key}) RETURN c.activeScope',{key:`case:${id}`}))[0]?.[0];}
@@ -94,13 +98,14 @@ export function viewGraph(bundle){
     for(const route of routes){
       add({...route,id:`route:${route.id}`,kind:'route',label:route.label,planId:goal.id});edge(goal.id,`route:${route.id}`,'HAS_ROUTE');
       for(const id of new Set(refs(route.requirements))){const c=model.conditions.find(c=>c.id===id);if(!c)continue;
-        add({...c,kind:'condition',planId:goal.id,description:c.check,truth:'unknown',editable:c.predicate==='condition',assumable:c.predicate==='condition'});edge(goal.id,id,'REQUIRES');edge(`route:${route.id}`,id,'REQUIRES');
+        add({...c,kind:'condition',planIds:[],routeIds:[],description:c.check,truth:'unknown',editable:c.predicate==='condition',assumable:c.predicate==='condition'});
+        const condition=nodes.get(id);if(!condition.planIds.includes(goal.id))condition.planIds.push(goal.id);if(!condition.routeIds.includes(route.id))condition.routeIds.push(route.id);edge(goal.id,id,'REQUIRES');edge(`route:${route.id}`,id,'REQUIRES');
         for(const mid of [...(c.dependsOn||[]),...(c.speciesId?[c.speciesId]:[])])if(model.members.some(m=>m.id===mid))edge(goal.id,mid,'USES');
         if(c.setId){const member=model.members.find(m=>m.setId===c.setId);if(member)edge(goal.id,member.id,'USES');}
       }
     }
     for(const [i,label]of(p?.failureCases||[]).entries()){const id=`counter:${goal.id}:${i}`;add({id,kind:'counter',label,planId:goal.id});edge(goal.id,id,'BREAKS_IF');}
-    for(const [i,label]of(p?.outcomes||[]).entries()){const id=`outcome:${goal.id}:${i}`;add({id,kind:'outcome',label,planId:goal.id});edge(goal.id,id,'YIELDS');}
+    for(const route of routes)for(const [i,label]of(route.outcomes||[]).entries()){const id=`outcome:${route.id}:${i}`;add({id,kind:'outcome',label,planId:goal.id,routeId:route.id,conditionalOn:`route:${route.id}`});edge(`route:${route.id}`,id,'YIELDS');}
     for(const id of p?.sourceIds||[])edge(goal.id,`source:${id}`,'SUPPORTED_BY');
   }
   for(const a of model.alternatives)add({...a,id:`alt:${a.id}`,kind:'alternative',label:a.purpose});

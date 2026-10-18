@@ -9,7 +9,7 @@
     "experiment": "node scripts/experiment.mjs",
     "demo:plans": "node scripts/plan-demo.mjs",
     "workbench": "node workbench/backend/server.mjs",
-    "test:workbench": "node --test workbench/logic/logic.test.mjs workbench/backend/backend.test.mjs",
+    "test:workbench": "node --test workbench/logic/logic.test.mjs workbench/logic/frontend-boundary.test.mjs workbench/backend/backend.test.mjs",
     "agent": "node workbench/agent.mjs"
   },
   "dependencies": {

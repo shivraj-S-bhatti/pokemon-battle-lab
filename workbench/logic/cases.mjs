@@ -29,20 +29,26 @@ export function buildCaseModel(record) {
   }
   function goal(id,label,purpose,sourcePlan) {model.goals.push({id,label,purpose,evidence:evidence(sourcePlan),sourcePlanId:sourcePlan.id});}
   function route(plan,id,label,requirements,extra={}) {const r={id,goalId:plan.id,label,requirements,scope:{battleMode:record.battleMode,format:record.format},
-    tradeoffs:plan.failureCases || [],outcomes:plan.outcomes || [],evidence:evidence(plan),...extra};model.routes.push(r);return r;}
+    // Source plans may describe several mechanisms; each route must author its own result.
+    tradeoffs:plan.failureCases || [],outcomes:[],evidence:evidence(plan),...extra};model.routes.push(r);return r;}
   const get=id=>record.plans.find(p=>p.id===id);
   for(const p of record.plans)goal(p.id,p.title,p.title,p);
   if(record.id==='sableye-slowking-bss') {
     let p=get('fairy-pivot');
     const pivotCore=[member('sableyemega'),member('slowkinggalar'),ability('slowkinggalar','regenerator'),fact('fairy-pivot:fairy-line','The incoming line is the specified Fairy attack, not unchecked coverage'),fact('fairy-pivot:survival','Slowking survives entry damage and the specified attack')];
-    route(p,'fairy-pivot:reception','Slow pivot through Chilly Reception',all(pivotCore,move('slowkinggalar','chillyreception'),fact('fairy-pivot:reception-window','Slowking can execute Chilly Reception before fainting')));
-    route(p,'fairy-pivot:switch','Switch out to recover with Regenerator',all(pivotCore,fact('fairy-pivot:switch-window','A safe manual switch and suitable destination are available')),{tradeoffs:[...p.failureCases,'Manual switching spends the turn and does not guarantee favorable positioning.']});
+    route(p,'fairy-pivot:reception','Slow pivot through Chilly Reception',all(pivotCore,move('slowkinggalar','chillyreception'),fact('fairy-pivot:reception-window','Slowking can execute Chilly Reception before fainting')),
+      {outcomes:['Slowking exits through Chilly Reception and Regenerator restores health on switching out.']});
+    route(p,'fairy-pivot:switch','Switch out to recover with Regenerator',all(pivotCore,fact('fairy-pivot:switch-window','A safe manual switch and suitable destination are available')),
+      {outcomes:['Slowking switches manually to the checked destination and Regenerator restores health on switching out.'],tradeoffs:[...p.failureCases,'Manual switching spends the turn and does not guarantee favorable positioning.']});
     p=get('physical-control');
     const control=[member('sableyemega'),item('sableyemega','sablenite'),move('sableyemega','recover'),fact('physical-control:survival','Sableye survives the specified incoming line'),fact('physical-control:mega-active','Sableye has Mega Evolved and Magic Bounce is effective')];
-    route(p,'physical-control:burn','Burn a susceptible physical attacker',all(control,move('sableyemega','willowisp'),fact('physical-control:burn-eligible','The target is burn susceptible and the selected burn line connects')));
-    route(p,'physical-control:foulplay','Use the target’s Attack through Foul Play',all(control,move('sableyemega','foulplay'),fact('physical-control:foulplay-value','Foul Play damage is useful against this actual target and set')));
+    route(p,'physical-control:burn','Burn a susceptible physical attacker',all(control,move('sableyemega','willowisp'),fact('physical-control:burn-eligible','The target is burn susceptible and the selected burn line connects')),
+      {outcomes:['The target is burned, reducing damage from its burn-sensitive physical attacks.']});
+    route(p,'physical-control:foulplay','Use the target’s Attack through Foul Play',all(control,move('sableyemega','foulplay'),fact('physical-control:foulplay-value','Foul Play damage is useful against this actual target and set')),
+      {outcomes:['Foul Play uses the target’s Attack for damage against the checked target.']});
     p=get('three-slot-progress');
-    route(p,'three-slot-progress:design','Check a selected third against the opposing six',all(add({id:'three-slot-progress:third-member',label:'At least three candidate members are selected',predicate:'team_size',minimum:3}),fact('three-slot-progress:opponent','The opposing six and plausible sets are specified'),fact('three-slot-progress:bring','A legal three-member bring and the defensive slots needed are chosen'),fact('three-slot-progress:progress','The third member has a checked progress line against recovery and opposing pressure')));
+    route(p,'three-slot-progress:design','Check a selected third against the opposing six',all(add({id:'three-slot-progress:third-member',label:'At least three candidate members are selected',predicate:'team_size',minimum:3}),fact('three-slot-progress:opponent','The opposing six and plausible sets are specified'),fact('three-slot-progress:bring','A legal three-member bring and the defensive slots needed are chosen'),fact('three-slot-progress:progress','The third member has a checked progress line against recovery and opposing pressure')),
+      {outcomes:['The selected third member has a checked progress line against the specified opposing six.']});
     for (const alternative of record.alternatives || []) for (const speciesId of alternative.speciesIds || []) {
       model.candidateEdits.push({type:'add_member',speciesId,proposal:{goalId:'three-slot-progress',alternativeId:alternative.id,
         purpose:alternative.role,tradeoffs:[alternative.cost],evidence:{sourceIds:record.sourceIds || [],status:'research_candidate'}}});
@@ -51,7 +57,8 @@ export function buildCaseModel(record) {
     let p=get('wideguard-window');
     route(p,'wideguard-window:spread','Wide Guard creates an attack window',all(member('torterra'),member('raichumegay'),move('torterra','wideguard'),move('raichumegay','zapcannon'),item('raichumegay','raichunitey'),
       fact('wideguard-window:spread','The opponent uses a spread move that Wide Guard blocks'),fact('wideguard-window:guard-action','Torterra is active and free to execute Wide Guard'),fact('wideguard-window:raichu-action','Raichu is active, Mega Evolved with effective No Guard, and survives to act'),fact('wideguard-window:target','The target is susceptible to Zap Cannon and the attack is not prevented')),
-      {resources:[{actor:'torterra',slot:'turn:guard',action:'wideguard'},{actor:'raichumegay',slot:'turn:guard',action:'zapcannon'}]});
+      {resources:[{actor:'torterra',slot:'turn:guard',action:'wideguard'},{actor:'raichumegay',slot:'turn:guard',action:'zapcannon'}],
+        outcomes:['Wide Guard blocks the specified opposing spread move for the side.','Mega Raichu Y executes Zap Cannon against the susceptible target with No Guard removing its accuracy check.']});
     p=get('intimidate-deterrence');
     route(p,'intimidate-deterrence:competitive','Convert an opponent-caused stat drop',all(member('milotic'),ability('milotic','competitive'),fact('intimidate-deterrence:active','Milotic is active and Competitive is effective'),fact('intimidate-deterrence:opponent-drop','An opponent actually lowers Milotic’s own stat'),fact('intimidate-deterrence:conversion','Milotic has a usable attack and the speed and survival to convert the boost')),
       {outcomes:['Competitive can trigger on an opponent-caused stat drop to Milotic. Deterrence and damage conversion still require separate evidence.']});
@@ -88,8 +95,10 @@ export function buildCaseModel(record) {
       {outcomes:['Active Simple amplifies the eligible Decorate boosts.']});
     p=get('trickroom-fallback');
     const room=[fact('trickroom-fallback:order','The actual speed matchup favors the planned Trick Room mode'),fact('trickroom-fallback:execution','The selected setter establishes Trick Room and the beneficiary survives to use the window')];
-    route(p,'trickroom-fallback:farigiraf','Use Farigiraf as the Trick Room setter',all(member('farigiraf'),move('farigiraf','trickroom'),any(member('torterra'),member('arbok')),room));
-    route(p,'trickroom-fallback:chimecho','Use Chimecho as the Trick Room setter',all(member('chimechomega'),move('chimechomega','trickroom'),any(member('torterra'),member('arbok')),room));
+    route(p,'trickroom-fallback:farigiraf','Use Farigiraf as the Trick Room setter',all(member('farigiraf'),move('farigiraf','trickroom'),any(member('torterra'),member('arbok')),room),
+      {outcomes:['Farigiraf establishes Trick Room for the selected Torterra or Arbok beneficiary.']});
+    route(p,'trickroom-fallback:chimecho','Use Chimecho as the Trick Room setter',all(member('chimechomega'),move('chimechomega','trickroom'),any(member('torterra'),member('arbok')),room),
+      {outcomes:['Chimecho establishes Trick Room for the selected Torterra or Arbok beneficiary.']});
     // Shared purposes do not erase differences in outcome: ordinary setup never restores the +4 route.
     const setupId='purpose:boost-torterra';goal(setupId,'Create a boosted Torterra','Create offensive pressure through setup',get('beam-smash'));
     model.routes.push({...structuredClone(beam),id:`${setupId}:beam`,goalId:setupId});
