@@ -19,11 +19,11 @@ Each item names the failure it prevents. If the proposal drops one, that failure
 1. **Files are the source of truth; FalkorDB is a rebuilt projection.** Theories, sources and check results live as versioned files in git; the graph is rebuilt from them by a guarded loader (as `workbench/board/load-gk-board.mjs` does for `gk_board` only). Prevents: graph edits that cannot be replayed, and a rebuild that wipes another graph.
 2. **Append-only revisions.** Each revision records parent revision, author (named agent or user), time, the change, and the reason. Nothing is overwritten; a superseded claim keeps its history (as the parent did for E3's `THREATENS` edges). Prevents: an earlier option and a later choice appearing as simultaneous facts (the JoeUX9 Kingambit revisions).
 3. **Sets are first-class and plans reference set IDs, with alternate sets allowed.** A plan should point at "Gholdengo, Timid 32 Spe" and "Gholdengo, Choice Scarf" as distinct sets, not at the species. Prevents: the Memento timing error, which was true for one spread and false for the Scarf set. **Current gap:** `gk_board` plans reference species; the sets live only inside check inputs. The minimal schema should fix this, not the board.
-4. **Five evidence statuses, never merged:** `source_claim` (attributed to a written source with locator), `hypothesis` (agent or user proposal), `legality_checked` (validator row), `native_checked` (calculator row), `engine_checked` (execution trace). A claim moves between statuses only through a check record. Prevents: a creator's spoken claim or a model extraction reading as a verified mechanic.
+4. **Evidence kinds stay distinct, without a certification ladder.** A source claim is its own kind of evidence, attributed to a written source with a locator; it is not promoted into a checked mechanic. Calculator, legality and engine results are separate receipts with their scope. A hypothesis is an agent or user proposal. Prevents: a creator's spoken claim or a model extraction reading as a verified mechanic, and a verified result being read as proof of the source's broader claim. (Revised 2026-10-18 after the parent clarified source claims are independent evidence.)
 5. **Every check stores its full inputs and scope.** Calculator: attacker and defender sets, boosts, field, move, calculator revision, the native `kochance`/`fullDesc` untouched, and a row locator. Engine trace: both teams, the choice script for both sides (including opponent choices), seed, engine revision, events. Prevents: "survives at +6" being read as "survives setup" when the trace had the opponent Protect every turn.
 6. **Costs and concessions are separate fields with separate owners.** Costs are what our side pays (a donor fainting, an item, turns, a lost ability), and can be filled by agents. Concessions are opposing matchups the user chooses to give up; default `undecided`; only the user sets them. Prevents: an agent quietly deciding which matchups don't matter.
 7. **Targets, conditions and dealbreakers are named before checks are requested.** A check request names the plan and the decision it could change. Prevents: drifting back into whole-field matrices (E3) and calculating everything.
-8. **No score field.** Verdicts are text with the deciding check attached. If an ordering is needed for reading, it is labeled a heuristic in place (E7's turn denominator now is). Prevents: a ranking being read as measured efficiency.
+8. **No universal score field.** Verdicts are text with the deciding check attached. An ordering scoped to named targets is allowed when labeled a heuristic in place (E7's turn denominator now is). Prevents: a ranking being read as measured efficiency.
 9. **Written-source intake keeps locators, not full texts.** Source record: URL or path, section or quote span, retrieval time, content hash, author, date, format and regulation it applies to. Extracted claims stay `source_claim` until checked. Prevents: stale or out-of-format advice leaking in, and copyright problems from storing whole compendia.
 10. **One replay command.** Re-derives every stored check from its inputs and reports differences, and rebuilds the graph from files. This is the harness's own check; it is not a test suite (Shivraj adds tests at the end of a cycle).
 
@@ -67,9 +67,35 @@ The proposal covers requirements 1, 2, 5, 6, 7 and 10 well: files as truth, immu
 1. **Full-document replacement can drop things silently.** `revise` takes a complete replacement document. An agent that rewrites the document can omit an alternative, a cost or a counterplay entry without saying so; history keeps it, but the current theory loses it. The `revise` result should list every claim, alternative, cost and concession removed, and the reason field should have to address each removal.
 2. **Concessions need an owner rule.** The proposal allows "accepted concessions or explicitly `undecided`" but does not say who may change them. Make `revise` reject a concession change whose author is not the user, or mark it `proposed` until the user accepts it.
 3. **Unreviewed model extractions need their own label.** Source-derived claims carry the source hash and extraction revision, but a model extraction nobody has read should be distinguishable from a human-confirmed quote, since today's guide extractions already produced wrong creators, mixed stat units and invented formats.
-4. **No score field, stated as a rule.** The proposal never introduces a score, but it should say the theory schema has none, and any ordering in prose is labeled a heuristic. E7's denominator is the precedent.
+4. **No universal score, stated as a rule.** Scoped heuristic orderings are fine when labeled as such; a team-wide or cross-target score should not appear in the theory schema. E7's denominator is the precedent.
 5. **Team-level validation is decision-changing now, not later.** The one-Mega rule decided the Audino chain today. Calling the existing upstream `TeamValidator.validateTeam` as a fourth checker is small and prevents theories that are individually legal but impossible together.
 6. **A check request should name the decision it could change.** `check` takes a claim ID; adding a short "would change" field (for example "keep or drop Scarf") keeps agents from drifting back into calculating everything, which is the failure the user keeps correcting.
 7. **Sets need stable identity across revisions.** The stale rule depends on "a changed referenced set". Give each set a local ID plus a content hash, so an alternate set (Scarf vs Timid Gholdengo) is a separate reference rather than an edit to one.
 
 Nothing here argues for more components. Each item is a field or a validation rule inside the proposed `theory.mjs`.
+
+## Review plan for the first `theory.mjs` loop
+
+Not yet run: on `819a0b1` neither `workbench/theory.mjs` nor `data/theories/memento-staraptor/` exists. When they land I will run these probes against the module through its CLI only, on scratch copies, and record results here. Bounded to the first useful loop (`r0 → r1`, one damage check, two imported ordering receipts).
+
+**Claim versus result**
+1. Does a completed `damage` receipt display as "the calculation completed for these inputs", with the native `kochance`/`fullDesc` text intact, and never as the claim being true? Probe: a claim "+2 lets Staraptor OHKO Garchomp" checked with inputs where the native result is a 2HKO. The receipt should be `completed` and the claim unsupported by it.
+2. Do imported runthrough receipts keep their original origin (fixture, script hash, engine pin) rather than appearing as newly executed?
+3. Is the unscarfed `memento-ally` trace shown as contradicting the same-turn claim, and only that claim, while its later +2 observation stays usable?
+
+**References changing**
+4. Change the Garchomp target set (for example a bulkier spread) in a new revision. The existing damage receipt should go stale for the claim; the old receipt stays valid for its revision.
+5. Change only prose, or rename a set's display label while keeping identical resolved inputs. The receipt should stay current. Change a single stat point in the referenced set: it should go stale.
+6. Add Choice Scarf to Gholdengo as an alternative set (r1). The unscarfed ordering receipt must not certify the Scarf claim, and the Scarf fixture receipt must not certify the unscarfed one.
+
+**Runtime pins**
+7. Does each receipt record the calculator bundle revision and hash, adapter code hash, engine revision, format, and for traces the seed and both sides' choices?
+8. Simulate a changed adapter hash (on a scratch copy of the receipt, not the tracked file). Replay should report the pin mismatch and keep history; re-execution, if attempted, should record a new outcome rather than overwrite.
+
+**Stale after edits**
+9. Change the goal or a concession from `undecided` to a chosen matchup. The damage number should stay current for its inputs while the decision rationale is flagged stale.
+10. Revise with a document that omits an alternative or a cost. Does the result report the removal (my gap 1), or does it vanish silently from the current theory?
+11. Repeat a command ID with the same payload (should return the prior receipt) and with a different payload (should conflict).
+12. Revise with a stale expected head (should refuse, previous head intact).
+
+Each probe gets one line in the findings: input, observed output, expected output, and whether it is a correctness bug, a scope question, or acceptable.
