@@ -22,6 +22,12 @@ The solution concept is Nash equilibrium, and **computing Nash is PPAD-complete*
 equilibrium is guaranteed to exist, so this is a *total* search problem — a
 different hardness neighborhood from NP-complete decision problems.
 
+Correction (2026-10-17): that hardness result is for general-sum games. A
+two-player zero-sum matrix game, such as one Pokémon turn with known payoffs,
+is solvable in polynomial time by linear programming. The hard part in
+Pokémon is estimating the payoffs and the size of the full game, not solving
+one known matrix.
+
 ## The algorithm that computes the distribution: CFR
 
 **CFR — Counterfactual Regret Minimization** (Zinkevich et al. 2007): regret

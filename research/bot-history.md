@@ -143,3 +143,4 @@ Archived from the creator's announcement post (Smogon thread
   verified.
 - CK49VGC, "Bots are Better than Pros at Pokemon. Now What?" (2026-10-14) —
   recent scene commentary: https://youtu.be/VSAeOI0CLx0
+- Per CK49VGC (V02 in [VIDEO_SOURCES.md](VIDEO_SOURCES.md)): about a month after Jaxcalibur, two independent bots topped the Showdown VGC best-of-one and best-of-three ladders within one day; names from auto-captions, unverified.

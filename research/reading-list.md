@@ -38,3 +38,11 @@ Suggested order: theory first, then papers in chronological order.
   narrow format. (Repo — check upstream; self-reports, not independently verified.)
 - Victory-Dance (2026) — behavior cloning on 86k battles → PPO self-play league;
   top 500 twice, peak 1744 Elo, Champions VGC.
+
+## Video sources
+
+See [VIDEO_SOURCES.md](VIDEO_SOURCES.md) for timestamped notes; synthesis in [LANDSCAPE.md](LANDSCAPE.md).
+
+- Aaron Traylor (2026-02-06), "Competitive Pokemon may be Impossible to Explain". https://www.youtube.com/watch?v=wrR6MquGU6A. Four elements of battling; team building has no theory yet.
+- ck49 (2026-10-15), "Bots are Better than Pros at Pokemon. Now What?". https://www.youtube.com/watch?v=VSAeOI0CLx0. Three ladder #1 bots in about a month; fast simulator was the bottleneck; team preview is the weak spot.
+- Balduzzi et al. (2018), arXiv:1806.02643, "Re-evaluating Evaluation". Nash averaging for ranking under cyclic matchups.
