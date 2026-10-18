@@ -99,3 +99,21 @@ Not yet run: on `819a0b1` neither `workbench/theory.mjs` nor `data/theories/meme
 12. Revise with a stale expected head (should refuse, previous head intact).
 
 Each probe gets one line in the findings: input, observed output, expected output, and whether it is a correctness bug, a scope question, or acceptable.
+
+## Bounded review of `theory.mjs` and the Memento fixture (2026-10-18, against final `MINIMAL_HARNESS.md`)
+
+Read-only. Ran `node workbench/theory.mjs read data/theories/memento-staraptor/theory.json` and compared the two receipts with the theory's sets. Final design: Git history, any theory edit stales every prior receipt, no revise/head/command-ID API. Judged against that, not against my earlier proposals.
+
+Holds up:
+- **Claim versus result.** `read` ends with "Receipt integrity and freshness only; no claim, matchup, or team is certified." Receipts store `claimId`, `question`, `decision`, the full calculator input and `outcome: completed`; nothing marks the claim true.
+- **Runtime pins.** Calculator revision and bundle hash (checked against its manifest), engine declared revision plus a hash of 387 dist files, adapter file hashes and the dependency lock hash are in every receipt; a mismatch reports `runtime_changed`.
+- **Stale after edits.** Both Garchomp receipts read `stale: theory_or_reference_changed` after the Scarf revision, while their contents stay intact. Imported execution evidence keeps `origin: imported_existing`.
+- **Alternate sets.** `staraptor-opening` (base form, Intimidate) and `staraptor-damage` (Mega, Contrary) are separate set IDs, and `concessions.status` is `undecided`.
+
+Worth fixing or deciding:
+1. **Check inputs are not tied to set IDs.** The request inlines attacker and defender sets. Today both receipts match `staraptor-damage` and `garchomp-candidate` exactly, but nothing enforces it; a request could check a different Garchomp than the target names. Either accept `{setRef:"garchomp-candidate"}` and resolve it, or record which theory set IDs the inlined sets equal (null if none).
+2. **`claims[].interpretation` is hand-written.** "Contradicted for the tested opening" is the author's reading of an imported trace. Fine as prose; label it as the author's interpretation in `read` so it is not mistaken for a derived status.
+3. **`theory.mjs` hashes itself into the runtime pin.** Any edit to the runner, including a comment, makes every receipt `runtime_changed`. Conservative and consistent with the design; if it becomes noisy, pin the runner separately and report its change as `unverifiable` rather than `stale`.
+4. **Every prose edit stales the numbers.** By design. The cost is one cheap rerun of unchanged calculator inputs; worth one sentence in the README so a reader does not read "stale" as "wrong".
+
+No correctness bug found in the bounded loop.
