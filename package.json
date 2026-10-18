@@ -7,7 +7,10 @@
     "export:data": "node scripts/export.mjs",
     "ingest": "node scripts/ingest.mjs",
     "experiment": "node scripts/experiment.mjs",
-    "demo:plans": "node scripts/plan-demo.mjs"
+    "demo:plans": "node scripts/plan-demo.mjs",
+    "workbench": "node workbench/backend/server.mjs",
+    "test:workbench": "node --test workbench/logic/logic.test.mjs workbench/backend/backend.test.mjs",
+    "agent": "node workbench/agent.mjs"
   },
   "dependencies": {
     "esbuild": "0.25.12",

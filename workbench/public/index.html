@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gimmikghoul Workbench</title>
+  <link rel="icon" href="/assets/gimmighoul.png">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Gimmikghoul workbench home">
+      <img src="/assets/gimmighoul.png" alt="" width="36" height="36">
+      <span class="brand-name">gimmikghoul</span>
+      <span class="brand-tag">team workbench</span>
+    </a>
+    <nav id="case-tabs" class="case-tabs" aria-label="Cases"></nav>
+    <button id="export-open" class="btn btn-ink" type="button" disabled>Export for agent</button>
+  </header>
+
+  <section id="banner" class="banner" aria-live="polite">
+    <p class="muted">Loading cases…</p>
+  </section>
+
+  <div class="workspace">
+    <aside class="panel team-panel" aria-label="Team and edits">
+      <div class="panel-head">
+        <h2>Team</h2>
+        <span id="team-count" class="count"></span>
+      </div>
+      <p class="hint">Uncheck a member, edit a set, or pin what must stay.</p>
+      <div id="team-list" class="team-list"></div>
+
+      <div class="panel-head sub"><h3>Bench</h3></div>
+      <p class="hint">Alternatives the case suggests. Try one in the team.</p>
+      <div id="bench-list" class="bench-list"></div>
+
+      <div class="panel-head sub">
+        <h3>Edits</h3>
+        <button id="reset-all" class="btn-link" type="button" disabled>Reset</button>
+      </div>
+      <ol id="edit-log" class="edit-log"></ol>
+    </aside>
+
+    <main class="map-panel" aria-label="Plan map">
+      <div class="map-toolbar">
+        <div class="legend">
+          <span class="lg lg-member">member</span>
+          <span class="lg lg-plan">plan</span>
+          <span class="lg lg-need">needs</span>
+          <span class="lg lg-break">breaks if</span>
+        </div>
+        <label class="toggle"><input id="show-breaks" type="checkbox" checked> breaks-if</label>
+        <span class="hint">Click to trace · Shift-click to collect for export</span>
+      </div>
+      <div id="map" class="map">
+        <svg id="strings" class="strings" aria-hidden="true"></svg>
+        <div id="map-members" class="map-members"></div>
+        <div id="map-plans" class="map-plans"></div>
+      </div>
+      <div id="tray" class="tray" hidden>
+        <span class="tray-label">Collected</span>
+        <div id="tray-chips" class="tray-chips"></div>
+        <button id="tray-clear" class="btn-link" type="button">Clear</button>
+        <button id="tray-export" class="btn btn-ink small" type="button">Export these</button>
+      </div>
+    </main>
+
+    <aside class="panel side-panel" aria-label="Inspector and analysis">
+      <section id="inspector" class="inspector">
+        <p class="hint">Select a member, plan, need or counter to inspect it.</p>
+      </section>
+      <section id="analysis" class="analysis"></section>
+    </aside>
+  </div>
+
+  <dialog id="export-dialog" class="export-dialog">
+    <form method="dialog" class="export-inner">
+      <div class="export-head">
+        <h2>Context for an agent</h2>
+        <button class="btn-link" value="close" aria-label="Close">Close</button>
+      </div>
+      <p class="hint">The agent sees the same revision you see: team, edits, assumptions, analysis and the nodes you collected.</p>
+      <div class="export-options">
+        <fieldset>
+          <legend>Format</legend>
+          <label><input type="radio" name="fmt" value="md" checked> Markdown</label>
+          <label><input type="radio" name="fmt" value="json"> JSON</label>
+        </fieldset>
+        <fieldset>
+          <legend>Scope</legend>
+          <label><input type="radio" name="scope" value="all" checked> Whole case</label>
+          <label><input type="radio" name="scope" value="collected"> Collected nodes</label>
+        </fieldset>
+      </div>
+      <textarea id="export-text" class="export-text" readonly spellcheck="false"></textarea>
+      <div class="export-actions">
+        <span id="export-status" class="hint" role="status"></span>
+        <button id="export-download" class="btn" type="button">Download</button>
+        <button id="export-copy" class="btn btn-ink" type="button">Copy</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

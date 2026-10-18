@@ -1,0 +1,1473 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-18",
+  "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+  "purpose": "Small case bank for an interactive plan/evidence graph; hypotheses and creator reports remain distinguishable from mechanics checks.",
+  "sources": [
+    {
+      "id": "engine",
+      "title": "Pinned Pokémon Showdown Champions mechanics",
+      "url": "https://github.com/smogon/pokemon-showdown/tree/a833737d8408322c8b1e821dee16af07b1fd9234",
+      "kind": "executable_community_rules",
+      "revision": "a833737d8408322c8b1e821dee16af07b1fd9234"
+    },
+    {
+      "id": "splashplate",
+      "title": "SplashPlate: My ANTI-META Combo Beats EVERYTHING",
+      "url": "https://www.youtube.com/watch?v=zQQH_5liolE",
+      "kind": "user_supplied_practitioner_example",
+      "inspection": "Metadata and user-described core; no full transcript, board states or exact creator sets extracted."
+    },
+    {
+      "id": "torterra-video",
+      "title": "THATSAplusONE: I cannot believe this combo actually works",
+      "url": "https://www.youtube.com/watch?v=XZrc4W-711Y",
+      "kind": "practitioner_example",
+      "inspection": "Existing research/VIDEO_SOURCES.md V04, based on user-supplied transcript and team sheets; not newly parsed."
+    },
+    {
+      "id": "limitless-trio",
+      "title": "Luu34 team sheet: Lega dei Bollenti",
+      "url": "https://play.limitlesstcg.com/tournament/69d7ac9ab9ec970afa6068c1/player/luu34/teamlist",
+      "kind": "primary_tournament_team_sheet",
+      "inspection": "Regular Raichu with Lightning Rod, Torterra and Milotic; not Mega Raichu Y. Recorded 0–3 drop. No evidence of successful Y-chu core."
+    },
+    {
+      "id": "usage-singles",
+      "title": "September 2026 Showdown Champions BSS M-C usage, cutoff 1500",
+      "url": "https://www.smogon.com/stats/2026-09/chaos/gen9championsbssregmc-1500.json",
+      "kind": "historical_aggregate_usage"
+    },
+    {
+      "id": "usage-doubles",
+      "title": "September 2026 Showdown Champions VGC M-C usage, cutoff 1500",
+      "url": "https://www.smogon.com/stats/2026-09/chaos/gen9championsvgc2026regmc-1500.json",
+      "kind": "historical_aggregate_usage"
+    },
+    {
+      "id": "official-roster",
+      "title": "Official Champions eligibility roster cached October 17",
+      "url": "https://web-view.app.pokemonchampions.jp/battle/pages/events/rs178955680104qaiodg/en/pokemon.html",
+      "kind": "official_catalog",
+      "inspection": "Cached source; current web tool fetch inaccessible. Exact candidate legality is checked with pinned community validator, not claimed official certification."
+    }
+  ],
+  "metaSnapshots": [
+    {
+      "id": "singles-2026-09-1500",
+      "sourceId": "usage-singles",
+      "mode": "singles",
+      "month": "2026-09",
+      "population": "Pokémon Showdown",
+      "format": "gen9championsbssregmc",
+      "cutoff": 1500,
+      "reportedBattles": 69462,
+      "sha256": "d274cc77924924b00aedbb89b9f2d87d75add6676ddbdaa43b096636f429f26e",
+      "meaning": "Weighted aggregate usage, not win rate, not live official Champions usage, and not a replay corpus.",
+      "topThreats": [
+        {
+          "speciesId": "salamencemega",
+          "name": "Salamence-Mega",
+          "usageFraction": 0.3540199
+        },
+        {
+          "speciesId": "primarina",
+          "name": "Primarina",
+          "usageFraction": 0.27026700000000003
+        },
+        {
+          "speciesId": "golisopodmega",
+          "name": "Golisopod-Mega",
+          "usageFraction": 0.21469059999999998
+        },
+        {
+          "speciesId": "garchomp",
+          "name": "Garchomp",
+          "usageFraction": 0.21389500000000003
+        },
+        {
+          "speciesId": "archaludon",
+          "name": "Archaludon",
+          "usageFraction": 0.1990158
+        },
+        {
+          "speciesId": "gholdengo",
+          "name": "Gholdengo",
+          "usageFraction": 0.1885636
+        },
+        {
+          "speciesId": "hippowdon",
+          "name": "Hippowdon",
+          "usageFraction": 0.16928010000000002
+        },
+        {
+          "speciesId": "lucariomegaz",
+          "name": "Lucario-Mega-Z",
+          "usageFraction": 0.1673563
+        },
+        {
+          "speciesId": "rillaboom",
+          "name": "Rillaboom",
+          "usageFraction": 0.1398973
+        },
+        {
+          "speciesId": "mimikyu",
+          "name": "Mimikyu",
+          "usageFraction": 0.1289123
+        },
+        {
+          "speciesId": "meowscarada",
+          "name": "Meowscarada",
+          "usageFraction": 0.1281349
+        },
+        {
+          "speciesId": "basculegion",
+          "name": "Basculegion",
+          "usageFraction": 0.11424659999999999
+        }
+      ],
+      "caseSpecies": [
+        {
+          "speciesId": "raichumegay",
+          "name": "Raichu-Mega-Y",
+          "usageFraction": 0.0405056
+        },
+        {
+          "speciesId": "slowkinggalar",
+          "name": "Slowking-Galar",
+          "usageFraction": 0.021617
+        },
+        {
+          "speciesId": "milotic",
+          "name": "Milotic",
+          "usageFraction": 0.014322099999999999
+        },
+        {
+          "speciesId": "arbok",
+          "name": "Arbok",
+          "usageFraction": 0.0043643
+        },
+        {
+          "speciesId": "farigiraf",
+          "name": "Farigiraf",
+          "usageFraction": 0.0041504
+        },
+        {
+          "speciesId": "sableyemega",
+          "name": "Sableye-Mega",
+          "usageFraction": 0.0037051000000000002
+        },
+        {
+          "speciesId": "torterra",
+          "name": "Torterra",
+          "usageFraction": 0.0012182
+        },
+        {
+          "speciesId": "chimechomega",
+          "name": "Chimecho-Mega",
+          "usageFraction": 0.0012004
+        },
+        {
+          "speciesId": "farfetchd",
+          "name": "Farfetch'd",
+          "usageFraction": 0.0005796
+        },
+        {
+          "speciesId": "alcremie",
+          "name": "Alcremie",
+          "usageFraction": 0.000207
+        }
+      ]
+    },
+    {
+      "id": "doubles-2026-09-1500",
+      "sourceId": "usage-doubles",
+      "mode": "doubles",
+      "month": "2026-09",
+      "population": "Pokémon Showdown",
+      "format": "gen9championsvgc2026regmc",
+      "cutoff": 1500,
+      "reportedBattles": 1631943,
+      "sha256": "cce52663ff63878ebb0fb696ef2b1e6218ff563438c79323fb0a8d12736d8cec",
+      "meaning": "Weighted aggregate usage, not win rate, not live official Champions usage, and not a replay corpus.",
+      "topThreats": [
+        {
+          "speciesId": "rillaboom",
+          "name": "Rillaboom",
+          "usageFraction": 0.4295905
+        },
+        {
+          "speciesId": "sneasler",
+          "name": "Sneasler",
+          "usageFraction": 0.36031329999999995
+        },
+        {
+          "speciesId": "incineroar",
+          "name": "Incineroar",
+          "usageFraction": 0.28715440000000003
+        },
+        {
+          "speciesId": "salamencemega",
+          "name": "Salamence-Mega",
+          "usageFraction": 0.2484263
+        },
+        {
+          "speciesId": "indeedeef",
+          "name": "Indeedee-F",
+          "usageFraction": 0.22405429999999998
+        },
+        {
+          "speciesId": "kingambit",
+          "name": "Kingambit",
+          "usageFraction": 0.2140514
+        },
+        {
+          "speciesId": "golisopodmega",
+          "name": "Golisopod-Mega",
+          "usageFraction": 0.1835668
+        },
+        {
+          "speciesId": "basculegion",
+          "name": "Basculegion",
+          "usageFraction": 0.17996420000000002
+        },
+        {
+          "speciesId": "farigiraf",
+          "name": "Farigiraf",
+          "usageFraction": 0.16775569999999998
+        },
+        {
+          "speciesId": "gholdengo",
+          "name": "Gholdengo",
+          "usageFraction": 0.1655466
+        },
+        {
+          "speciesId": "pelipper",
+          "name": "Pelipper",
+          "usageFraction": 0.1397349
+        },
+        {
+          "speciesId": "archaludon",
+          "name": "Archaludon",
+          "usageFraction": 0.1336472
+        }
+      ],
+      "caseSpecies": [
+        {
+          "speciesId": "farigiraf",
+          "name": "Farigiraf",
+          "usageFraction": 0.16775569999999998
+        },
+        {
+          "speciesId": "milotic",
+          "name": "Milotic",
+          "usageFraction": 0.1300386
+        },
+        {
+          "speciesId": "raichumegay",
+          "name": "Raichu-Mega-Y",
+          "usageFraction": 0.11123670000000001
+        },
+        {
+          "speciesId": "slowkinggalar",
+          "name": "Slowking-Galar",
+          "usageFraction": 0.0038764
+        },
+        {
+          "speciesId": "alcremie",
+          "name": "Alcremie",
+          "usageFraction": 0.002125
+        },
+        {
+          "speciesId": "torterra",
+          "name": "Torterra",
+          "usageFraction": 0.0019671
+        },
+        {
+          "speciesId": "chimechomega",
+          "name": "Chimecho-Mega",
+          "usageFraction": 0.0013256000000000001
+        },
+        {
+          "speciesId": "sableyemega",
+          "name": "Sableye-Mega",
+          "usageFraction": 0.0008627
+        },
+        {
+          "speciesId": "farfetchd",
+          "name": "Farfetch'd",
+          "usageFraction": 0.0008219
+        },
+        {
+          "speciesId": "arbok",
+          "name": "Arbok",
+          "usageFraction": 0.00010109999999999999
+        }
+      ]
+    }
+  ],
+  "species": [
+    {
+      "id": "sableyemega",
+      "name": "Sableye-Mega",
+      "types": [
+        "Dark",
+        "Ghost"
+      ],
+      "abilities": {
+        "0": "Magic Bounce"
+      },
+      "baseStats": {
+        "hp": 50,
+        "atk": 85,
+        "def": 125,
+        "spa": 85,
+        "spd": 115,
+        "spe": 20
+      },
+      "requiredItem": "Sablenite",
+      "sourceId": "engine"
+    },
+    {
+      "id": "slowkinggalar",
+      "name": "Slowking-Galar",
+      "types": [
+        "Poison",
+        "Psychic"
+      ],
+      "abilities": {
+        "0": "Curious Medicine",
+        "1": "Own Tempo",
+        "H": "Regenerator"
+      },
+      "baseStats": {
+        "hp": 95,
+        "atk": 65,
+        "def": 80,
+        "spa": 110,
+        "spd": 110,
+        "spe": 30
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "corviknight",
+      "name": "Corviknight",
+      "types": [
+        "Flying",
+        "Steel"
+      ],
+      "abilities": {
+        "0": "Pressure",
+        "1": "Unnerve",
+        "H": "Mirror Armor"
+      },
+      "baseStats": {
+        "hp": 98,
+        "atk": 87,
+        "def": 105,
+        "spa": 53,
+        "spd": 85,
+        "spe": 67
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "garchomp",
+      "name": "Garchomp",
+      "types": [
+        "Dragon",
+        "Ground"
+      ],
+      "abilities": {
+        "0": "Sand Veil",
+        "H": "Rough Skin"
+      },
+      "baseStats": {
+        "hp": 108,
+        "atk": 130,
+        "def": 95,
+        "spa": 80,
+        "spd": 85,
+        "spe": 102
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "primarina",
+      "name": "Primarina",
+      "types": [
+        "Water",
+        "Fairy"
+      ],
+      "abilities": {
+        "0": "Torrent",
+        "H": "Liquid Voice"
+      },
+      "baseStats": {
+        "hp": 80,
+        "atk": 74,
+        "def": 74,
+        "spa": 126,
+        "spd": 116,
+        "spe": 60
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "torterra",
+      "name": "Torterra",
+      "types": [
+        "Grass",
+        "Ground"
+      ],
+      "abilities": {
+        "0": "Overgrow",
+        "H": "Shell Armor"
+      },
+      "baseStats": {
+        "hp": 95,
+        "atk": 109,
+        "def": 105,
+        "spa": 75,
+        "spd": 85,
+        "spe": 56
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "raichumegay",
+      "name": "Raichu-Mega-Y",
+      "types": [
+        "Electric"
+      ],
+      "abilities": {
+        "0": "No Guard"
+      },
+      "baseStats": {
+        "hp": 60,
+        "atk": 100,
+        "def": 55,
+        "spa": 160,
+        "spd": 80,
+        "spe": 130
+      },
+      "requiredItem": "Raichunite Y",
+      "sourceId": "engine"
+    },
+    {
+      "id": "milotic",
+      "name": "Milotic",
+      "types": [
+        "Water"
+      ],
+      "abilities": {
+        "0": "Marvel Scale",
+        "1": "Competitive",
+        "H": "Cute Charm"
+      },
+      "baseStats": {
+        "hp": 95,
+        "atk": 60,
+        "def": 79,
+        "spa": 100,
+        "spd": 125,
+        "spe": 81
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "farigiraf",
+      "name": "Farigiraf",
+      "types": [
+        "Normal",
+        "Psychic"
+      ],
+      "abilities": {
+        "0": "Cud Chew",
+        "1": "Armor Tail",
+        "H": "Sap Sipper"
+      },
+      "baseStats": {
+        "hp": 120,
+        "atk": 90,
+        "def": 70,
+        "spa": 110,
+        "spd": 70,
+        "spe": 60
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "indeedeef",
+      "name": "Indeedee-F",
+      "types": [
+        "Psychic",
+        "Normal"
+      ],
+      "abilities": {
+        "0": "Own Tempo",
+        "1": "Synchronize",
+        "H": "Psychic Surge"
+      },
+      "baseStats": {
+        "hp": 70,
+        "atk": 55,
+        "def": 65,
+        "spa": 95,
+        "spd": 105,
+        "spe": 85
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "sinistcha",
+      "name": "Sinistcha",
+      "types": [
+        "Grass",
+        "Ghost"
+      ],
+      "abilities": {
+        "0": "Hospitality",
+        "H": "Heatproof"
+      },
+      "baseStats": {
+        "hp": 71,
+        "atk": 60,
+        "def": 106,
+        "spa": 121,
+        "spd": 80,
+        "spe": 70
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "farfetchd",
+      "name": "Farfetch’d",
+      "types": [
+        "Normal",
+        "Flying"
+      ],
+      "abilities": {
+        "0": "Keen Eye",
+        "1": "Inner Focus",
+        "H": "Defiant"
+      },
+      "baseStats": {
+        "hp": 52,
+        "atk": 90,
+        "def": 55,
+        "spa": 58,
+        "spd": 62,
+        "spe": 60
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "chimechomega",
+      "name": "Chimecho-Mega",
+      "types": [
+        "Psychic",
+        "Steel"
+      ],
+      "abilities": {
+        "0": "Levitate"
+      },
+      "baseStats": {
+        "hp": 75,
+        "atk": 50,
+        "def": 110,
+        "spa": 135,
+        "spd": 120,
+        "spe": 65
+      },
+      "requiredItem": "Chimechite",
+      "sourceId": "engine"
+    },
+    {
+      "id": "alcremie",
+      "name": "Alcremie",
+      "types": [
+        "Fairy"
+      ],
+      "abilities": {
+        "0": "Sweet Veil",
+        "H": "Aroma Veil"
+      },
+      "baseStats": {
+        "hp": 65,
+        "atk": 60,
+        "def": 75,
+        "spa": 110,
+        "spd": 121,
+        "spe": 64
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "arbok",
+      "name": "Arbok",
+      "types": [
+        "Poison"
+      ],
+      "abilities": {
+        "0": "Intimidate",
+        "1": "Shed Skin",
+        "H": "Unnerve"
+      },
+      "baseStats": {
+        "hp": 60,
+        "atk": 95,
+        "def": 69,
+        "spa": 65,
+        "spd": 79,
+        "spe": 80
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "raichu",
+      "name": "Raichu",
+      "types": [
+        "Electric"
+      ],
+      "abilities": {
+        "0": "Static",
+        "H": "Lightning Rod"
+      },
+      "baseStats": {
+        "hp": 60,
+        "atk": 90,
+        "def": 55,
+        "spa": 90,
+        "spd": 80,
+        "spe": 110
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    },
+    {
+      "id": "incineroar",
+      "name": "Incineroar",
+      "types": [
+        "Fire",
+        "Dark"
+      ],
+      "abilities": {
+        "0": "Blaze",
+        "H": "Intimidate"
+      },
+      "baseStats": {
+        "hp": 95,
+        "atk": 115,
+        "def": 90,
+        "spa": 80,
+        "spd": 90,
+        "spe": 60
+      },
+      "requiredItem": null,
+      "sourceId": "engine"
+    }
+  ],
+  "cases": [
+    {
+      "id": "sableye-slowking-bss",
+      "title": "Mega Sableye: build a three-slot plan, not a wall collection",
+      "format": "gen9championsbssregmc",
+      "battleMode": "singles",
+      "rosterSize": 6,
+      "bringSize": 3,
+      "regulation": "M-C",
+      "status": "user_core_with_mechanics_grounded_hypotheses",
+      "sourceIds": [
+        "splashplate",
+        "engine",
+        "usage-singles"
+      ],
+      "speciesIds": [
+        "sableyemega",
+        "slowkinggalar"
+      ],
+      "question": "Which third member turns the Sableye / Galarian Slowking defensive cycle into progress against a particular opposing six?",
+      "summary": "Mega Sableye denies reflectable disruption and pressures physical attackers; Galarian Slowking resists Fairy and can pivot with Regenerator. That is a starting mechanism, not a universal matchup answer.",
+      "sets": [
+        {
+          "id": "sableye-recovery-control",
+          "speciesId": "sableye",
+          "name": "Sableye",
+          "itemId": "sablenite",
+          "abilityId": "prankster",
+          "moveIds": [
+            "recover",
+            "willowisp",
+            "foulplay",
+            "encore"
+          ],
+          "status": "illustrative_candidate",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsbssregmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "slowking-fairy-pivot",
+          "speciesId": "slowkinggalar",
+          "name": "Slowking-Galar",
+          "itemId": "sitrusberry",
+          "abilityId": "regenerator",
+          "moveIds": [
+            "sludgebomb",
+            "chillyreception",
+            "flamethrower",
+            "slackoff"
+          ],
+          "status": "illustrative_candidate",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsbssregmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        }
+      ],
+      "plans": [
+        {
+          "id": "fairy-pivot",
+          "title": "Turn Fairy pressure into a recoverable pivot",
+          "participants": [
+            "sableyemega",
+            "slowkinggalar"
+          ],
+          "mechanismIds": [
+            "fairyresistance",
+            "regenerator",
+            "chillyreception"
+          ],
+          "prerequisites": [
+            "A predicted Fairy attack rather than a coverage move",
+            "Slowking survives entry damage and the actual attack",
+            "A safe Chilly Reception or switch window exists"
+          ],
+          "outcomes": [
+            "Slowking takes half damage from Fairy typing before other modifiers",
+            "Regenerator restores health on switching out",
+            "Chilly Reception offers a slow pivot if the user survives to move"
+          ],
+          "failureCases": [
+            "Water coverage from Primarina is neutral rather than resisted",
+            "Ground, Ghost or Dark coverage threatens Slowking",
+            "Repeated entry damage or doubleswitches can exceed regeneration",
+            "Two defensive slots leave only one selected member to make progress"
+          ],
+          "sourceIds": [
+            "engine",
+            "splashplate"
+          ],
+          "status": "mechanics_grounded_hypothesis"
+        },
+        {
+          "id": "physical-control",
+          "title": "Make physical setup expensive",
+          "participants": [
+            "sableyemega"
+          ],
+          "mechanismIds": [
+            "magicbounce",
+            "willowisp",
+            "foulplay",
+            "recover"
+          ],
+          "prerequisites": [
+            "Sableye can survive the incoming line",
+            "Opponent can be burned or its Attack makes Foul Play meaningful",
+            "Magic Bounce is active after Mega Evolution"
+          ],
+          "outcomes": [
+            "Reflect eligible status moves",
+            "Reduce damage from burn-sensitive physical attackers",
+            "Foul Play can exploit the target Attack stat"
+          ],
+          "failureCases": [
+            "Magic Bounce does not stop damaging Fairy moves",
+            "Fire types, Guts, Substitute or status immunity change the burn line",
+            "Gholdengo Good as Gold blocks many status approaches",
+            "Recovery can surrender tempo to a special attacker"
+          ],
+          "sourceIds": [
+            "engine"
+          ],
+          "status": "mechanics_grounded_hypothesis"
+        },
+        {
+          "id": "three-slot-progress",
+          "title": "Select a third that forces progress",
+          "participants": [
+            "sableyemega",
+            "slowkinggalar"
+          ],
+          "mechanismIds": [
+            "bringthree",
+            "groundimmunity",
+            "breakingpower"
+          ],
+          "prerequisites": [
+            "Name the opposing six and plausible sets",
+            "Choose which two of the defensive pair actually need to be brought"
+          ],
+          "outcomes": [
+            "Compare a Ground-immune pivot with an immediate breaker as alternative third slots"
+          ],
+          "failureCases": [
+            "Type coverage alone says nothing about breaking a recovery cycle",
+            "Two Mega candidates cannot both Mega Evolve in the same battle",
+            "Opponent changes the expected lineup"
+          ],
+          "sourceIds": [
+            "engine",
+            "usage-singles"
+          ],
+          "status": "open_team_design"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "corviknight-ground-patch",
+          "speciesIds": [
+            "corviknight"
+          ],
+          "role": "Ground-immune defensive pivot",
+          "helps": "Can cover Ground attacks aimed at Slowking while resisting Fairy.",
+          "cost": "A third defensive member can make the selected three too passive; evaluate actual Body Press or other progress line."
+        },
+        {
+          "id": "garchomp-progress",
+          "speciesIds": [
+            "garchomp"
+          ],
+          "role": "Immediate physical progress",
+          "helps": "Can threaten relevant Steel targets and provide a faster offensive route.",
+          "cost": "Adds Fairy and Ice vulnerabilities; no claim it is the best third."
+        },
+        {
+          "id": "primarina-breaker",
+          "speciesIds": [
+            "primarina"
+          ],
+          "role": "Special breaker alternative",
+          "helps": "A different damage profile instead of another defensive pivot.",
+          "cost": "Leaves Ground switching and speed decisions to the other slots."
+        }
+      ],
+      "warnings": [
+        "Mega Sableye is neutral to Ghost and Dark, not resistant. It does not automatically cover those weaknesses for Slowking.",
+        "These two sets are new illustrative candidates, not extracted SplashPlate sets.",
+        "September Showdown usage is the latest inspected monthly snapshot, not a live October official ladder."
+      ],
+      "nextCalculations": [
+        "Slowking switch-in survival against specified Primarina Water/Fairy variants at realistic HP",
+        "Third-slot candidate damage and recovery pressure against Gholdengo and opposing defensive cores",
+        "Bring-three selection against three explicit opposing sixes"
+      ],
+      "hypotheses": [
+        {
+          "id": "h-singles",
+          "claim": "Retrieving condition-dependent switch and progress plans produces more useful third-slot suggestions than species-level type coverage.",
+          "test": "Compare the same three suggested partners with exact threats, prerequisite chains and one exposed failure case each."
+        }
+      ],
+      "metaSnapshotId": "singles-2026-09-1500"
+    },
+    {
+      "id": "torterra-raichuy-milotic",
+      "title": "Torterra / Mega Raichu Y / Milotic: protection and pressure",
+      "format": "gen9championsvgc2026regmc",
+      "battleMode": "doubles",
+      "rosterSize": 6,
+      "bringSize": 4,
+      "regulation": "M-C",
+      "status": "user_hypothesis_not_observed_success",
+      "sourceIds": [
+        "engine",
+        "usage-doubles",
+        "limitless-trio"
+      ],
+      "speciesIds": [
+        "torterra",
+        "raichumegay",
+        "milotic"
+      ],
+      "question": "Can Wide Guard and anti-Intimidate pressure give Mega Raichu Y enough safe turns without making Torterra passive?",
+      "summary": "Torterra supplies spread protection and targeted Ground/Grass damage. Mega Raichu Y supplies accurate attacks through its own No Guard. Competitive Milotic can punish opponent-induced stat drops. Their turn economy and switching rules determine whether the trio works.",
+      "sets": [
+        {
+          "id": "torterra-guard",
+          "speciesId": "torterra",
+          "name": "Torterra",
+          "itemId": "sitrusberry",
+          "abilityId": "shellarmor",
+          "moveIds": [
+            "wideguard",
+            "headlongrush",
+            "woodhammer",
+            "protect"
+          ],
+          "status": "illustrative_candidate",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "raichuy-pressure",
+          "speciesId": "raichu",
+          "name": "Raichu",
+          "itemId": "raichunitey",
+          "abilityId": "lightningrod",
+          "moveIds": [
+            "zapcannon",
+            "focusblast",
+            "fakeout",
+            "protect"
+          ],
+          "status": "illustrative_candidate",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "milotic-pressure",
+          "speciesId": "milotic",
+          "name": "Milotic",
+          "itemId": "leftovers",
+          "abilityId": "competitive",
+          "moveIds": [
+            "scald",
+            "icywind",
+            "recover",
+            "protect"
+          ],
+          "status": "illustrative_candidate",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        }
+      ],
+      "plans": [
+        {
+          "id": "wideguard-window",
+          "title": "Buy Y-chu a turn against spread attacks",
+          "participants": [
+            "torterra",
+            "raichumegay"
+          ],
+          "mechanismIds": [
+            "wideguard",
+            "noguard",
+            "zapcannon"
+          ],
+          "prerequisites": [
+            "Opponent uses a blockable spread move",
+            "Torterra is free to use Wide Guard",
+            "Raichu has Mega Evolved and can act"
+          ],
+          "outcomes": [
+            "Wide Guard blocks applicable spread moves for the side",
+            "No Guard removes accuracy checks on attacks by or targeting Mega Raichu Y",
+            "Zap Cannon can apply damage and paralysis when the target is susceptible"
+          ],
+          "failureCases": [
+            "Single-target Earth Power or Ice Beam bypass Wide Guard",
+            "Opponent protects or switches to an Electric immunity",
+            "Raichu loses Lightning Rod when it Mega Evolves",
+            "No Guard also improves accuracy of incoming moves against Raichu"
+          ],
+          "sourceIds": [
+            "engine"
+          ],
+          "status": "mechanics_grounded_hypothesis"
+        },
+        {
+          "id": "intimidate-deterrence",
+          "title": "Make opponent stat drops costly",
+          "participants": [
+            "torterra",
+            "milotic"
+          ],
+          "mechanismIds": [
+            "competitive",
+            "intimidate"
+          ],
+          "prerequisites": [
+            "Milotic is on the field when its own stats are lowered by an opponent",
+            "Opponent actually chooses or is forced into the stat-dropping action"
+          ],
+          "outcomes": [
+            "Competitive raises Milotic Special Attack by two stages when triggered",
+            "May discourage a stat-drop line that weakens physical Torterra"
+          ],
+          "failureCases": [
+            "Benched Milotic does not receive the trigger",
+            "Ally stat drops do not activate Competitive",
+            "Opponent can choose a different line",
+            "Milotic still needs attacks, speed and survivability to convert the boost"
+          ],
+          "sourceIds": [
+            "engine"
+          ],
+          "status": "mechanics_grounded_hypothesis"
+        },
+        {
+          "id": "avoid-friendly-fire",
+          "title": "Keep Ground pressure without damaging the ally",
+          "participants": [
+            "torterra",
+            "raichumegay",
+            "milotic"
+          ],
+          "mechanismIds": [
+            "headlongrush",
+            "earthquake",
+            "protect"
+          ],
+          "prerequisites": [
+            "Choose a single-target Ground move or coordinate Protect/switch before Earthquake"
+          ],
+          "outcomes": [
+            "Headlong Rush damages the selected target without Earthquake friendly fire"
+          ],
+          "failureCases": [
+            "Headlong Rush lowers Torterra defenses",
+            "Earthquake hits grounded allied Raichu and Milotic",
+            "Protect consumes the ally attack opportunity",
+            "Rillaboom terrain can weaken Earthquake and alter targets"
+          ],
+          "sourceIds": [
+            "engine"
+          ],
+          "status": "mechanics_grounded_hypothesis"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "farigiraf-priority-control",
+          "speciesIds": [
+            "farigiraf"
+          ],
+          "role": "Priority protection",
+          "helps": "Armor Tail can block opposing priority directed at the side.",
+          "cost": "Grounded partner without Air Balloon is vulnerable to Earthquake; requires a slot and correct positioning."
+        },
+        {
+          "id": "redirection-window",
+          "speciesIds": [
+            "indeedeef",
+            "sinistcha"
+          ],
+          "role": "Redirect eligible single-target attacks",
+          "helps": "Creates a different class of protected turn from Wide Guard.",
+          "cost": "Follow Me / Rage Powder differ; spread moves, powder immunity and redirect-bypassing abilities must be checked."
+        },
+        {
+          "id": "milotic-hypnosis-variant",
+          "speciesIds": [
+            "milotic"
+          ],
+          "role": "Alternate disruption mode",
+          "helps": "Hypnosis is an option to test with its own accuracy support.",
+          "cost": "Ally No Guard is not an accuracy aura; Milotic Hypnosis still checks accuracy unless user or target has relevant effects."
+        }
+      ],
+      "warnings": [
+        "The linked prior team has base Raichu, not Mega Raichu Y, and a 0–3 result. It only establishes that this species trio has been used.",
+        "This is a role-oriented Torterra candidate, not the separate Shell Smash / Simple Beam composition.",
+        "No Guard does not bypass type immunity, Protect, or every form of prevention."
+      ],
+      "nextCalculations": [
+        "Raichu survival against named single-target attacks that bypass Wide Guard",
+        "Torterra Headlong Rush and Wood Hammer damage against actual opposing sets",
+        "Compare using a guard turn versus attacking immediately",
+        "Assess Milotic Competitive-trigger opportunities against current Incineroar/Salamence usage without treating co-occurrence as wins"
+      ],
+      "hypotheses": [
+        {
+          "id": "h-double",
+          "claim": "A condition graph can discover role replacements by matching a protected-turn requirement instead of repeating one known combo.",
+          "test": "Request alternatives to Wide Guard, then show exactly which attack classes each alternative permits or fails against."
+        }
+      ],
+      "metaSnapshotId": "doubles-2026-09-1500"
+    },
+    {
+      "id": "simplebeam-torterra",
+      "title": "Simple Beam Torterra: a known plan with breakpoints",
+      "format": "gen9championsvgc2026regmc",
+      "battleMode": "doubles",
+      "rosterSize": 6,
+      "bringSize": 4,
+      "regulation": "M-C",
+      "status": "practitioner_report_reconstruction",
+      "sourceIds": [
+        "torterra-video",
+        "engine"
+      ],
+      "speciesIds": [
+        "farfetchd",
+        "torterra",
+        "farigiraf",
+        "chimechomega",
+        "alcremie",
+        "arbok"
+      ],
+      "question": "If one enabler is removed, can the agent repair the plan through a different legal mechanism and explain what was lost?",
+      "summary": "Use a documented off-meta composition as an explainable plan graph, with distinct setup, protection, attack and fallback modes.",
+      "sets": [
+        {
+          "id": "farfetchd-beam",
+          "speciesId": "farfetchd",
+          "name": "Farfetch’d",
+          "itemId": "choicescarf",
+          "abilityId": "innerfocus",
+          "moveIds": [
+            "uturn",
+            "simplebeam",
+            "closecombat",
+            "bravebird"
+          ],
+          "status": "creator_reported_moves_item_ability",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "torterra-smash",
+          "speciesId": "torterra",
+          "name": "Torterra",
+          "itemId": "whiteherb",
+          "abilityId": "shellarmor",
+          "moveIds": [
+            "protect",
+            "shellsmash",
+            "rockslide",
+            "earthquake"
+          ],
+          "status": "creator_reported_moves_item_ability",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "farigiraf-support",
+          "speciesId": "farigiraf",
+          "name": "Farigiraf",
+          "itemId": "airballoon",
+          "abilityId": "armortail",
+          "moveIds": [
+            "allyswitch",
+            "trickroom",
+            "helpinghand",
+            "twinbeam"
+          ],
+          "status": "creator_reported_moves_item_ability",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "chimecho-support",
+          "speciesId": "chimecho",
+          "name": "Chimecho",
+          "itemId": "chimechite",
+          "abilityId": "levitate",
+          "moveIds": [
+            "trickroom",
+            "healpulse",
+            "calmmind",
+            "dazzlinggleam"
+          ],
+          "status": "creator_reported_moves_item_ability",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "alcremie-decorate",
+          "speciesId": "alcremie",
+          "name": "Alcremie",
+          "itemId": "focussash",
+          "abilityId": "aromaveil",
+          "moveIds": [
+            "protect",
+            "decorate",
+            "psychup",
+            "dazzlinggleam"
+          ],
+          "status": "creator_reported_moves_item_ability",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        },
+        {
+          "id": "arbok-coil",
+          "speciesId": "arbok",
+          "name": "Arbok",
+          "itemId": "leftovers",
+          "abilityId": "intimidate",
+          "moveIds": [
+            "coil",
+            "leechlife",
+            "earthquake",
+            "gunkshot"
+          ],
+          "status": "creator_reported_moves_item_ability",
+          "spreads": "Not optimized or recovered from the creator. Validation uses neutral nature, 32 HP / 2 SpD / 32 Speed points and 31 IVs solely as a legal smoke-test spread.",
+          "legality": {
+            "engineRevision": "a833737d8408322c8b1e821dee16af07b1fd9234",
+            "format": "gen9championsvgc2026regmc",
+            "checked": "individual_set_with_smoke_test_spread",
+            "errors": []
+          }
+        }
+      ],
+      "plans": [
+        {
+          "id": "beam-smash",
+          "title": "Land Simple Beam before Shell Smash",
+          "participants": [
+            "farfetchd",
+            "torterra"
+          ],
+          "mechanismIds": [
+            "simplebeam",
+            "simple",
+            "shellsmash",
+            "whiteherb",
+            "innerfocus",
+            "choicescarf"
+          ],
+          "prerequisites": [
+            "Farfetchd moves before Torterra",
+            "Both survive to act",
+            "Simple Beam is not blocked or redirected",
+            "Torterra has an intact White Herb"
+          ],
+          "outcomes": [
+            "Simple doubles Shell Smash to +4 Attack, Special Attack and Speed and -2 defenses",
+            "White Herb clears negative stat stages when it activates",
+            "Inner Focus prevents flinch, including Fake Out flinch"
+          ],
+          "failureCases": [
+            "Inner Focus does not prevent Fake Out damage or a KO",
+            "Torterra loses Shell Armor when Simple overwrites its ability",
+            "White Herb can be consumed earlier",
+            "Choice Scarf locks Farfetchd into its selected move until switching",
+            "Torterra Protect blocks the ally Simple Beam",
+            "Opposing redirection can steal a redirectable ally-targeted move from a susceptible user"
+          ],
+          "sourceIds": [
+            "torterra-video",
+            "engine"
+          ],
+          "status": "source_reported_plan_mechanics_checked"
+        },
+        {
+          "id": "earthquake-partner",
+          "title": "Attack beside a Ground-immune partner",
+          "participants": [
+            "torterra",
+            "chimechomega",
+            "farigiraf"
+          ],
+          "mechanismIds": [
+            "earthquake",
+            "levitate",
+            "airballoon"
+          ],
+          "prerequisites": [
+            "Active partner is immune to Ground in the actual state",
+            "Air Balloon remains intact or Levitate remains effective"
+          ],
+          "outcomes": [
+            "Torterra can use Earthquake without damaging that immune ally"
+          ],
+          "failureCases": [
+            "Air Balloon pops",
+            "Grounding or ability suppression removes immunity",
+            "Opponent Wide Guard blocks spread attacks",
+            "Ground-immune opponents require Rock Slide or a different attack"
+          ],
+          "sourceIds": [
+            "torterra-video",
+            "engine"
+          ],
+          "status": "source_reported_plan_mechanics_checked"
+        },
+        {
+          "id": "decorate-mode",
+          "title": "Use another boost route",
+          "participants": [
+            "alcremie",
+            "torterra"
+          ],
+          "mechanismIds": [
+            "decorate",
+            "protect",
+            "simple"
+          ],
+          "prerequisites": [
+            "Alcremie can act and targets the intended ally",
+            "Choose whether Simple is already active"
+          ],
+          "outcomes": [
+            "Decorate can boost the ally through Protect",
+            "Simple can amplify eligible stat changes"
+          ],
+          "failureCases": [
+            "Aroma Veil is not general damage protection",
+            "Boosting still costs a support action",
+            "Status removal or opposing boost control can erase progress"
+          ],
+          "sourceIds": [
+            "torterra-video",
+            "engine"
+          ],
+          "status": "source_reported_plan_mechanics_checked"
+        },
+        {
+          "id": "trickroom-fallback",
+          "title": "Choose a slower mode instead of blindly boosting Speed",
+          "participants": [
+            "farigiraf",
+            "chimechomega",
+            "torterra",
+            "arbok"
+          ],
+          "mechanismIds": [
+            "trickroom",
+            "coil",
+            "simplebeam"
+          ],
+          "prerequisites": [
+            "Choose leads and backline for the actual opposing speed plan",
+            "Avoid treating +4 Speed and Trick Room as automatically complementary"
+          ],
+          "outcomes": [
+            "Trick Room offers a different turn-order mode",
+            "Simple plus Coil offers an Arbok boost route"
+          ],
+          "failureCases": [
+            "Speed boosting may be counterproductive in Trick Room",
+            "Opposing Taunt, damage or reversal can prevent the intended order",
+            "Selecting four members cannot preserve every six-member plan simultaneously"
+          ],
+          "sourceIds": [
+            "torterra-video",
+            "engine"
+          ],
+          "status": "source_reported_plan_mechanics_checked"
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "direct-smash",
+          "speciesIds": [
+            "torterra"
+          ],
+          "role": "Remove the Simple Beam dependency",
+          "helps": "Ordinary Shell Smash needs one fewer enabler.",
+          "cost": "Smaller boosts; still needs a setup turn and survival."
+        },
+        {
+          "id": "fakeout-window",
+          "speciesIds": [
+            "raichu",
+            "incineroar"
+          ],
+          "role": "Disrupt one opponent for setup",
+          "helps": "Fake Out can buy a turn against an eligible target.",
+          "cost": "Only one target; Ghost immunity, priority blocking, terrain and opposing Protect alter the line."
+        },
+        {
+          "id": "redirect-window",
+          "speciesIds": [
+            "indeedeef",
+            "sinistcha"
+          ],
+          "role": "Redirect eligible attacks",
+          "helps": "Protect setup from a different class of attacks.",
+          "cost": "Does not replace Simple doubling, and not every attack redirects."
+        }
+      ],
+      "warnings": [
+        "This is reconstruction from a known published team, not novel discovery.",
+        "Creator set spreads are not recovered here.",
+        "The six-member plan graph must be projected to a legal selected four and active pair."
+      ],
+      "nextCalculations": [
+        "Actual Farfetchd-before-Torterra speed relation for candidate spreads",
+        "One turn with redirection, one with Fake Out, and one with spread damage",
+        "Whether a simpler direct Shell Smash line achieves enough damage at lower setup cost"
+      ],
+      "hypotheses": [
+        {
+          "id": "h-repair",
+          "claim": "Reified plan nodes expose which prerequisites disappear after a set edit and retrieve multiple replacement mechanisms.",
+          "test": "Remove Simple Beam or Air Balloon and compare legal repairs with explicit lost benefits and new failure cases."
+        }
+      ],
+      "metaSnapshotId": "doubles-2026-09-1500"
+    }
+  ],
+  "validationSummary": {
+    "candidateSets": 11,
+    "setsWithErrors": 0,
+    "battleSimulations": 0,
+    "fullVideoExtractions": 0
+  }
+}
