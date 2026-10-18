@@ -37,23 +37,23 @@ N = {  # id: (label, x, y, kind)
  'rillaboom': ('Rillaboom', 1500, 260, 'mon'), 'incineroar': ('Incineroar', 1600, 420, 'mon'),
  'archaludon': ('Archaludon', 1600, 590, 'mon'), 'charizardmegay': ('Mega Charizard Y', 1500, 760, 'mon'),
  'gholdengo': ('Gholdengo', 1330, 860, 'mon'), 'sylveon': ('Sylveon', 1300, 140, 'mon'),
- 'sleep': ('Sleep (Venusaur, everywhere)', 300, 520, 'threat'),
+ 'sleep': ('Sleep (most top sets: no answer)', 300, 520, 'threat'),
  'indeedeef': ('Indeedee-F  Follow Me', 230, 700, 'mon'), 'sinistcha': ('Sinistcha  Rage Powder', 430, 840, 'mon'),
  'annihilape': ('Coaching (+Atk/Def, no SpA)', 560, 960, 'mon'),
 }
 STEPS = [
  dict(title='1  Seed', nodes=['alcremie', 'garchompmegaz', 'torkoal', 'farigiraf', 'venusaur', 'kingambit'],
       edges=[('alcremie', 'garchompmegaz', 'CORE'), ('farigiraf', 'torkoal', 'CORE')],
-      say='The agent opens a fresh idea graph in FalkorDB, seeded with Alcremie and a partner.'),
+      say='The agent opens a fresh idea graph in FalkorDB, seeded with a creator-attributed Alcremie team.'),
  dict(title='2  What can boost a partner', nodes=['decorate', 'memento', 'staraptormega'],
       edges=[('alcremie', 'decorate', 'ENABLES'), ('decorate', 'garchompmegaz', 'ENABLES'), ('memento', 'staraptormega', 'SUPPORT')],
       say='From the game data, it indexes every move that can boost an ally. Decorate gives plus two attack and special attack. Stat drops flip into boosts on a Contrary partner.'),
  dict(title='3  What +2 actually buys', nodes=['rillaboom', 'incineroar', 'archaludon', 'charizardmegay', 'gholdengo'],
       edges=[('garchompmegaz', 'rillaboom', 'OHKO'), ('garchompmegaz', 'incineroar', 'OHKO'), ('garchompmegaz', 'archaludon', 'OHKO'),
              ('garchompmegaz', 'charizardmegay', 'OHKO'), ('garchompmegaz', 'gholdengo', 'NOT')],
-      say='The damage calculator checks the payoff. With Decorate, Draco Meteor one shots Rillaboom, Incineroar, Archaludon and Mega Charizard Y. Without it, it does not.'),
+      say='A pinned community damage calculator checks the payoff. With Decorate, Draco Meteor guarantees the knockout on Rillaboom, Incineroar, Archaludon and Mega Charizard Y. Without it, none of those is guaranteed.'),
  dict(title='4  The gap in the meta', nodes=['sleep'], edges=[('alcremie', 'sleep', 'GOOD')],
-      say='Here is the gap. Sleep Powder is everywhere, and almost nothing answers it. Alcremie keeps itself and its partner awake.'),
+      say='Here is the gap. Most top sets carry no answer of their own to sleep, and the creator notes Venusaur is common. Alcremie keeps itself and its partner awake.'),
  dict(title='5  What to play around', nodes=['indeedeef', 'sinistcha', 'sylveon'],
       edges=[('indeedeef', 'alcremie', 'BAD'), ('sinistcha', 'alcremie', 'BAD'), ('garchompmegaz', 'sylveon', 'BAD')],
       say='Every plan has counterplay. Follow Me and Rage Powder steal Decorate, so you lead around them. Fairy types ignore Draco Meteor.'),
@@ -130,15 +130,15 @@ def main():
     hero = os.path.join(ROOT, 'brand/gimmikghoul-hero.png')
     scenes = [
      ('title', 'Gimmikghoul. Find your favourite Pokemon a job in the meta.', lambda t: card([('GIMMIKGHOUL', 120, YEL), ('find your favourite Pokémon a job in the meta', 44, INK)], logo=True)),
-     ('problem', 'Bots can now beat top players at Pokemon battles. None of them can tell you whether your favourite has a place in the meta.',
-      lambda t: card([('Bots win battles now.', 70, INK), ('Nobody tells you where your favourite fits.', 52, YEL)], bgimg=hero, zoom=1.0 + 0.08 * t)),
+     ('problem', 'Bots now top the Showdown ladders. None of them tells you whether your favourite has a place in the meta.',
+      lambda t: card([('Bots top the ladders now.', 70, INK), ('Nobody tells you where your favourite fits.', 52, YEL)], bgimg=hero, zoom=1.0 + 0.08 * t)),
      ('ask', 'So we ask an agent, with a FalkorDB graph of the whole meta. I like Alcremie. Nobody runs it. Where does it have a job?',
       lambda t: ask_card(t)),
     ]
     for i, st in enumerate(STEPS): scenes.append(('step%d' % i, st['say'], ('graph', i)))
     scenes += [
-     ('payoff', 'This is the core London Faust took to top sixteen at Louisville Regionals. The graph got there from the data.',
-      lambda t: card([('Louisville Regionals, top 16', 64, YEL), ('Alcremie + Mega Garchomp Z + Trick Room Torkoal', 46, INK), ('The graph got there from the data.', 44, MUTED)])),
+     ('payoff', 'The seed is London Faust\'s top sixteen core from Louisville Regionals, as broken down by a creator. The graph explores why it works and what to play around.',
+      lambda t: card([('Louisville Regionals, top 16', 64, YEL), ('Alcremie + Mega Garchomp Z + Trick Room Torkoal', 46, INK), ('Creator-attributed core, explored in the graph', 44, MUTED)])),
      ('formula', 'A new idea scores well when a common hole meets a rare enabler with a real payoff.',
       lambda t: card([('idea  ≈  hole × rare enabler × payoff', 66, YEL), ('÷ turns and slots it costs', 48, INK), ('counterplay is what you learn to play around', 38, MUTED)])),
      ('end', 'Gimmikghoul. Built on FalkorDB.', lambda t: card([('GIMMIKGHOUL', 110, YEL), ('Built on FalkorDB  ·  Cypher  ·  graph algorithms  ·  MCP', 40, INK), ('github.com/shivraj-S-bhatti/pokemon-battle-lab', 36, MUTED)], logo=True)),
@@ -164,6 +164,9 @@ def main():
             for f in range(frames):
                 im = render(f / max(frames - 1, 1)); ff.stdin.write(im.convert('RGB').tobytes())
     ff.stdin.close(); ff.wait()
+    import json; t0 = 0; tl = []
+    for (name, *_), (_, d) in zip(scenes, audio): tl.append({'scene': name, 'start': round(t0, 3), 'end': round(t0 + d, 3)}); t0 += d
+    json.dump(tl, open(os.path.join(OUT, 'scenes.json'), 'w'), indent=1)
     lst = os.path.join(OUT, 'audio.txt')
     with open(lst, 'w') as fh:
         for wav, dur in audio: fh.write(f"file '{wav}'\noutpoint {dur:.3f}\n")
