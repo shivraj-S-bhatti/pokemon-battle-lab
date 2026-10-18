@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "pokemon-falkordb": {
+      "type": "stdio",
+      "command": "/bin/sh",
+      "args": ["/Users/apple/Projects/pokemon-core-lab/workbench/mcp/start.sh"]
+    }
+  }
+}

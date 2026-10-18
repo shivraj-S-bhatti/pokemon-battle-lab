@@ -1,0 +1,212 @@
+{
+  "retrievedAt": "2026-10-18T16:27:57.244848+00:00",
+  "sources": [
+    {
+      "videoId": "LFXZLuq-JxM",
+      "url": "https://www.youtube.com/watch?v=LFXZLuq-JxM",
+      "title": "Easy Team Building Guide for Pokemon Champions!",
+      "author": "aDrive",
+      "publishedAt": "2026-04-14T05:12:20-07:00",
+      "durationSeconds": 1476,
+      "method": "youtube-transcript-api fetch, English generated captions",
+      "segments": 794,
+      "lastCaptionEndSeconds": 1477.6,
+      "sha256": "a82c176d5490230113aedcf74f9d0c977dc3af41bf0b0e7c1931cf9200ff754e",
+      "rawLocalPath": ".artifacts/team-guide-signals/LFXZLuq-JxM.yta.json",
+      "visualVerification": false,
+      "googleVideoAnalysis": {
+        "model": "google/gemini-3.1-pro-preview",
+        "provider": "google-ai-studio via OpenRouter",
+        "reasoningEffort": "high",
+        "maxOutputTokens": 24000,
+        "statusCode": 200,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 134680,
+          "completion_tokens": 7695,
+          "total_tokens": 142375,
+          "cost": 0.3617,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 134313
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.3617,
+            "upstream_inference_prompt_cost": 0.26936,
+            "upstream_inference_completions_cost": 0.09234
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 3976,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "receiptLocalPath": ".artifacts/team-guide-signals/LFXZLuq-JxM/receipt.json",
+        "receiptSha256": "b4644ddd6206edca800628d6a499b77842598e5ac51bc55912bbbdf7f4b06452",
+        "parsedJsonLocalPath": ".artifacts/team-guide-signals/LFXZLuq-JxM/analysis.json",
+        "independentFrameVerification": false,
+        "promotionPolicy": "Only caption-corroborated strategic claims promoted; exact visual sets/calcs quarantined pending independent verification."
+      }
+    },
+    {
+      "videoId": "cvVzNtC4uMA",
+      "url": "https://www.youtube.com/watch?v=cvVzNtC4uMA",
+      "title": "How To Build Better Teams In Pok\u00e9mon Champions",
+      "author": "JoeUX9",
+      "publishedAt": "2026-06-19T09:20:45-07:00",
+      "durationSeconds": 1971,
+      "method": "youtube-transcript-api fetch, English generated captions",
+      "segments": 1062,
+      "lastCaptionEndSeconds": 1973.24,
+      "sha256": "8163da058a068647e6748a36af104f536b25db6d94bbb642ecb4107cf92316fc",
+      "rawLocalPath": ".artifacts/team-guide-signals/cvVzNtC4uMA.yta.json",
+      "visualVerification": false,
+      "googleVideoAnalysis": {
+        "model": "google/gemini-3.1-pro-preview",
+        "provider": "google-ai-studio via OpenRouter",
+        "reasoningEffort": "high",
+        "maxOutputTokens": 24000,
+        "statusCode": 200,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 179744,
+          "completion_tokens": 7062,
+          "total_tokens": 186806,
+          "cost": 0.444232,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 179375
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.444232,
+            "upstream_inference_prompt_cost": 0.359488,
+            "upstream_inference_completions_cost": 0.084744
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 3218,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "receiptLocalPath": ".artifacts/team-guide-signals/cvVzNtC4uMA/receipt.json",
+        "receiptSha256": "090d1862d7372cdf9fa40997580b27901c6512d0a4311999ab8c4b5bebaf699d",
+        "parsedJsonLocalPath": ".artifacts/team-guide-signals/cvVzNtC4uMA/analysis.json",
+        "independentFrameVerification": false,
+        "promotionPolicy": "Only caption-corroborated strategic claims promoted; exact visual sets/calcs quarantined pending independent verification."
+      }
+    },
+    {
+      "videoId": "I9bXHtYnzGY",
+      "url": "https://www.youtube.com/watch?v=I9bXHtYnzGY",
+      "title": "A COMPLETE Guide to Team Building in Pok\u00e9mon Champions",
+      "author": "TheBattleRoom",
+      "publishedAt": "2026-04-20T14:03:20-07:00",
+      "durationSeconds": 1184,
+      "method": "youtube-transcript-api fetch, English generated captions",
+      "segments": 556,
+      "lastCaptionEndSeconds": 1170.44,
+      "sha256": "a71ff8b586b9e347d2d96fd6b8c6ca1e84fc53c3ed2c0c2003312efd4eae1958",
+      "rawLocalPath": ".artifacts/team-guide-signals/I9bXHtYnzGY.yta.json",
+      "visualVerification": false,
+      "googleVideoAnalysis": {
+        "model": "google/gemini-3.1-pro-preview",
+        "provider": "google-ai-studio via OpenRouter",
+        "reasoningEffort": "high",
+        "maxOutputTokens": 24000,
+        "statusCode": 200,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 108039,
+          "completion_tokens": 7965,
+          "total_tokens": 116004,
+          "cost": 0.311658,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 107669
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.311658,
+            "upstream_inference_prompt_cost": 0.216078,
+            "upstream_inference_completions_cost": 0.09558
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 4679,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "receiptLocalPath": ".artifacts/team-guide-signals/I9bXHtYnzGY/receipt.json",
+        "receiptSha256": "8ef34d1b8711d050952229e4e58a88a0479790ee9cd0509118a09a463fc6a0cc",
+        "parsedJsonLocalPath": ".artifacts/team-guide-signals/I9bXHtYnzGY/analysis.json",
+        "independentFrameVerification": false,
+        "promotionPolicy": "Only caption-corroborated strategic claims promoted; exact visual sets/calcs quarantined pending independent verification."
+      }
+    },
+    {
+      "videoId": "n4GsQqHbLb0",
+      "url": "https://www.youtube.com/watch?v=n4GsQqHbLb0",
+      "title": "The ULTIMATE Team Building Guide for Pok\u00e9mon Champions Mobile! (Beginner Guide) \u2b50",
+      "author": "KingVGC",
+      "publishedAt": "2026-07-01T15:17:38-07:00",
+      "durationSeconds": 621,
+      "method": "youtube-transcript-api fetch, English generated captions",
+      "segments": 313,
+      "lastCaptionEndSeconds": 622.96,
+      "sha256": "6560c7b935615ccfd1c328ff2145f908e84f934491120f5f3fd086df41ed03a2",
+      "rawLocalPath": ".artifacts/team-guide-signals/n4GsQqHbLb0.yta.json",
+      "visualVerification": false,
+      "googleVideoAnalysis": {
+        "model": "google/gemini-3.1-pro-preview",
+        "provider": "google-ai-studio via OpenRouter",
+        "reasoningEffort": "high",
+        "maxOutputTokens": 24000,
+        "statusCode": 200,
+        "finishReason": "stop",
+        "usage": {
+          "prompt_tokens": 56892,
+          "completion_tokens": 5507,
+          "total_tokens": 62399,
+          "cost": 0.179868,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 56514
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.179868,
+            "upstream_inference_prompt_cost": 0.113784,
+            "upstream_inference_completions_cost": 0.066084
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 3885,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "receiptLocalPath": ".artifacts/team-guide-signals/n4GsQqHbLb0/receipt.json",
+        "receiptSha256": "90470686ddce40e3c9192788c7a3ea3814260ccc0b9c49f3cd984ce3d8a4d526",
+        "parsedJsonLocalPath": ".artifacts/team-guide-signals/n4GsQqHbLb0/analysis.json",
+        "independentFrameVerification": false,
+        "promotionPolicy": "Only caption-corroborated strategic claims promoted; exact visual sets/calcs quarantined pending independent verification."
+      }
+    }
+  ],
+  "notes": [
+    "Raw captions kept in gitignored .artifacts, not copied into committed research.",
+    "Caption-end timestamps can slightly exceed player duration; this does not establish frame coverage.",
+    "Direct timedtext returned empty and get_transcript returned 400; standard transcript API succeeded."
+  ],
+  "googleTotalCostUsd": 1.297458,
+  "googleCompletedAt": "2026-10-18T16:31:45.750250+00:00"
+}

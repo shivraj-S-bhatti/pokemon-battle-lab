@@ -1,0 +1,321 @@
+{
+  "observedAt": "2026-10-18T16:16:38.883Z",
+  "package": "@falkordb/mcpserver@1.3.0",
+  "transport": "stdio",
+  "endpoint": "127.0.0.1:6388",
+  "graph": "pokemon_mc_202609",
+  "calls": [
+    {
+      "name": "list_graphs",
+      "arguments": {},
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "pokemon_mc_202609\npokemon_workbench_v1\ngk_meta"
+          }
+        ]
+      }
+    },
+    {
+      "name": "query_graph_readonly",
+      "arguments": {
+        "graphName": "pokemon_mc_202609",
+        "query": "MATCH (n) RETURN count(n) AS nodes"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"metadata\": [\n    \"Cached execution: 0\",\n    \"Query internal execution time: 0.825625 milliseconds\"\n  ],\n  \"data\": [\n    {\n      \"nodes\": 3877\n    }\n  ]\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "query_graph_readonly",
+      "arguments": {
+        "graphName": "pokemon_mc_202609",
+        "query": "MATCH ()-[r]->() RETURN count(r) AS relationships"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"metadata\": [\n    \"Cached execution: 0\",\n    \"Query internal execution time: 1.693166 milliseconds\"\n  ],\n  \"data\": [\n    {\n      \"relationships\": 151201\n    }\n  ]\n}"
+          }
+        ]
+      }
+    },
+    {
+      "name": "query_graph_readonly",
+      "arguments": {
+        "graphName": "pokemon_mc_202609",
+        "query": "MATCH (n) RETURN labels(n) AS labels, count(n) AS nodes ORDER BY nodes DESC LIMIT 10"
+      },
+      "result": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"metadata\": [\n    \"Cached execution: 0\",\n    \"Query internal execution time: 2.232958 milliseconds\"\n  ],\n  \"data\": [\n    {\n      \"labels\": [\n        \"Species\",\n        \"Entity\"\n      ],\n      \"nodes\": 1417\n    },\n    {\n      \"labels\": [\n        \"Move\",\n        \"Entity\"\n      ],\n      \"nodes\": 954\n    },\n    {\n      \"labels\": [\n        \"Item\",\n        \"Entity\"\n      ],\n      \"nodes\": 584\n    },\n    {\n      \"labels\": [\n        \"Ability\",\n        \"Entity\"\n      ],\n      \"nodes\": 321\n    },\n    {\n      \"labels\": [\n        \"Usage\",\n        \"Entity\"\n      ],\n      \"nodes\": 316\n    },\n    {\n      \"labels\": [\n        \"RosterEntry\",\n        \"Entity\"\n      ],\n      \"nodes\": 262\n    },\n    {\n      \"labels\": [\n        \"Type\",\n        \"Entity\"\n      ],\n      \"nodes\": 19\n    },\n    {\n      \"labels\": [\n        \"Source\",\n        \"Entity\"\n      ],\n      \"nodes\": 3\n    },\n    {\n      \"labels\": [\n        \"Snapshot\",\n        \"Entity\"\n      ],\n      \"nodes\": 1\n    }\n  ]\n}"
+          }
+        ]
+      }
+    }
+  ],
+  "initialize": {
+    "name": "falkordb",
+    "version": "1.3.0"
+  },
+  "tools": [
+    {
+      "name": "query_graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "graphName": {
+            "type": "string",
+            "description": "The name of the graph to query"
+          },
+          "query": {
+            "type": "string",
+            "description": "The OpenCypher query to run"
+          },
+          "params": {
+            "description": "Optional query parameters, referenced in the query as $name. Parameter names (including nested map keys) must be valid identifiers. Note: FalkorDB does not allow parameters in LIMIT/SKIP clauses.",
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+            },
+            "additionalProperties": {
+              "$ref": "#/definitions/__schema0"
+            }
+          },
+          "readOnly": {
+            "description": "If true, executes as a read-only query (GRAPH.RO_QUERY). Useful for replica instances or to prevent accidental writes. Defaults to FALKORDB_DEFAULT_READONLY environment variable.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "graphName",
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "definitions": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/__schema0"
+                }
+              },
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/__schema0"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "query_graph_readonly",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "graphName": {
+            "type": "string",
+            "description": "The name of the graph to query"
+          },
+          "query": {
+            "type": "string",
+            "description": "The read-only OpenCypher query to run (write operations will fail)"
+          },
+          "params": {
+            "description": "Optional query parameters, referenced in the query as $name. Parameter names (including nested map keys) must be valid identifiers. Note: FalkorDB does not allow parameters in LIMIT/SKIP clauses.",
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+            },
+            "additionalProperties": {
+              "$ref": "#/definitions/__schema0"
+            }
+          }
+        },
+        "required": [
+          "graphName",
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "definitions": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/__schema0"
+                }
+              },
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/__schema0"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "list_graphs",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "delete_graph",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "graphName": {
+            "type": "string",
+            "description": "The name of the graph to delete"
+          },
+          "confirmDelete": {
+            "type": "boolean",
+            "const": true,
+            "description": "Must be set to true to confirm deletion. This is a safety measure to prevent accidental data loss."
+          }
+        },
+        "required": [
+          "graphName",
+          "confirmDelete"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_graph_schema",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "graphName": {
+            "type": "string",
+            "description": "Name of the graph. Use the list_graphs tool to discover available graphs."
+          },
+          "includeConnections": {
+            "description": "If true (default), include the relationship connection topology. Each connection is { source, relationship, target } where source and target are arrays of node labels (a node may have multiple labels) and relationship is the relationship type. Derived from a bounded sample of relationships; set to false to skip it entirely on very large graphs to reduce cost and response size.",
+            "type": "boolean"
+          },
+          "connectionSampleSize": {
+            "description": "Maximum number of relationships to scan when deriving connection topology (default: 10000). Bounds query cost on large graphs; topology derived from the sample may be incomplete if the graph has more relationships than this.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "graphName"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_node_schema",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "graphName": {
+            "type": "string",
+            "description": "Name of the graph. Use the list_graphs tool to discover available graphs."
+          },
+          "label": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "description": "Node label to inspect"
+          },
+          "sampleSize": {
+            "description": "Number of nodes to sample (default: 100). Larger values improve property coverage at the cost of query time.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "graphName",
+          "label"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "name": "get_relationship_schema",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "graphName": {
+            "type": "string",
+            "description": "Name of the graph. Use the list_graphs tool to discover available graphs."
+          },
+          "relationshipType": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+            "description": "Relationship type to inspect"
+          },
+          "sampleSize": {
+            "description": "Number of relationships to sample (default: 100). Larger values improve property coverage at the cost of query time.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          }
+        },
+        "required": [
+          "graphName",
+          "relationshipType"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ],
+  "success": true
+}

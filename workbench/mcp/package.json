@@ -1,0 +1,13 @@
+{
+  "name": "pokemon-core-lab-mcp",
+  "private": true,
+  "scripts": {
+    "smoke": "node smoke.mjs"
+  },
+  "dependencies": {
+    "@falkordb/mcpserver": "1.3.0"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1"
+  }
+}

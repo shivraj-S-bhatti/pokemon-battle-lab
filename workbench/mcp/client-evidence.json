@@ -1,0 +1,33 @@
+{
+  "observedAt": "2026-10-18T16:18:42.409795+00:00",
+  "codexVersion": "0.153.4",
+  "claudeVersion": "2.1.282",
+  "codex": {
+    "exitCode": 0,
+    "config": {
+      "name": "pokemon-falkordb",
+      "enabled": true,
+      "disabled_reason": null,
+      "transport": {
+        "type": "stdio",
+        "command": "/bin/sh",
+        "args": [
+          "/Users/apple/Projects/pokemon-core-lab/workbench/mcp/start.sh"
+        ],
+        "env": null,
+        "env_vars": [],
+        "cwd": null
+      },
+      "enabled_tools": null,
+      "disabled_tools": null,
+      "startup_timeout_sec": null,
+      "tool_timeout_sec": null
+    }
+  },
+  "claude": {
+    "exitCode": 0,
+    "status": "pokemon-falkordb:\n  Scope: Project config (shared via .mcp.json)\n  Status: \u23f8 Pending approval (run `claude` to approve)\n  Type: stdio\n  Command: /bin/sh\n  Args: /Users/apple/Projects/pokemon-core-lab/workbench/mcp/start.sh\n\nTo remove this server, run: claude mcp remove pokemon-falkordb -s project\n"
+  },
+  "projectTrustChanged": false,
+  "toolApprovalSettingsChanged": false
+}
