@@ -25,6 +25,16 @@ To try a different target spread, edit that set and the selected request togethe
 
 The opening fixture and damage calculation deliberately use separately named Staraptor sets. They share the attack/speed investment relevant here, but their full move sets differ. A calculation is not a whole-team legality check or proof that the opening survives opposition.
 
+## Recorded revision
+
+Commit `2f3b6be` saves the unscarfed theory and its first calculator receipt. The next revision adds the exact Choice Scarf donor from the earlier controlled opening, retaining the failed unscarfed assumption and its costs. The execution log places Memento before Brave Bird; opposing Protect means this observation establishes timing, not a successful hit.
+
+Reading after that revision marked the original `935d0476…` receipt stale. A fresh selected check produced `b48b9be6…`, current for the revised document. Both calculations return the same native result: 226–267 damage against the selected 185-HP Garchomp, described upstream as a guaranteed OHKO. The input already assumes +2 Attack. Neither result establishes that a player can create that position against active opposition.
+
+This is deliberately conservative invalidation: changing the donor plan stales the whole document's receipts even though this damage input did not change. The rerun demonstrates revision handling; it supplies no new strategic evidence. Avoid repeating checks when the decision has not changed.
+
+“Current” means the recorded inputs and local runtime still match. Check `receipt.outcome` separately: an unsupported or failed attempt can be current. Receipt hashes detect changed contents under the recorded filename; they are not signatures proving who ran a calculation.
+
 ## Boundaries
 
 One assigned agent writes a theory at a time. Files and Git are the persistence layer; there is no automatic merge, orchestrator, or database migration. The native FalkorDB Browser remains available for exploring candidates. This first increment does not yet regenerate its discussion board from theory files.
