@@ -128,9 +128,9 @@ if (step === 4) {
   for (const [id, name, target] of claims)
     await q('MATCH (m:Mon {id:$m}), (s:Source {id:$s}) CREATE (t:Threat {id:$id, name:$name, status:"source_claim"})-[:COUNTERPLAY {status:"source_claim", source:"cybertron-alcremie"}]->(m), (t)-[:FROM]->(s)', { id, name, m: target, s: SOURCE.id });
   const fairy = META.species.filter(s => dex.species.get(s.name).types.includes('Fairy')).map(s => s.name).slice(0, 6);
-  for (const f of fairy) { await mon(f); await q('MATCH (f:Mon {id:$f}), (g:Mon {id:"garchompmegaz"}) CREATE (f)-[:NO_EFFECT {move:"Draco Meteor", why:"Fairy type is immune to Dragon moves", status:"engine_typechart"}]->(g)', { f: toID(f) }); }
+  for (const f of fairy) { await mon(f); await q('MATCH (f:Mon {id:$f}), (g:Mon {id:"garchompmegaz"}) CREATE (g)-[:NO_EFFECT {move:"Draco Meteor", why:"Fairy type is immune to Dragon moves", status:"engine_typechart"}]->(f)', { f: toID(f) }); }
   say('Counterplay', [`Redirection carriers in meta candidate sets: ${users.join(', ')}`, `${claims.length} source claims from the video`, `Fairy types immune to Draco (engine type chart): ${fairy.join(', ')}`],
-    "MATCH p=()-[:COUNTERPLAY|NO_EFFECT]->(:Mon {onTeam:true}) RETURN p");
+    "MATCH p=()-[:COUNTERPLAY]->(:Mon {onTeam:true}) RETURN p UNION MATCH p=(:Mon {onTeam:true})-[:NO_EFFECT]->() RETURN p");
 }
 
 if (step === 5) {
@@ -150,11 +150,18 @@ if (step === 5) {
 }
 
 if (step === 6) {
-  // Revision: alternatives for the same job, kept beside the seed rather than replacing it.
-  const alts = rows(await q('MATCH (a:Mon)-[:CAN_LEARN]->(x:Move {kind:"ally-boost"}) WHERE a.id <> "alcremie" AND x.confuses = false RETURN DISTINCT a.name, x.name LIMIT 8'));
-  for (const [a, mv] of alts) await q('MATCH (a:Mon {name:$a}), (b:Mon {id:"alcremie"}) MERGE (a)-[:ALTERNATIVE_TO {job:$job, status:"hypothesis"}]->(b)', { a, job: `ally boost via ${mv}` });
-  await q('MATCH (s:Mon {id:"staraptormega"}) MATCH (g:Mon {id:"garchompmegaz"}) MERGE (s)-[:ALTERNATIVE_TO {job:"one-Mega slot: Memento into Contrary (see gk_board)", status:"hypothesis"}]->(g)');
-  say('Alternatives for the same job', alts.map(([a, m]) => `${a} via ${m}`), "MATCH p=()-[:ALTERNATIVE_TO]->() RETURN p");
+  // Other support moves, shown with their stat vectors. They are different supports, not substitutes:
+  // Garchomp's Draco Meteor and Torkoal's Eruption are special, so only a Special Attack raise does Decorate's job for them.
+  const other = rows(await q('MATCH (a:Mon)-[:CAN_LEARN]->(x:Move {kind:"ally-boost"}) WHERE a.id <> "alcremie" AND x.confuses = false AND x.id <> "decorate" RETURN DISTINCT a.name, x.id, x.name, x.boosts LIMIT 8'));
+  const lines = [];
+  for (const [a, id, mv, boosts] of other) {
+    const b = JSON.parse(boosts), spa = (b.spa || 0) > 0;
+    await q('MATCH (a:Mon {name:$a}), (d:Move {id:"decorate"}) MERGE (a)-[:OTHER_SUPPORT {move:$mv, boosts:$boosts, raisesSpecialAttack:$spa, note:$note, status:"move_data"}]->(d)',
+      { a, mv, boosts, spa, note: spa ? 'Also raises Special Attack' : 'Does not raise Special Attack: no substitute for Decorate on special Garchomp or Torkoal' });
+    lines.push(`${a} via ${mv} ${boosts}${spa ? '' : '  (no SpA: different support, not a substitute)'}`);
+  }
+  await q('MATCH (s:Mon {id:"staraptormega"}) MATCH (g:Mon {id:"garchompmegaz"}) MERGE (s)-[:OTHER_PLAN {job:"different plan for the one-Mega slot: Memento into Contrary (see gk_board)", status:"hypothesis"}]->(g)');
+  say('Other supports, with stat vectors', lines, "MATCH p=(:Mon)-[:OTHER_SUPPORT]->(:Move {id:'decorate'}) RETURN p");
 }
 
 const counts = rows(await q('MATCH (n) RETURN labels(n)[0], count(n)'));

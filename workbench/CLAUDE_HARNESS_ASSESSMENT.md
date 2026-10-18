@@ -107,7 +107,7 @@ Read-only. Ran `node workbench/theory.mjs read data/theories/memento-staraptor/t
 Holds up:
 - **Claim versus result.** `read` ends with "Receipt integrity and freshness only; no claim, matchup, or team is certified." Receipts store `claimId`, `question`, `decision`, the full calculator input and `outcome: completed`; nothing marks the claim true.
 - **Runtime pins.** Calculator revision and bundle hash (checked against its manifest), engine declared revision plus a hash of 387 dist files, adapter file hashes and the dependency lock hash are in every receipt; a mismatch reports `runtime_changed`.
-- **Stale after edits.** Both Garchomp receipts read `stale: theory_or_reference_changed` after the Scarf revision, while their contents stay intact. Imported execution evidence keeps `origin: imported_existing`.
+- **Stale after edits.** After the Scarf revision, the earlier Garchomp receipt (`935d0476`) reads `stale: theory_or_reference_changed` and the receipt rerun on the revised theory (`b48b9be6`) reads `current`. Corrected: an earlier version of this note said both were stale. Imported execution evidence keeps `origin: imported_existing`.
 - **Alternate sets.** `staraptor-opening` (base form, Intimidate) and `staraptor-damage` (Mega, Contrary) are separate set IDs, and `concessions.status` is `undecided`.
 
 Worth fixing or deciding:
