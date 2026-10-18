@@ -2,9 +2,9 @@
 
 Four of E2's 45 top gimmicks (30 doubles, 15 BSS) are worth a test, two are already the standard set, and 39 are deprioritized for the selected sets and targets: on the targets checked, the receiver's selected set usually already won the matchup without the gimmick, or could not use the effect. A different set, target, move order or partner can change these verdicts.
 
-## Re-ranked top 10
+## Top 10 by the ordering heuristic
 
-Score = target matchups flipped per turn invested, times E2 novelty. A flip is a named target that crosses a KO threshold (native calculator `kochance`) or changes move order. Turns count the receiver's idle turns, the partner's spent actions, and a fainted partner.
+Score = target matchups flipped per turn invested, times E2 novelty. A flip is a named target that crosses a KO threshold (native calculator `kochance`) or changes move order. Turns count the receiver's idle turns, the partner's spent actions, and a fainted partner. The score only orders this table for reading. Its denominator lumps battle turns, partner actions and sacrifices into one count, so it is a heuristic, not a measured efficiency, and it should not be used to rank gimmicks against each other outside their selected targets.
 
 | Rank | Gimmick | Before | After | Turns | Verdict |
 | --- | --- | --- | --- | --- | --- |
