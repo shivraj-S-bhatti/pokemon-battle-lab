@@ -2,6 +2,8 @@
 
 ## Current workflow: team exploration beside the graph
 
+The next increment is the [minimal theory harness proposal](workbench/MINIMAL_HARNESS.md), alongside [Claude's adversarial assessment](workbench/CLAUDE_HARNESS_ASSESSMENT.md). It is a design proposal; the current runnable tools are below.
+
 Start with [the exploration handoff](workbench/EXPERIMENT_UNBLOCKS.md). Choose an idea, target matchups and acceptable losses; use Codex or Claude to retrieve alternatives and request the few checks that could change a team decision. The native FalkorDB Browser shows Pokémon sprites and a compact human reasoning map. Agent runtime graphs may contain different structures.
 
 After the catalog setup below:
@@ -16,7 +18,7 @@ node workbench/tools/damage.mjs < workbench/tools/damage-examples.json
 
 Open [FalkorDB Browser](http://localhost:4319). The database remains writable at localhost:6388. [Official MCP setup](workbench/mcp/README.md) connects agents directly. [Calculator and legality adapters](workbench/tools/README.md) reuse existing Champions implementations; [sprite metadata](workbench/SPRITES.md) includes exact form mappings. Experiment graphs use `gk_*`; the catalog is `pokemon_mc_202609`. The [discussion board](workbench/board/README.md) holds plans, alternatives and evidence. [Controlled execution checks](workbench/RUNTHROUGH_CHECK.md) distinguish a legal sequence from a team that wins its intended matchups.
 
-[Teambuilding guide analyses](research/experiments/team-guide-signals.md) and [JoeUX9's anti-meta walkthrough](research/experiments/JOEUX9_ANTI_META_GUIDE.md) inform the representation: retain alternatives, intended roles, conditions, and revisions. Historical video examples and usage marginals are evidence to investigate, not current team-win predictions.
+[Written-source intake](research/experiments/WRITTEN_SOURCE_INTAKE.md) provides post-level format/date boundaries and source claims to investigate. [Teambuilding guide analyses](research/experiments/team-guide-signals.md) and [JoeUX9's anti-meta walkthrough](research/experiments/JOEUX9_ANTI_META_GUIDE.md) inform the representation: retain alternatives, intended roles, conditions, and revisions. Historical video examples and usage marginals are evidence to investigate, not current team-win predictions.
 
 The earlier [authored-case workbench](workbench/README.md) and [scripted demo](workbench/DEMO.md) remain available as historical experiments. The user rejected dependency checking as the main product direction. See [the database recovery record](workbench/DB_RECOVERY.md) for the persistence correction and unrecovered prior run history.
 
