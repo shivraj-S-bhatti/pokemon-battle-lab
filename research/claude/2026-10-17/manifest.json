@@ -1,0 +1,41 @@
+{
+  "captured": "2026-10-17",
+  "origin": {
+    "formulation.md": "Claude cloud strategy artifact downloaded locally",
+    "clawitzer-report.txt": "Rendered text captured from Claude strategy artifact viewer; UI header removed",
+    "learning-map": "Claude local scratchpad; source, rendered HTML, and two YouTube thumbnail assets copied without changes"
+  },
+  "verification": "Imported reports are attributed source material. Cloud simulator code and raw outputs are unavailable locally; claims are not independently reproduced.",
+  "files": [
+    {
+      "path": "clawitzer-report.txt",
+      "bytes": 9331,
+      "sha256": "5c7621de3e2370a7eb2eafa810b768ad3b444ddecd8bfe51c909383901c29909"
+    },
+    {
+      "path": "formulation.md",
+      "bytes": 15221,
+      "sha256": "8f8396b63f2a5ec60b598744825aff4f45d70eb02c5433858b2ae0157e5f1c6b"
+    },
+    {
+      "path": "learning-map/VSAeOI0CLx0.jpg",
+      "bytes": 16206,
+      "sha256": "ccc87c4129a20634a09aa3187b6899201962581bf1bb29be8ac30a9ca8838510"
+    },
+    {
+      "path": "learning-map/team-reasoning.html",
+      "bytes": 72117,
+      "sha256": "7a945ca00a5eb51d0151082059ab6f981ec85eb3722e714978b9ca81811aacb4"
+    },
+    {
+      "path": "learning-map/team-reasoning.src.html",
+      "bytes": 36615,
+      "sha256": "210534b63ff8c3c23260bbfeb79ad459c1ac69cb4d3491a8301bfae66f61a1ab"
+    },
+    {
+      "path": "learning-map/wrR6MquGU6A.jpg",
+      "bytes": 10394,
+      "sha256": "9c236fca36b52d1756e0ffa4c6500499c678c3154f9c7e9ddb66436e462389ec"
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+<title>Why Is This Team Good?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column; the five-layer stack is the spine, every later section hangs off one layer. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202a; --muted:#5a6672; --line:#d6dde4; --accent:#0e7c86; --accent-soft:#d8eef0;
+  --l1:#6b7a8f; --l2:#b5651d; --l3:#0e7c86; --l4:#7b4fb0; --l5:#b23a48;
+  --good:#2f7d4f; --bad:#b23a48;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1418; --surface:#172027; --fg:#e4eaef; --muted:#97a4b0; --line:#2a3640; --accent:#4cc2cc; --accent-soft:#16363a;
+  --l1:#9aa8ba; --l2:#e0954f; --l3:#4cc2cc; --l4:#b08ce0; --l5:#e57583; --good:#6cc493; --bad:#e57583; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1418; --surface:#172027; --fg:#e4eaef; --muted:#97a4b0; --line:#2a3640; --accent:#4cc2cc; --accent-soft:#16363a;
+  --l1:#9aa8ba; --l2:#e0954f; --l3:#4cc2cc; --l4:#b08ce0; --l5:#e57583; --good:#6cc493; --bad:#e57583; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding:0 16px}
+main{max-width:860px;margin:0 auto;padding-block:40px 80px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);font-stretch:85%;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.75rem;font-weight:750}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0;max-width:66ch}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code,.mono{font-family:var(--mono);font-size:.88em}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:18px}
+.lede{font-size:1.15rem;color:var(--muted)}
+.formula{font-family:var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;overflow-x:auto;white-space:nowrap}
+.note{font-size:.9rem;color:var(--muted)}
+/* hero */
+header{display:flex;flex-direction:column;gap:16px}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:6px}
+.q{border-left:3px solid var(--c);padding:4px 0 4px 12px}
+.q b{display:block;font-family:var(--display);font-stretch:85%;font-size:1.05rem}
+.q span{font-size:.9rem;color:var(--muted)}
+/* stack */
+.stack{display:flex;flex-direction:column;gap:8px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:6px;padding:16px}
+.layer .tag{display:flex;flex-direction:column;gap:4px}
+.layer .tag b{font-family:var(--display);font-stretch:85%;font-size:1.2rem;color:var(--c)}
+.layer .tag i{font-style:normal;font:500 .78rem/1.3 var(--mono);color:var(--muted)}
+.layer dl{margin:0;display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:.93rem;min-width:0}
+.layer dt{color:var(--muted);font:500 .75rem/1.6 var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.layer dd{margin:0;min-width:0}
+.arrow{font:500 .78rem var(--mono);color:var(--muted);text-align:center}
+@media (max-width:620px){.layer{grid-template-columns:1fr}.layer dl{grid-template-columns:1fr}.layer dt{margin-top:6px}}
+/* evidence card */
+.case{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.bars{display:flex;flex-direction:column;gap:6px;font-size:.9rem}
+.bar{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center}
+.bar .track{height:12px;background:var(--accent-soft);border-radius:2px;overflow:hidden}
+.bar .fill{height:100%;background:var(--c,var(--accent))}
+.bar .v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--mono);font-size:.85rem}
+.chip{border:1px solid var(--line);border-radius:4px;padding:3px 8px;background:var(--bg)}
+.chip.t{border-color:var(--good);color:var(--good)}
+.chip.f{border-color:var(--bad);color:var(--bad)}
+/* toys */
+.toy{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+button{font:600 .9rem var(--body);background:var(--accent);color:var(--surface);border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+input[type=range]{width:220px;max-width:100%;accent-color:var(--accent)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;font-size:.9rem;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font:500 .75rem var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font-family:var(--mono);text-align:center;font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-stretch:85%;font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums}
+/* concepts */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:500;padding:5px 10px}
+.filters button[aria-pressed=true]{border-color:var(--c,var(--accent));background:var(--accent-soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:.92rem;min-width:0}
+.card .k{font:500 .7rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.card p{max-width:none}
+.card ul{margin:0;padding-left:18px}
+.card .links{margin-top:auto;padding-top:6px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:3px}
+/* videos */
+.vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.vid{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.vid img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.vid div{padding:0 14px 14px;display:flex;flex-direction:column;gap:4px}
+.vid b{font-family:var(--display);font-stretch:85%;font-size:1.05rem}
+.vid span{font-size:.85rem;color:var(--muted)}
+ol.path{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+ol.path li{padding-left:4px}
+svg text{fill:var(--fg);font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<main>
+<header>
+  <span class="eyebrow">Pokémon Core Lab · reading map · Reg M-C doubles</span>
+  <h1>Why is this team good?</h1>
+  <p class="lede">A team is good against some opponents, in some board states, played some way. To reason about that you have to answer four smaller questions, each with its own math, its own data and its own way of going wrong.</p>
+  <div class="qs">
+    <div class="q" style="--c:var(--l1)"><b>What can happen?</b><span>Mechanics. The engine knows.</span></div>
+    <div class="q" style="--c:var(--l2)"><b>What is probably true?</b><span>Beliefs about hidden sets.</span></div>
+    <div class="q" style="--c:var(--l3)"><b>What does this pairing enable?</b><span>Interactions and plans.</span></div>
+    <div class="q" style="--c:var(--l4)"><b>What should I click?</b><span>Decisions under a guessing game.</span></div>
+  </div>
+  <p>The fifth question, "is the team good?", is an average of the fourth over the opponents you expect to meet:</p>
+  <div class="formula">T* = argmax<sub>T</sub> &nbsp;E<sub>O ~ metagame</sub> [ Pr(win | T, O, π) ]</div>
+  <p class="note">Read it as: pick the team T whose average win chance is highest, where opponents O are drawn from the metagame and both sides are played by policy π. Change the pilot or the metagame and the best team changes too.</p>
+</header>
+
+<section id="stack">
+  <span class="eyebrow">The decomposition</span>
+  <h2>Five layers, bottom to top</h2>
+  <p>Each layer rests on the one below it. Most bad team analysis, by people or by LLMs, comes from answering one layer with tools that belong to another, such as treating a mechanism as if it were a probability.</p>
+  <div class="stack">
+    <div class="layer" style="--c:var(--l5)">
+      <div class="tag"><b>5 · Team value</b><i>Is the team good?</i></div>
+      <dl><dt>Represent</dt><dd>Matchup matrix: your team vs. each common archetype, win rate per cell.</dd>
+      <dt>Compute</dt><dd>Simulate or log games; fit ratings (Elo, Bradley–Terry); the counterfactual swap test, which replaces one slot and reruns the same opponents.</dd>
+      <dt>Fails when</dt><dd>You read "appears on winning teams" as "causes wins". Incineroar is on 29% of teams, so it is on many winning teams by default.</dd></dl>
+    </div>
+    <div class="arrow">↑ average over opponents</div>
+    <div class="layer" style="--c:var(--l4)">
+      <div class="tag"><b>4 · Decisions</b><i>What should I click?</i></div>
+      <dl><dt>Represent</dt><dd>A simultaneous-move game: payoff matrix per turn, information sets for what you cannot see.</dd>
+      <dt>Compute</dt><dd>Minimax / MCTS search, mixed strategies, regret minimization (CFR).</dd>
+      <dt>Fails when</dt><dd>You pick one "best move". Both players choose at once, so any fixed answer can be read and punished.</dd></dl>
+    </div>
+    <div class="arrow">↑ choose under uncertainty</div>
+    <div class="layer" style="--c:var(--l3)">
+      <div class="tag"><b>3 · Interactions</b><i>What does this pairing enable?</i></div>
+      <dl><dt>Represent</dt><dd>Graph of roles and plans. Many effects need three or more things at once (setter + redirector + field), so they are hyperedges or conditional rules, not pairs.</dd>
+      <dt>Compute</dt><dd>Graph queries, production rules, dependency walks: "if Sinistcha faints, which plans lose their redirector?"</dd>
+      <dt>Fails when</dt><dd>Pairwise "X counters Y" edges ignore the board. Rage Powder works until the target is Grass type, has Stalwart, or the redirector is gone.</dd></dl>
+    </div>
+    <div class="arrow">↑ weight by likelihood</div>
+    <div class="layer" style="--c:var(--l2)">
+      <div class="tag"><b>2 · Beliefs</b><i>What are they running?</i></div>
+      <dl><dt>Represent</dt><dd>Probability tables: usage stats as priors, updated by team preview and what gets revealed.</dd>
+      <dt>Compute</dt><dd>Bayes' rule. Conditioning on teammates, items and player history.</dd>
+      <dt>Fails when</dt><dd>Possible gets treated as likely. This is the Stalwart Archaludon mistake below.</dd></dl>
+    </div>
+    <div class="arrow">↑ what exists at all</div>
+    <div class="layer" style="--c:var(--l1)">
+      <div class="tag"><b>1 · Mechanics</b><i>What can happen?</i></div>
+      <dl><dt>Represent</dt><dd>The simulator's source code and a damage calculator. Rules as executable code, not prose.</dd>
+      <dt>Compute</dt><dd>Run it. Showdown resolves ability, item, field and priority order exactly.</dd>
+      <dt>Fails when</dt><dd>An LLM recalls a rule from text. It forgets edge cases (Grass types ignore Rage Powder) or invents them.</dd></dl>
+    </div>
+  </div>
+</section>
+
+<section id="stalwart">
+  <span class="eyebrow">Worked example · layer 1 vs layer 2</span>
+  <h2>"Archaludon beats Sinistcha's Rage Powder"</h2>
+  <p>The mechanism is real: Stalwart ignores redirection, so a Stalwart Archaludon fires through Rage Powder. A graph that stores only mechanisms will flag Archaludon as a counter. Players know it almost never matters, because almost nobody runs Stalwart. That piece of tribal knowledge is a number you can look up.</p>
+  <div class="case">
+    <span class="eyebrow">Archaludon ability split · Showdown Reg M-C, 1500+, Sept 2026, 1.63M battles</span>
+    <div class="bars">
+      <div class="bar"><span>Stamina</span><div class="track"><div class="fill" style="width:94.6%"></div></div><span class="v">94.6%</span></div>
+      <div class="bar"><span>Sturdy</span><div class="track"><div class="fill" style="width:3%"></div></div><span class="v">3.0%</span></div>
+      <div class="bar" style="--c:var(--bad)"><span>Stalwart</span><div class="track"><div class="fill" style="width:2.4%"></div></div><span class="v">2.4%</span></div>
+    </div>
+    <p>So the threat is a product, and one factor is tiny:</p>
+    <div class="formula">threat ≈ [mechanism exists] × Pr(Stalwart | Archaludon) × Pr(it matters this game)<br>&nbsp; &nbsp; &nbsp; &nbsp; = 1 × 0.024 × (…)</div>
+    <div class="chain">
+      <span class="chip t">Stalwart IGNORES redirection</span><span>×</span>
+      <span class="chip f">P = 0.024</span><span>→</span>
+      <span class="chip">a weak edge, not a counter</span>
+    </div>
+    <p>What Archaludon actually brings: Electro Shot on 96.8% of sets, Leftovers on 84.8%, Pelipper as a teammate on about 56%. Rain lets Electro Shot fire in one turn. Against Grass/Ghost Sinistcha, Electric is resisted, so the relationship that matters is a different one entirely.</p>
+  </div>
+  <p><b>Lesson for the graph:</b> every mechanism edge needs a weight from layer 2. Store "Stalwart ignores redirection" once as a rule, and store "Archaludon runs Stalwart 2.4%" as a dated observation with its source. The query multiplies them. Your <code>pokemon-core-lab</code> already has both node types (Species/Ability and Usage/Snapshot); the missing piece is the query that joins them.</p>
+</section>
+
+<section id="volcarona">
+  <span class="eyebrow">Worked example · layer 2</span>
+  <h2>The Volcarona spidey sense</h2>
+  <p>Some players read a Volcarona at team preview and just know it is Quiver Dance, not Rage Powder support. The usage stats show why that feels like intuition: the marginals are a coin flip.</p>
+  <div class="case">
+    <span class="eyebrow">Volcarona moves · share of sets that carry the move</span>
+    <div class="bars">
+      <div class="bar"><span>Protect</span><div class="track"><div class="fill" style="width:66.8%"></div></div><span class="v">66.8%</span></div>
+      <div class="bar" style="--c:var(--l3)"><span>Rage Powder</span><div class="track"><div class="fill" style="width:53.3%"></div></div><span class="v">53.3%</span></div>
+      <div class="bar" style="--c:var(--l4)"><span>Quiver Dance</span><div class="track"><div class="fill" style="width:51.9%"></div></div><span class="v">51.9%</span></div>
+      <div class="bar"><span>Heat Wave</span><div class="track"><div class="fill" style="width:43.1%"></div></div><span class="v">43.1%</span></div>
+      <div class="bar"><span>Tailwind</span><div class="track"><div class="fill" style="width:33.9%"></div></div><span class="v">33.9%</span></div>
+    </div>
+    <p>A coin flip on its own; the experienced player is conditioning on more evidence. Teammates (Rillaboom on about 63% of Volcarona teams), the item once revealed (Grassy Seed on 35%), the rest of the six, the player's own history. That is Bayes' rule applied quickly:</p>
+    <div class="formula">posterior odds = prior odds × likelihood ratio of each cue</div>
+    <p>One catch: Smogon's usage file gives marginals per Pokémon, not whole sets. It cannot tell you "Quiver Dance given Rillaboom teammate". For that you need set-level data, such as replays or team sheets. This is the gap between the stats and the spidey sense.</p>
+  </div>
+  <div class="toy" aria-labelledby="bayes-h">
+    <h3 id="bayes-h">Try it: update a set guess</h3>
+    <p class="note">The prior comes from the usage numbers above. Cue strengths are made up for illustration; real ones would come from set-level data.</p>
+    <div class="row"><label for="prior">Prior Pr(Quiver Dance)</label><input id="prior" type="range" min="5" max="95" value="52"><span class="mono" id="priorV">52%</span></div>
+    <div class="row"><label for="cue">Cue strength (likelihood ratio)</label><input id="cue" type="range" min="-30" max="30" value="10"><span class="mono" id="cueV">×2.0</span></div>
+    <div class="row"><span>Posterior Pr(Quiver Dance)</span><span class="big" id="post">68%</span></div>
+    <p class="note">A ratio above 1 favors Quiver Dance (say, a hyper-offense six with no other redirector). Below 1 favors Rage Powder (say, a Trick Room or Grassy Terrain shell). Three cues of ×2 each turn 52% into about 90%.</p>
+  </div>
+</section>
+
+<section id="mixed">
+  <span class="eyebrow">Worked example · layer 4</span>
+  <h2>Why the answer is a distribution</h2>
+  <p>Volcarona can Quiver Dance, Rage Powder or Protect. The opponent can attack Volcarona, attack its partner, or set up. Both choose at the same time. The payoffs below are invented to show the shape of the problem; a real version would get them from the engine.</p>
+  <div class="toy">
+    <div class="scroll"><table aria-label="Payoff to you">
+      <thead><tr><th>You \ Them</th><th>Attack Volcarona</th><th>Attack partner</th><th>Set up</th></tr></thead>
+      <tbody>
+        <tr><th>Quiver Dance</th><td class="n">−2</td><td class="n">+1</td><td class="n">+2</td></tr>
+        <tr><th>Rage Powder</th><td class="n">−1</td><td class="n">+2</td><td class="n">−1</td></tr>
+        <tr><th>Protect</th><td class="n">+1</td><td class="n">−1</td><td class="n">−1</td></tr>
+      </tbody></table></div>
+    <p>Press run. Both sides play thousands of rounds of <b>regret matching</b>: after each round, each side asks "how much better would each other option have done?" and shifts weight toward the ones it regrets not playing. The <em>average</em> strategy settles on a mix where neither side can gain by changing alone. That is a Nash equilibrium, and CFR is this same loop extended to every decision point in a game tree.</p>
+    <div class="row"><button id="run" type="button">Run 20,000 rounds</button><button id="reset" class="ghost" type="button">Reset</button><span class="mono note" id="iters">0 rounds</span></div>
+    <div class="bars" id="mine"></div>
+    <div class="bars" id="theirs"></div>
+    <p class="note">Result: you play Protect most often, Quiver Dance sometimes and Rage Powder rarely, and the opponent mixes too. Any pure "always Quiver Dance" gets read. When people say a player was "unpredictable", this mix is what they mean.</p>
+  </div>
+</section>
+
+<section id="graph">
+  <span class="eyebrow">Your question</span>
+  <h2>Can a graph database fix LLM reasoning about interactions?</h2>
+  <p>Partly. A graph stores facts and finds them fast. It does not compute what happens when Intimidate, a Sitrus Berry, Grassy Terrain and a speed tie meet on one turn. That is the engine's job. What fixes the LLM is splitting the work so each part does what it is reliable at:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Part</th><th>Good at</th><th>Bad at</th><th>In your lab</th></tr></thead>
+    <tbody>
+      <tr><td><b>LLM</b></td><td>Proposing hypotheses, naming plans, explaining in human terms</td><td>Tracking state, exact rule order, knowing what is rare</td><td>Writes the candidate: "Sinistcha + Indeedee for double redirection"</td></tr>
+      <tr><td><b>Graph</b></td><td>Facts with sources, priors with dates, which plan depends on which piece</td><td>Any outcome that depends on order, damage or chance</td><td>Species, moves, Usage, Snapshot nodes; reverse dependency walk</td></tr>
+      <tr><td><b>Engine / calc</b></td><td>Ground truth for one exact situation</td><td>Saying which situations to try</td><td>Showdown at the pinned revision</td></tr>
+      <tr><td><b>Search / game theory</b></td><td>Picking an action when the opponent is also choosing</td><td>Huge trees without abstraction</td><td>Small simultaneous-move games over engine outcomes</td></tr>
+    </tbody></table></div>
+  <p>The loop is: the LLM proposes, the graph supplies facts and priors, the engine checks, search decides, and the graph stores the result with its conditions. PokéChamp works this way: an LLM inside a minimax search.</p>
+  <h3>Representations, from least to most expressive</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Representation</th><th>Captures</th><th>Misses</th></tr></thead>
+    <tbody>
+      <tr><td>Type chart (pairwise matrix)</td><td>Electric into Grass is 0.5×</td><td>Everything else</td></tr>
+      <tr><td>Counter graph (X → Y edges)</td><td>"Rillaboom ignores Rage Powder"</td><td>How likely, under what conditions</td></tr>
+      <tr><td>Weighted, dated edges</td><td>"Stalwart Archaludon: 2.4% in Sept 2026"</td><td>Effects that need 3+ pieces at once</td></tr>
+      <tr><td>Hyperedges / conditional rules</td><td>"TR setter + redirector + slow attacker = a plan"</td><td>Turn order, damage rolls</td></tr>
+      <tr><td>Simulator</td><td>Exactly what happens in one state</td><td>Which states and choices are worth trying</td></tr>
+      <tr><td>Learned policy and value (RL)</td><td>Intuition compressed from millions of games</td><td>Explaining why; adapting to a new regulation without new data</td></tr>
+    </tbody></table></div>
+  <p class="note">The opposite camp is the last row alone: skip hand-built structure and learn from data at scale. Metamon and VGC-Bench go this way, and Sutton's "Bitter Lesson" argues it usually wins. A graph earns its place where you need explanations, provenance and fast updates when the rules change.</p>
+</section>
+
+<section id="concepts">
+  <span class="eyebrow">Concept map</span>
+  <h2>Concepts, what comes before them, and what competes with them</h2>
+  <p>Filter by layer. Each card lists the prerequisite, a Pokémon hook, an alternative or opposite idea, and a short read first.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filter by layer"></div>
+  <div class="cards" id="cards"></div>
+</section>
+
+<section id="watch">
+  <span class="eyebrow">Start here</span>
+  <h2>The two videos you sent</h2>
+  <div class="vids">
+    <a class="vid" href="https://www.youtube.com/watch?v=wrR6MquGU6A" target="_blank" rel="noopener">
+      <img src="{{T1}}" alt="Thumbnail: Competitive Pokemon may be Impossible to Explain">
+      <div><b>Competitive Pokemon may be Impossible to Explain</b><span>Aaron Traylor · why expert judgment resists being written down (layers 3–5)</span></div></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=VSAeOI0CLx0" target="_blank" rel="noopener">
+      <img src="{{T2}}" alt="Thumbnail: Bots are Better than Pros at Pokemon. Now What?">
+      <div><b>Bots are Better than Pros at Pokemon. Now What?</b><span>ck49 · what learned bots mean for human play (layer 4 and the RL row above)</span></div></a>
+  </div>
+</section>
+
+<section id="path">
+  <span class="eyebrow">A weekend, in order</span>
+  <h2>Reading path</h2>
+  <ol class="path">
+    <li><b>Saturday morning, layers 1–2.</b> Open the <a href="https://calc.pokemonshowdown.com/" target="_blank" rel="noopener">damage calc</a> and run three calcs you think you know. Then do <a href="https://setosa.io/conditional/" target="_blank" rel="noopener">Conditional probability, visually</a> (10 min) and <a href="https://www.3blue1brown.com/lessons/bayes-theorem" target="_blank" rel="noopener">3Blue1Brown on Bayes</a> (15 min).</li>
+    <li><b>Saturday afternoon, layer 3.</b> Read <a href="https://sahovic.fr/algorithmic-pokemon-teambuilding.html" target="_blank" rel="noopener">Algorithmic Pokémon Teambuilding</a>: strength, synergy and matchup as separate terms. Then skim the <a href="https://www.smogon.com/forums/threads/good-vgc-cores.3684842/" target="_blank" rel="noopener">Smogon VGC cores thread</a> and note every core that needs three pieces.</li>
+    <li><b>Sunday morning, layer 4.</b> Read the rock-paper-scissors part of <a href="http://modelai.gettysburg.edu/2013/cfr/cfr.pdf" target="_blank" rel="noopener">Neller &amp; Lanctot's CFR tutorial</a>; it is the toy above with the code. Then <a href="https://www.quantamagazine.org/in-game-theory-no-clear-path-to-equilibrium-20170718/" target="_blank" rel="noopener">Quanta on why equilibria are hard to reach</a>.</li>
+    <li><b>Sunday afternoon, the bots.</b> Abstracts and figures only: <a href="https://arxiv.org/abs/2503.04094" target="_blank" rel="noopener">PokéChamp</a> (LLM + minimax), <a href="https://arxiv.org/abs/2506.10326" target="_blank" rel="noopener">VGC-Bench</a> (doubles, team diversity), <a href="https://arxiv.org/abs/2504.04395" target="_blank" rel="noopener">Metamon</a> (offline RL). Finish with the <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener">Bitter Lesson</a> as the counterargument to building a graph at all.</li>
+    <li><b>Then build one query.</b> In <code>pokemon-core-lab</code>: for each mechanism edge that threatens your team, multiply by its usage weight and list the top five real threats. Check the top one in the engine.</li>
+  </ol>
+</section>
+</main>
+
+<script>
+// Bayes toy
+(function(){
+  const pr=document.getElementById('prior'),cu=document.getElementById('cue');
+  function upd(){
+    const p=pr.value/100, lr=Math.pow(2,cu.value/10);
+    const o=p/(1-p)*lr, post=o/(1+o);
+    document.getElementById('priorV').textContent=Math.round(p*100)+'%';
+    document.getElementById('cueV').textContent='×'+(lr>=1?lr.toFixed(1):lr.toFixed(2));
+    document.getElementById('post').textContent=Math.round(post*100)+'%';
+  }
+  pr.addEventListener('input',upd);cu.addEventListener('input',upd);upd();
+})();
+
+// Regret matching toy
+(function(){
+  const A=[[-2,1,2],[-1,2,-1],[1,-1,-1]];
+  const me=['Quiver Dance','Rage Powder','Protect'], them=['Attack Volcarona','Attack partner','Set up'];
+  let R1,R2,S1,S2,t;
+  function reset(){R1=[0,0,0];R2=[0,0,0];S1=[0,0,0];S2=[0,0,0];t=0;draw();}
+  const strat=R=>{const p=R.map(r=>Math.max(r,0)),s=p.reduce((a,b)=>a+b,0);return s>0?p.map(x=>x/s):[1/3,1/3,1/3]};
+  function step(n){
+    for(let k=0;k<n;k++){
+      const p=strat(R1),q=strat(R2);
+      for(let i=0;i<3;i++){S1[i]+=p[i];S2[i]+=q[i];}
+      const u1=[0,1,2].map(i=>A[i].reduce((s,a,j)=>s+a*q[j],0));
+      const u2=[0,1,2].map(j=>-A.reduce((s,row,i)=>s+row[j]*p[i],0));
+      const v1=u1.reduce((s,u,i)=>s+u*p[i],0), v2=u2.reduce((s,u,j)=>s+u*q[j],0);
+      for(let i=0;i<3;i++){R1[i]+=u1[i]-v1;R2[i]+=u2[i]-v2;}
+      t++;
+    }
+  }
+  function bars(el,label,names,S,color){
+    const tot=t||1;
+    el.innerHTML='<span class="eyebrow">'+label+'</span>'+names.map((n,i)=>{
+      const v=t?S[i]/tot:1/3;
+      return '<div class="bar" style="--c:'+color+'"><span>'+n+'</span><div class="track"><div class="fill" style="width:'+(v*100).toFixed(1)+'%;transition:width .3s"></div></div><span class="v">'+(v*100).toFixed(0)+'%</span></div>';
+    }).join('');
+  }
+  function draw(){
+    bars(document.getElementById('mine'),'Your average strategy',me,S1,'var(--l4)');
+    bars(document.getElementById('theirs'),'Their average strategy',them,S2,'var(--l5)');
+    document.getElementById('iters').textContent=t.toLocaleString()+' rounds';
+  }
+  document.getElementById('run').addEventListener('click',()=>{
+    let done=0;const go=()=>{step(1000);done+=1000;draw();if(done<20000)requestAnimationFrame(go);};go();
+  });
+  document.getElementById('reset').addEventListener('click',reset);
+  reset();
+})();
+
+// Concept cards
+(function(){
+  const L={1:['Mechanics','var(--l1)'],2:['Beliefs','var(--l2)'],3:['Interactions','var(--l3)'],4:['Decisions','var(--l4)'],5:['Team value','var(--l5)'],0:['Foundations','var(--muted)']};
+  const W='https://en.wikipedia.org/wiki/';
+  const C=[
+    {l:0,t:'Big-O and reductions',pre:'Functions, counting',what:'How cost grows with input size. A ≤ₚ B means "A translates cheaply into B, so B is at least as hard".',hook:'Why nobody enumerates all ~10^354 first-turn states.',alt:'Empirical scaling: just measure how long the search takes.',links:[['Big O notation',W+'Big_O_notation'],['Polynomial-time reduction',W+'Polynomial-time_reduction']]},
+    {l:1,t:'Simulator as ground truth',pre:'Reading a battle log',what:'Rules live in code; the engine resolves order, abilities, items and field exactly.',hook:'Grass types ignore Rage Powder; Stalwart ignores redirection. The engine never forgets either.',alt:'Hand-written rule lists or an LLM recalling rules. Both drift.',links:[['Showdown sim protocol','https://github.com/smogon/pokemon-showdown/blob/master/sim/SIM-PROTOCOL.md'],['Damage calculator','https://calc.pokemonshowdown.com/'],['poke-env (Python bot API)','https://github.com/hsahovic/poke-env']]},
+    {l:2,t:'Conditional probability and Bayes',pre:'Fractions, expected value',what:'Pr(A | B): how likely A is once you know B. Bayes turns a prior plus evidence into a posterior.',hook:'Pr(Stalwart | Archaludon) = 2.4%. Pr(Quiver Dance | Volcarona) ≈ 52% before preview cues.',alt:'Frequentist counting only; or worst-case thinking (assume every possible set).',links:[['Conditional probability, visually','https://setosa.io/conditional/'],['3Blue1Brown: Bayes theorem','https://www.3blue1brown.com/lessons/bayes-theorem'],['Smogon usage stats','https://www.smogon.com/stats/']]},
+    {l:2,t:'Information sets and POSGs',pre:'Game trees',what:'An information set is all the states that look identical to you. A partially observable stochastic game has hidden info, chance and simultaneous moves.',hook:'"I see Incineroar but not its item" is one information set covering every item it could hold.',alt:'Perfect-information games (chess), where minimax alone works.',links:[['Information set',W+'Information_set_(game_theory)'],['Stochastic game',W+'Stochastic_game'],['POMDP',W+'Partially_observable_Markov_decision_process']]},
+    {l:3,t:'Knowledge and property graphs',pre:'Tables and joins',what:'Nodes and typed edges with properties, queried by pattern.',hook:'Species —LEARNS→ Move; Usage —OBSERVED_ABILITY→ Stalwart with weight 0.024 and a snapshot date.',alt:'Relational tables (same facts, joins instead of traversals); or no explicit store, an end-to-end model.',links:[['Neo4j: what a graph DB is','https://neo4j.com/docs/getting-started/graph-database/'],['Knowledge graph',W+'Knowledge_graph']]},
+    {l:3,t:'Hypergraphs and n-ary relations',pre:'Graphs',what:'An edge that joins three or more nodes at once.',hook:'Trick Room setter + redirector + slow attacker form one plan. Remove any one and the plan is gone.',alt:'Pairwise synergy scores summed up (Sahovic-style). Simpler, and misses three-way effects.',links:[['Hypergraph',W+'Hypergraph']]},
+    {l:3,t:'Production rules and Rete',pre:'If-then logic',what:'IF conditions THEN conclusion, matched efficiently against a changing set of facts.',hook:'IF opponent has Grass type AND my plan uses Rage Powder THEN flag "redirection leak".',alt:'Expert systems were the precursor; learned models are the opposite camp.',links:[['Production system',W+'Production_system_(computer_science)'],['Rete algorithm',W+'Rete_algorithm'],['Expert system',W+'Expert_system']]},
+    {l:3,t:'Truth maintenance',pre:'Production rules',what:'Track which conclusions rest on which assumptions, so changing one assumption retracts only what depended on it.',hook:'Assume "their Archaludon is Stamina". Learn it is Stalwart, and only the plans that relied on redirection get rechecked.',alt:'Recompute everything from scratch each time.',links:[['Reason maintenance',W+'Reason_maintenance'],['Argumentation framework',W+'Argumentation_framework']]},
+    {l:3,t:'Causal models and counterfactuals',pre:'Conditional probability',what:'Separate "seen together" from "makes happen". A counterfactual asks what would change if you intervened.',hook:'Swap one slot, replay the same opponents, compare. That is the causal test for "this member makes the team better".',alt:'Correlation from usage and win rates, which Simpson\'s paradox can flip.',links:[['Causal model',W+'Causal_model'],['Simpson\'s paradox',W+'Simpson%27s_paradox'],['Abductive reasoning',W+'Abductive_reasoning']]},
+    {l:4,t:'Normal-form games and mixed strategies',pre:'Expected value',what:'A payoff matrix for simultaneous choices. A mixed strategy is a probability for each action.',hook:'Protect vs. attack vs. set up, every turn.',alt:'Sequential games, where you see their move first.',links:[['Normal-form game',W+'Normal-form_game'],['Zero-sum game',W+'Zero-sum_game'],['Expected value',W+'Expected_value']]},
+    {l:4,t:'Nash equilibrium and PPAD',pre:'Mixed strategies',what:'Strategies where neither side gains by changing alone. One always exists; finding it is PPAD-hard in general.',hook:'Why "unpredictable" is a real property of strong play, not a vibe.',alt:'Exploitative play: abandon equilibrium to punish a specific opponent\'s habits.',links:[['Nash equilibrium',W+'Nash_equilibrium'],['PPAD',W+'PPAD_(complexity)'],['Quanta: no clear path to equilibrium','https://www.quantamagazine.org/in-game-theory-no-clear-path-to-equilibrium-20170718/']]},
+    {l:4,t:'Regret matching and CFR',pre:'Nash, information sets',what:'Shift weight toward actions you regret not playing; the average converges toward equilibrium. CFR does it at every information set.',hook:'The toy above is exactly regret matching.',alt:'Search with a value estimate (minimax, MCTS); or RL self-play.',links:[['Neller & Lanctot: CFR tutorial (PDF)','http://modelai.gettysburg.edu/2013/cfr/cfr.pdf']]},
+    {l:4,t:'Search: minimax and MCTS',pre:'Game trees',what:'Look ahead through possible moves and score the leaves.',hook:'PokéChamp puts an LLM inside minimax: the LLM proposes moves, search checks them.',alt:'Pure policy: act from learned intuition with no lookahead.',links:[['Monte Carlo tree search',W+'Monte_Carlo_tree_search'],['PokéChamp (arXiv)','https://arxiv.org/abs/2503.04094'],['PokéLLMon (arXiv)','https://arxiv.org/abs/2402.01118']]},
+    {l:5,t:'Ratings and matchup models',pre:'Logistic function',what:'Turn win/loss records into strengths. Bradley–Terry: Pr(A beats B) from two strengths.',hook:'Sahovic splits team value into strength + synergy + matchup.',alt:'Full matchup matrix, no single number. More honest, needs more data.',links:[['Algorithmic Pokémon Teambuilding','https://sahovic.fr/algorithmic-pokemon-teambuilding.html'],['Bradley–Terry model',W+'Bradley%E2%80%93Terry_model'],['Elo rating',W+'Elo_rating_system']]},
+    {l:5,t:'Learned intuition (RL at scale)',pre:'Search, value functions',what:'Train a policy and value network on huge numbers of games; intuition comes from data, not rules.',hook:'Metamon reaches human-level singles from replays; VGC-Bench targets doubles across many teams.',alt:'Everything above: explicit structure you can inspect.',links:[['Metamon (arXiv)','https://arxiv.org/abs/2504.04395'],['VGC-Bench (arXiv)','https://arxiv.org/abs/2506.10326'],['The Bitter Lesson','http://www.incompleteideas.net/IncIdeas/BitterLesson.html']]},
+  ];
+  const fEl=document.getElementById('filters'),cEl=document.getElementById('cards');
+  let cur='all';
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  function render(){
+    fEl.innerHTML=['all',0,1,2,3,4,5].map(k=>{
+      const lab=k==='all'?'All':L[k][0], c=k==='all'?'var(--accent)':L[k][1];
+      return '<button type="button" data-k="'+k+'" style="--c:'+c+'" aria-pressed="'+(String(cur)===String(k))+'">'+lab+'</button>';
+    }).join('');
+    cEl.innerHTML=C.filter(c=>cur==='all'||String(c.l)===String(cur)).map(c=>
+      '<article class="card" style="--c:'+L[c.l][1]+'"><span class="k">'+L[c.l][0]+'</span><h3>'+esc(c.t)+'</h3>'+
+      '<p>'+esc(c.what)+'</p>'+
+      '<p><span class="k">Needs first</span><br>'+esc(c.pre)+'</p>'+
+      '<p><span class="k">In Pokémon</span><br>'+esc(c.hook)+'</p>'+
+      '<p><span class="k">Alternative / opposite</span><br>'+esc(c.alt)+'</p>'+
+      '<div class="links">'+c.links.map(([n,u])=>'<a href="'+u+'" target="_blank" rel="noopener">'+esc(n)+' ↗</a>').join('')+'</div></article>'
+    ).join('');
+  }
+  fEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cur=b.dataset.k;render();});
+  render();
+})();
+</script>

@@ -64,3 +64,8 @@ Usage weights describe observations, not causal synergy. Missing usage remains u
 - `.artifacts/`: full local dataset and current machine-readable results.
 
 The next experiment should compare candidate generation against a flat-data baseline on withheld mechanical combinations, measuring valid unusual cores, explanations and failure cases. More imported rows alone cannot establish that the graph helps.
+
+## Additional research
+
+- [Bot history and Muse’s October context update](research/bot-history.md).
+- [Recovered Claude learning map and strategy reports](research/claude/2026-10-17/README.md).

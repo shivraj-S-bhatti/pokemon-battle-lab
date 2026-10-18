@@ -1,0 +1,380 @@
+<title>Why Is This Team Good?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column; the five-layer stack is the spine, every later section hangs off one layer. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --fg:#17202a; --muted:#5a6672; --line:#d6dde4; --accent:#0e7c86; --accent-soft:#d8eef0;
+  --l1:#6b7a8f; --l2:#b5651d; --l3:#0e7c86; --l4:#7b4fb0; --l5:#b23a48;
+  --good:#2f7d4f; --bad:#b23a48;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1418; --surface:#172027; --fg:#e4eaef; --muted:#97a4b0; --line:#2a3640; --accent:#4cc2cc; --accent-soft:#16363a;
+  --l1:#9aa8ba; --l2:#e0954f; --l3:#4cc2cc; --l4:#b08ce0; --l5:#e57583; --good:#6cc493; --bad:#e57583; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1418; --surface:#172027; --fg:#e4eaef; --muted:#97a4b0; --line:#2a3640; --accent:#4cc2cc; --accent-soft:#16363a;
+  --l1:#9aa8ba; --l2:#e0954f; --l3:#4cc2cc; --l4:#b08ce0; --l5:#e57583; --good:#6cc493; --bad:#e57583; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding:0 16px}
+main{max-width:860px;margin:0 auto;padding-block:40px 80px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);font-stretch:85%;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.75rem;font-weight:750}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0;max-width:66ch}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code,.mono{font-family:var(--mono);font-size:.88em}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:18px}
+.lede{font-size:1.15rem;color:var(--muted)}
+.formula{font-family:var(--mono);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;overflow-x:auto;white-space:nowrap}
+.note{font-size:.9rem;color:var(--muted)}
+/* hero */
+header{display:flex;flex-direction:column;gap:16px}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:6px}
+.q{border-left:3px solid var(--c);padding:4px 0 4px 12px}
+.q b{display:block;font-family:var(--display);font-stretch:85%;font-size:1.05rem}
+.q span{font-size:.9rem;color:var(--muted)}
+/* stack */
+.stack{display:flex;flex-direction:column;gap:8px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:16px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:6px;padding:16px}
+.layer .tag{display:flex;flex-direction:column;gap:4px}
+.layer .tag b{font-family:var(--display);font-stretch:85%;font-size:1.2rem;color:var(--c)}
+.layer .tag i{font-style:normal;font:500 .78rem/1.3 var(--mono);color:var(--muted)}
+.layer dl{margin:0;display:grid;grid-template-columns:110px 1fr;gap:6px 12px;font-size:.93rem;min-width:0}
+.layer dt{color:var(--muted);font:500 .75rem/1.6 var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.layer dd{margin:0;min-width:0}
+.arrow{font:500 .78rem var(--mono);color:var(--muted);text-align:center}
+@media (max-width:620px){.layer{grid-template-columns:1fr}.layer dl{grid-template-columns:1fr}.layer dt{margin-top:6px}}
+/* evidence card */
+.case{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.bars{display:flex;flex-direction:column;gap:6px;font-size:.9rem}
+.bar{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center}
+.bar .track{height:12px;background:var(--accent-soft);border-radius:2px;overflow:hidden}
+.bar .fill{height:100%;background:var(--c,var(--accent))}
+.bar .v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--mono);font-size:.85rem}
+.chip{border:1px solid var(--line);border-radius:4px;padding:3px 8px;background:var(--bg)}
+.chip.t{border-color:var(--good);color:var(--good)}
+.chip.f{border-color:var(--bad);color:var(--bad)}
+/* toys */
+.toy{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+button{font:600 .9rem var(--body);background:var(--accent);color:var(--surface);border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+input[type=range]{width:220px;max-width:100%;accent-color:var(--accent)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;font-size:.9rem;width:100%}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font:500 .75rem var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.n{font-family:var(--mono);text-align:center;font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-stretch:85%;font-size:2rem;font-weight:800;font-variant-numeric:tabular-nums}
+/* concepts */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:500;padding:5px 10px}
+.filters button[aria-pressed=true]{border-color:var(--c,var(--accent));background:var(--accent-soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:8px;font-size:.92rem;min-width:0}
+.card .k{font:500 .7rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.card p{max-width:none}
+.card ul{margin:0;padding-left:18px}
+.card .links{margin-top:auto;padding-top:6px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:3px}
+/* videos */
+.vids{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.vid{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.vid img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.vid div{padding:0 14px 14px;display:flex;flex-direction:column;gap:4px}
+.vid b{font-family:var(--display);font-stretch:85%;font-size:1.05rem}
+.vid span{font-size:.85rem;color:var(--muted)}
+ol.path{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px}
+ol.path li{padding-left:4px}
+svg text{fill:var(--fg);font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<main>
+<header>
+  <span class="eyebrow">Pokémon Core Lab · reading map · Reg M-C doubles</span>
+  <h1>Why is this team good?</h1>
+  <p class="lede">A team is good against some opponents, in some board states, played some way. To reason about that you have to answer four smaller questions, each with its own math, its own data and its own way of going wrong.</p>
+  <div class="qs">
+    <div class="q" style="--c:var(--l1)"><b>What can happen?</b><span>Mechanics. The engine knows.</span></div>
+    <div class="q" style="--c:var(--l2)"><b>What is probably true?</b><span>Beliefs about hidden sets.</span></div>
+    <div class="q" style="--c:var(--l3)"><b>What does this pairing enable?</b><span>Interactions and plans.</span></div>
+    <div class="q" style="--c:var(--l4)"><b>What should I click?</b><span>Decisions under a guessing game.</span></div>
+  </div>
+  <p>The fifth question, "is the team good?", is an average of the fourth over the opponents you expect to meet:</p>
+  <div class="formula">T* = argmax<sub>T</sub> &nbsp;E<sub>O ~ metagame</sub> [ Pr(win | T, O, π) ]</div>
+  <p class="note">Read it as: pick the team T whose average win chance is highest, where opponents O are drawn from the metagame and both sides are played by policy π. Change the pilot or the metagame and the best team changes too.</p>
+</header>
+
+<section id="stack">
+  <span class="eyebrow">The decomposition</span>
+  <h2>Five layers, bottom to top</h2>
+  <p>Each layer rests on the one below it. Most bad team analysis, by people or by LLMs, comes from answering one layer with tools that belong to another, such as treating a mechanism as if it were a probability.</p>
+  <div class="stack">
+    <div class="layer" style="--c:var(--l5)">
+      <div class="tag"><b>5 · Team value</b><i>Is the team good?</i></div>
+      <dl><dt>Represent</dt><dd>Matchup matrix: your team vs. each common archetype, win rate per cell.</dd>
+      <dt>Compute</dt><dd>Simulate or log games; fit ratings (Elo, Bradley–Terry); the counterfactual swap test, which replaces one slot and reruns the same opponents.</dd>
+      <dt>Fails when</dt><dd>You read "appears on winning teams" as "causes wins". Incineroar is on 29% of teams, so it is on many winning teams by default.</dd></dl>
+    </div>
+    <div class="arrow">↑ average over opponents</div>
+    <div class="layer" style="--c:var(--l4)">
+      <div class="tag"><b>4 · Decisions</b><i>What should I click?</i></div>
+      <dl><dt>Represent</dt><dd>A simultaneous-move game: payoff matrix per turn, information sets for what you cannot see.</dd>
+      <dt>Compute</dt><dd>Minimax / MCTS search, mixed strategies, regret minimization (CFR).</dd>
+      <dt>Fails when</dt><dd>You pick one "best move". Both players choose at once, so any fixed answer can be read and punished.</dd></dl>
+    </div>
+    <div class="arrow">↑ choose under uncertainty</div>
+    <div class="layer" style="--c:var(--l3)">
+      <div class="tag"><b>3 · Interactions</b><i>What does this pairing enable?</i></div>
+      <dl><dt>Represent</dt><dd>Graph of roles and plans. Many effects need three or more things at once (setter + redirector + field), so they are hyperedges or conditional rules, not pairs.</dd>
+      <dt>Compute</dt><dd>Graph queries, production rules, dependency walks: "if Sinistcha faints, which plans lose their redirector?"</dd>
+      <dt>Fails when</dt><dd>Pairwise "X counters Y" edges ignore the board. Rage Powder works until the target is Grass type, has Stalwart, or the redirector is gone.</dd></dl>
+    </div>
+    <div class="arrow">↑ weight by likelihood</div>
+    <div class="layer" style="--c:var(--l2)">
+      <div class="tag"><b>2 · Beliefs</b><i>What are they running?</i></div>
+      <dl><dt>Represent</dt><dd>Probability tables: usage stats as priors, updated by team preview and what gets revealed.</dd>
+      <dt>Compute</dt><dd>Bayes' rule. Conditioning on teammates, items and player history.</dd>
+      <dt>Fails when</dt><dd>Possible gets treated as likely. This is the Stalwart Archaludon mistake below.</dd></dl>
+    </div>
+    <div class="arrow">↑ what exists at all</div>
+    <div class="layer" style="--c:var(--l1)">
+      <div class="tag"><b>1 · Mechanics</b><i>What can happen?</i></div>
+      <dl><dt>Represent</dt><dd>The simulator's source code and a damage calculator. Rules as executable code, not prose.</dd>
+      <dt>Compute</dt><dd>Run it. Showdown resolves ability, item, field and priority order exactly.</dd>
+      <dt>Fails when</dt><dd>An LLM recalls a rule from text. It forgets edge cases (Grass types ignore Rage Powder) or invents them.</dd></dl>
+    </div>
+  </div>
+</section>
+
+<section id="stalwart">
+  <span class="eyebrow">Worked example · layer 1 vs layer 2</span>
+  <h2>"Archaludon beats Sinistcha's Rage Powder"</h2>
+  <p>The mechanism is real: Stalwart ignores redirection, so a Stalwart Archaludon fires through Rage Powder. A graph that stores only mechanisms will flag Archaludon as a counter. Players know it almost never matters, because almost nobody runs Stalwart. That piece of tribal knowledge is a number you can look up.</p>
+  <div class="case">
+    <span class="eyebrow">Archaludon ability split · Showdown Reg M-C, 1500+, Sept 2026, 1.63M battles</span>
+    <div class="bars">
+      <div class="bar"><span>Stamina</span><div class="track"><div class="fill" style="width:94.6%"></div></div><span class="v">94.6%</span></div>
+      <div class="bar"><span>Sturdy</span><div class="track"><div class="fill" style="width:3%"></div></div><span class="v">3.0%</span></div>
+      <div class="bar" style="--c:var(--bad)"><span>Stalwart</span><div class="track"><div class="fill" style="width:2.4%"></div></div><span class="v">2.4%</span></div>
+    </div>
+    <p>So the threat is a product, and one factor is tiny:</p>
+    <div class="formula">threat ≈ [mechanism exists] × Pr(Stalwart | Archaludon) × Pr(it matters this game)<br>&nbsp; &nbsp; &nbsp; &nbsp; = 1 × 0.024 × (…)</div>
+    <div class="chain">
+      <span class="chip t">Stalwart IGNORES redirection</span><span>×</span>
+      <span class="chip f">P = 0.024</span><span>→</span>
+      <span class="chip">a weak edge, not a counter</span>
+    </div>
+    <p>What Archaludon actually brings: Electro Shot on 96.8% of sets, Leftovers on 84.8%, Pelipper as a teammate on about 56%. Rain lets Electro Shot fire in one turn. Against Grass/Ghost Sinistcha, Electric is resisted, so the relationship that matters is a different one entirely.</p>
+  </div>
+  <p><b>Lesson for the graph:</b> every mechanism edge needs a weight from layer 2. Store "Stalwart ignores redirection" once as a rule, and store "Archaludon runs Stalwart 2.4%" as a dated observation with its source. The query multiplies them. Your <code>pokemon-core-lab</code> already has both node types (Species/Ability and Usage/Snapshot); the missing piece is the query that joins them.</p>
+</section>
+
+<section id="volcarona">
+  <span class="eyebrow">Worked example · layer 2</span>
+  <h2>The Volcarona spidey sense</h2>
+  <p>Some players read a Volcarona at team preview and just know it is Quiver Dance, not Rage Powder support. The usage stats show why that feels like intuition: the marginals are a coin flip.</p>
+  <div class="case">
+    <span class="eyebrow">Volcarona moves · share of sets that carry the move</span>
+    <div class="bars">
+      <div class="bar"><span>Protect</span><div class="track"><div class="fill" style="width:66.8%"></div></div><span class="v">66.8%</span></div>
+      <div class="bar" style="--c:var(--l3)"><span>Rage Powder</span><div class="track"><div class="fill" style="width:53.3%"></div></div><span class="v">53.3%</span></div>
+      <div class="bar" style="--c:var(--l4)"><span>Quiver Dance</span><div class="track"><div class="fill" style="width:51.9%"></div></div><span class="v">51.9%</span></div>
+      <div class="bar"><span>Heat Wave</span><div class="track"><div class="fill" style="width:43.1%"></div></div><span class="v">43.1%</span></div>
+      <div class="bar"><span>Tailwind</span><div class="track"><div class="fill" style="width:33.9%"></div></div><span class="v">33.9%</span></div>
+    </div>
+    <p>A coin flip on its own; the experienced player is conditioning on more evidence. Teammates (Rillaboom on about 63% of Volcarona teams), the item once revealed (Grassy Seed on 35%), the rest of the six, the player's own history. That is Bayes' rule applied quickly:</p>
+    <div class="formula">posterior odds = prior odds × likelihood ratio of each cue</div>
+    <p>One catch: Smogon's usage file gives marginals per Pokémon, not whole sets. It cannot tell you "Quiver Dance given Rillaboom teammate". For that you need set-level data, such as replays or team sheets. This is the gap between the stats and the spidey sense.</p>
+  </div>
+  <div class="toy" aria-labelledby="bayes-h">
+    <h3 id="bayes-h">Try it: update a set guess</h3>
+    <p class="note">The prior comes from the usage numbers above. Cue strengths are made up for illustration; real ones would come from set-level data.</p>
+    <div class="row"><label for="prior">Prior Pr(Quiver Dance)</label><input id="prior" type="range" min="5" max="95" value="52"><span class="mono" id="priorV">52%</span></div>
+    <div class="row"><label for="cue">Cue strength (likelihood ratio)</label><input id="cue" type="range" min="-30" max="30" value="10"><span class="mono" id="cueV">×2.0</span></div>
+    <div class="row"><span>Posterior Pr(Quiver Dance)</span><span class="big" id="post">68%</span></div>
+    <p class="note">A ratio above 1 favors Quiver Dance (say, a hyper-offense six with no other redirector). Below 1 favors Rage Powder (say, a Trick Room or Grassy Terrain shell). Three cues of ×2 each turn 52% into about 90%.</p>
+  </div>
+</section>
+
+<section id="mixed">
+  <span class="eyebrow">Worked example · layer 4</span>
+  <h2>Why the answer is a distribution</h2>
+  <p>Volcarona can Quiver Dance, Rage Powder or Protect. The opponent can attack Volcarona, attack its partner, or set up. Both choose at the same time. The payoffs below are invented to show the shape of the problem; a real version would get them from the engine.</p>
+  <div class="toy">
+    <div class="scroll"><table aria-label="Payoff to you">
+      <thead><tr><th>You \ Them</th><th>Attack Volcarona</th><th>Attack partner</th><th>Set up</th></tr></thead>
+      <tbody>
+        <tr><th>Quiver Dance</th><td class="n">−2</td><td class="n">+1</td><td class="n">+2</td></tr>
+        <tr><th>Rage Powder</th><td class="n">−1</td><td class="n">+2</td><td class="n">−1</td></tr>
+        <tr><th>Protect</th><td class="n">+1</td><td class="n">−1</td><td class="n">−1</td></tr>
+      </tbody></table></div>
+    <p>Press run. Both sides play thousands of rounds of <b>regret matching</b>: after each round, each side asks "how much better would each other option have done?" and shifts weight toward the ones it regrets not playing. The <em>average</em> strategy settles on a mix where neither side can gain by changing alone. That is a Nash equilibrium, and CFR is this same loop extended to every decision point in a game tree.</p>
+    <div class="row"><button id="run" type="button">Run 20,000 rounds</button><button id="reset" class="ghost" type="button">Reset</button><span class="mono note" id="iters">0 rounds</span></div>
+    <div class="bars" id="mine"></div>
+    <div class="bars" id="theirs"></div>
+    <p class="note">Result: you play Protect most often, Quiver Dance sometimes and Rage Powder rarely, and the opponent mixes too. Any pure "always Quiver Dance" gets read. When people say a player was "unpredictable", this mix is what they mean.</p>
+  </div>
+</section>
+
+<section id="graph">
+  <span class="eyebrow">Your question</span>
+  <h2>Can a graph database fix LLM reasoning about interactions?</h2>
+  <p>Partly. A graph stores facts and finds them fast. It does not compute what happens when Intimidate, a Sitrus Berry, Grassy Terrain and a speed tie meet on one turn. That is the engine's job. What fixes the LLM is splitting the work so each part does what it is reliable at:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Part</th><th>Good at</th><th>Bad at</th><th>In your lab</th></tr></thead>
+    <tbody>
+      <tr><td><b>LLM</b></td><td>Proposing hypotheses, naming plans, explaining in human terms</td><td>Tracking state, exact rule order, knowing what is rare</td><td>Writes the candidate: "Sinistcha + Indeedee for double redirection"</td></tr>
+      <tr><td><b>Graph</b></td><td>Facts with sources, priors with dates, which plan depends on which piece</td><td>Any outcome that depends on order, damage or chance</td><td>Species, moves, Usage, Snapshot nodes; reverse dependency walk</td></tr>
+      <tr><td><b>Engine / calc</b></td><td>Ground truth for one exact situation</td><td>Saying which situations to try</td><td>Showdown at the pinned revision</td></tr>
+      <tr><td><b>Search / game theory</b></td><td>Picking an action when the opponent is also choosing</td><td>Huge trees without abstraction</td><td>Small simultaneous-move games over engine outcomes</td></tr>
+    </tbody></table></div>
+  <p>The loop is: the LLM proposes, the graph supplies facts and priors, the engine checks, search decides, and the graph stores the result with its conditions. PokéChamp works this way: an LLM inside a minimax search.</p>
+  <h3>Representations, from least to most expressive</h3>
+  <div class="scroll"><table>
+    <thead><tr><th>Representation</th><th>Captures</th><th>Misses</th></tr></thead>
+    <tbody>
+      <tr><td>Type chart (pairwise matrix)</td><td>Electric into Grass is 0.5×</td><td>Everything else</td></tr>
+      <tr><td>Counter graph (X → Y edges)</td><td>"Rillaboom ignores Rage Powder"</td><td>How likely, under what conditions</td></tr>
+      <tr><td>Weighted, dated edges</td><td>"Stalwart Archaludon: 2.4% in Sept 2026"</td><td>Effects that need 3+ pieces at once</td></tr>
+      <tr><td>Hyperedges / conditional rules</td><td>"TR setter + redirector + slow attacker = a plan"</td><td>Turn order, damage rolls</td></tr>
+      <tr><td>Simulator</td><td>Exactly what happens in one state</td><td>Which states and choices are worth trying</td></tr>
+      <tr><td>Learned policy and value (RL)</td><td>Intuition compressed from millions of games</td><td>Explaining why; adapting to a new regulation without new data</td></tr>
+    </tbody></table></div>
+  <p class="note">The opposite camp is the last row alone: skip hand-built structure and learn from data at scale. Metamon and VGC-Bench go this way, and Sutton's "Bitter Lesson" argues it usually wins. A graph earns its place where you need explanations, provenance and fast updates when the rules change.</p>
+</section>
+
+<section id="concepts">
+  <span class="eyebrow">Concept map</span>
+  <h2>Concepts, what comes before them, and what competes with them</h2>
+  <p>Filter by layer. Each card lists the prerequisite, a Pokémon hook, an alternative or opposite idea, and a short read first.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filter by layer"></div>
+  <div class="cards" id="cards"></div>
+</section>
+
+<section id="watch">
+  <span class="eyebrow">Start here</span>
+  <h2>The two videos you sent</h2>
+  <div class="vids">
+    <a class="vid" href="https://www.youtube.com/watch?v=wrR6MquGU6A" target="_blank" rel="noopener">
+      <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAC0AUADASIAAhEBAxEB/8QAHAAAAQQDAQAAAAAAAAAAAAAAAAQFBgcBAgMI/8QASRAAAQMDAgQDBAYGBwcDBQAAAQIDBAAFEQYhBxIxQRNRYRQicYEyQlKRobEVI2JyktEWJIKissHCCENTVHOz8CUmMzRVlOHx/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAECAwQFBv/EACoRAAICAgIBAwQABwAAAAAAAAABAhEDEiExBAUTUSIyQdEUUmFxkaGx/9oADAMBAAIRAxEAPwC5qKKKAKKKKAKKKKAKK4y5kaBEclzH22GGk8zjjiuVKR6mqvuHFi7364rtegrKucpP0pbyDgdd+XYJHkVH5UBa1FVO3pbi5cAHpmq48RRH0ErwQfUIRy/jWq4vGPTY8dEyLfGU/SaHKs4+YQs/AGgLaoqu9M8X7bcpf6M1BGXZLiFchS/kNlXkScFB9FffVhg5GRQGaKKKAKKKKAKKKKAKKKKAKKKKAKKKKAKKKKAKKKwpQSkqUQABkk9qAzRUTu3E/R1ncLT95aedH1IyS98spBA+ZphPHbSYd5PZboU5+n4CMf48/hQFlUVEbVxS0bdnA01eG47h+rKSWv7yvd/GpYlaVoC0KCkqGQQcgigNqKxmigM1iisZqLBnNGaxms0skM0UUVICjNYzWpVU0VN80ZrmV1jn9amhZ1zXGXMjwIbsyW8llhhBW44s4CUjqayF1U2u7nM17q9jQdle5YrC+e4vpOQCn6QOOoR5d1kDbANQ0ExITeONOoVoS49A0tBcxtsXD+RcI+IQD3J963LPZbdYbe3AtcRuNHR0Sgbk+ZPUn1NYs9phWK1R7ZbmQ1Gjp5Up7nzJ8yTuTS6oJM0UUUBHtV6IsmsIhbuMcJkJGGpTezjfz7j0O351Xdp1HfuFN3asGqAuZYnDyxZqQT4afNPfA7o6jtkY5rlpuvtit+pLS9bLmwHWHR8FIV2Uk9iP/NqAWx5DMuO3IjuoeZdSFtuIVlKkncEEdRXSqb01eJ/CrU50pqF4rsspZVCmK+i3k/S9AT9Idjv0OTcYORkUBmiiigCiiigCiiigCiiigCiiigCiioJxD4iJ0whNptKPa77KwlppKefwubYEgdVHsnv8OoDhrTiFZ9Fx+WQr2metPM1DbV7x9VH6qfU/IHFQhrTWueJq0y9RzVWWzKPM3CbBCljbHuf6lnI7DBp90Jw09gf/AKQ6pV7ffH1eLh086Y5/JS/XoO3TJsWgIhZ+FmjrO2Am0NzHAMKdm/rir1wfdHyAp/8A0BZQ34QtEHk+z7MjH3YpfRQESu/C/R94aUldnahrIwl2EPBKfXA90/MGoU/pfW/DNapmmZy7vaEnmchOJJKRvnKP9SMHzGKuGsZqrlRJFtF8QrRrSPyxz7NPbTzOw3FZUB5pP1k+vbuBkVKc1XOuuHBmSf6R6VPsF7YV4vK0eQPnuR2Cz59D365qWaWm3edpyHJvsNMSe4jLjQ6+hI+qSNynt+AzlNJWSkPWaxmtOaub0hqO2XX3UNNjqtagkD5msHmJo75rOaidx4l6Ptg/W32O8rsmNl7PzQCPvNN1k4v6avl8ZtTKJjC31+Gy6+2lKFq6AbKJGe2RV4yk+aHBPs1mtAa2FaxlZU1Ua5KXihasUmdcxXVGNmMpUbqdx3rTxhVb8Rb5dbPebXJgTXGkciyWgs8jhBGeZPQjBA+/GKYdU6/k3uMzFt/tEFnHM+QvlWtXkFJP0R8s/KrtxVplUpSpoucucyCkLUgkY5k9R6io9ovRcLRwnKZkuTJEx3mVIeHv8nZJ89ySTtkn0FN+kdVm92tP9VmuPRG20SnQzzJUsjqOUknJBPTbvUnjTG308zTiVgHlOD0PcHyPpU6xlyiu0o8MdUqroDSRtzNd0qrKUaNoys61mtQazWZczRRRQEf1ppKHrKwOW6Rht5Pvxn8btL7H4HoR5euDUS4W6rlsyHtEahy1c7cSiOVndxCfq+pA3BHVPwybNqs+Lml3lR2dY2dZYudqwpxaDgrbByFeRKT94JG+AKAsyiq205xgjaivtms7FvUh6Yk+1urVhLawhRwgd8kdTjbz7WTQBRRTXetTWTTrQcu9zYiZBKULVlagPspHvH5CgHSiq1m8ddLR3CiNGuEvHRaGkpSf4lA/hSZrj5p8q/XWq5IHmkNq/wBQoC06Kitk4l6SvziWYt2bafVjDMkFpRJ7Aq2J9ATUqoAooqOTte6dt7d08a4Nh+1A+PHJw4TtgJB+lkkDI2yd8UAk4ia5Z0ZZeZrlduUrKIrJ7HutXoPxOB5kNPDbQT1sUrU+ouaRfZmV/rdzHCuv9s9/IbeeWbh/Y5euNSPa+1CgKaDmLfHO6QUnAI/ZT0HmrJ6je3aAKKKKAxRRRUMkwa5PPNsMreecS202kqWtZwlKQMkk9hXQ0y6thOXLSN2htf8AyPQ3Uo9VcpwPvrCbJRF7pxn0jAJTHdlXBYOP6uzhP3r5dvhmolc+PUxYUm12RhnfZcl0uZH7qeXH3mqlrKELdcS22hS1rICUpGSSegAq/sw/JFslty4qaxuXMk3ZUVtQxyRUJbx8FD3vxqMS50y4O+LNlvyXPtvOFZ+81b+lOBzHsaJ2qpTiFlPP7GyoJDY/bX/kMY8zT/G0FwpuEgwYXsT8rBHIzdFrc267BZ/KrqMY9Ig89V1iSnYM1iWwQHWHEuIJ7KScj8qsHiPwrXpKObta3nJNs5glxLmOdgk4GSNiknbO3UD1quasD2DFkty4rMlo5beQlxB8wRkfnXcGohwxuRufD61OK+my0Y6hnOOQlI/ugH51LkmuKDptF2JnVU2T5bUSM7JfcDbTSCtaj0AAyTS947Gqy4oX0oQ1ZGF+84A7Ix9nPup+ZGfkPOvXTUY2cTTlKhrixmtaO3rUd8muxLdbmcNNtlPMCc8iRnPz+0pQwe1QoZwM9e9FFczd8s6Uq4Qst13uVoeD1tnyIi85y0sgK+KeivgQas7SmrRq9wxJJahagbRliQhOG5aU78q098b5HlkpxuBUxSUnCgQeuCK6RZUiDLZlxXC3IYWHG1+Sgcj4j0706FWeg7XcBNYKy2pl1tZbeZV1aWnZST5+h6EEEbGnVtVRZi4NSLhbL3HHhx7/ABQHEZHuyEJ5h8yjnSf+kmpGyrIrf7o2YfbKhak1uK5INdRWDN0ZoooqCQqJa/0MNbWxDKLk/DeZ3bTzEsrP7aO/oeoz36VLaKA826f07eNF8TrIzd4imOeYltt0e826FHlylXQ9enUZ3Ar0lXKRFjykJRIYbeShaXEhaQrlUk5SoZ7gjINV1xj1u5p+0ostveLc+4IJWtJ95lnoSPIqOQD6K6HFANnEXjAbe87Z9MuIXIQSl+bgKS2e6UDoT6nYevUVbHstzvT6ptwkOczpyp59RW4v133PzpTpyyJKEz5SM53aQRt+8f8AKpNXDm8nV6wPqfTPRFlgs3kdPpfsZmdLW1tP6xLjx81Lx+WK6K03alDAjlPqHFfzp1orj97J/MfSL07w0qWJf4IvN0nyJKob5P7Ln8xTzo7iZfNFyUW+4h2ZbUkAx3Fe+0nzbUfy6fDOaXdabbpbGZ7JbcGFDdtfdP8A+q6cXlSTqZ4vqHoWOUXPx+H8fh/o9DWi7wb5bGbjbpCX4z6cpWn8QR2I7ivLuqvaLpry7iO25IdeuDyW0Np5lK98gAAddsVIuGWr39G6nNsnuFNumOBt9Kj7rS+iXB5dgfT4Crw09o2y6aW6/CihUx9SlPS3cKdWScnfsPQYFej2fGtOLp9iDh1H1NE0yzF1IxGYLKEojIaADiWwMALA90Hp0+e9SyiihAUUVqtaW0lS1BKR1JOAKA2rFNEnV+moayiRqC2trHVCpSOYfLOaTo13pJauUaktoP7UlI/M1DA+muaq1jS405gPxJLUhpXRxpYWk/MVsquTN0XR5M1Hbf0PqS420JKUxpLjaAfshR5T92KlXBm0sXTX7Tj6QpMBhcpKSMgqBSlP3FYPxArPGa2+w6+dkAHlnMNvemQOQ/4M/OmfQmsVaIvb1zTCEzxYymPDLvh4ypKs5wfs11Qe0UyrJtx11LMVdmNOMuqbhtspefSk48VZJwD5gAAgeZ9BVTNuOMuodaWptxCgpK0nBSR0IPY096x1U/rG+m6yIrMZXhpbCGiTsM7knqd/TtTTBgyblOYgw2VPSJCw222nqpR6VYg9L6XmnW/DFldxHOubEcjyCfrKHMgq9Ccc23TNeYa9IXmTG4YcLEQm3QqShgx2CP8AePryVKA8gSpXwGK830BdvAa5eLZ7pbCTmO+l5OfJacHHzR+NWymvPfBS5ex64MRSiEzoy2wnsVJwsfglX316DTXDP6crLroSOjNUXNlWuXe9RvXz2oyipxMLwMcqXEqKUhXoAEj4A98VfDic1B79w5tV2uT1wD8mM697ziWikoUr7WCNie+DXqtOSpHKmou2U8lKlqCEJKlKOAlIySfICplY9HeABOvKUpCRzJYUdkgd1/y+/wAqkGm9CpsT6pcx5EmVjlb5EkJbHcjPc+fYfGo1rDVImrcttvX/AFZJw68P96fIfs+vf4ddMcIY1vk7/CMsk55Hpj6/LIzcJXttxkyh0edUpOR0GdvwxSeiiuVu3bOtKlSLO0jKU9wzC0pHPZ7uhSM9kKWgrP8AC64KsVg1VmilKVw11igHBbjrdSfIhonP90VaMZXOhK/tAGtcfTRlk7Qvb6V2FcG+ldx0qkjSJtRRRVCwUUUUAV5d1PcFau4izXysqZXILbeDsGkbDHlkJz8TXpq4OqYt0l5P0m2VqHxAJryTZ7gi2TDIW0XPcKQAcYORVZ3q9ezfxljeaPuuo2r/ALE9ACUhKQAAMADtWajn9MGf+TX/ABj+VaP6uSuO4hqMtDikkJVzj3T59K8r+Hy/B96/WfBS4n/p/oWXLUseE6phlHjuJOFb4Sk+We5pHH1eC4BIi8qD9ZCskfI1YHA3S1tlwJeoZbCJEluQY7AcAUGsJSoqA8zzDftjbrVkat0pbdV2V+HNYbLvIfAf5ffZXjYg9cZ6jvXcvGxpU0fK5PXPNlk2jKl8UqKZYfakspeZWFtrGQoUOjKc+VQ6zX39FsuMuNKdQo8yQFY5T3/ypxVq9lSSPY17/tj+VccvGmpfSuD6TD634uTCnllUvyqZx1REHI1LSNweRf5j/OvQXDi9rv8AoW2zHlFT6Gyy6SckqQeXJ9SAD8687XG/tToLkcR1IKsYUVZxg5q4eArqlaOnNEkhE9RHplCP5V34FJQqR8n6nPDk8hzwu0/+j7xE4hRNF27wmeR+7SE/1dgnZA6c6/JPkO528yIBpXjJcYtjFudtcu93dT7ikKCvpJUebsCSQSRgDGMVJr1wTt95nvz3dQXJcuQrmcdkBDhJ+ACduwA2AwBSnQnDGZoe/OTm72iZGfZLTrRjlsncEEe8dwR9xNbHmjQHeMOqd2242n4yxtzANqx655lg/IVu3wUk3JYd1Jq2dPV9lOSUn95ZV+Qq16KAr+LwU0ZHQEux5coj6zskgn+HlpQ5wd0OpOE2lxB80ync/io1OKxQFS3PhJcNOqVddDXqWzLaBV7M6sZcHXlChgH91QIPc1JeHut/6YWx5uW0I90gkIlNcpAOc4UAenQgjsR6ipoaqWK2mx/7Qz7EdIS1do6lKSkYAJb51H5qbJ+dZTWyaJXAn49W4qgWm6JwA06uOvbrzAKT/gV99UvXpTirbTceH1yCEguRwmQnPblUCo/w81ea6p47uFfBMuwq2eAtjZk3e4Xt5HMqEhLTGcYCl55iPIgDHwUaqap9wx4hQtENXNufHkyEyvDU0lgJ2UnmzkkjGQR59K6Cpy4vaievet5MQr/qtsJjso7BW3OfiVDHwSKg1PGq7mL7qGXemoLkNic4XG0LPNk7BR5sDO+T6ZxTPQDvpO5/ofVlruBWEIZlILij0CCcK/uk16tTXjuvWGl7j+l9MWy4EgqkRW1rx9rlHN+Oa5c65TLxHNaaTuN5papNclIrvjKjnlGyF6/lrtmkZrzSuRawlkKzjHOoJO/ngmqS8Rv7afvr004ylQwpII8iKTLht/8ADR/CKvJbu7KReiqjzd4iPtp++jxEfbT99ejfY2/+Gn+EVlMNv/ho/hFR7S+SfdfwVlocpPDjWiwQQYbicg9/BX/OrTgp/qjP/TT+VZbjIAxyJweu1KkIxUJakt7HRArqK0SK3FZs0RtRRUJ1ZxW07pZ1cQLVcJyNjHjkYQfJa+g+AyR5VUsTamZerLI1qBdhfnNsXBKUqS077ocChkcpOxPp1qvhqzipqMFdl021bY6vouPpAUB55cIB+SarLXEXUg1YqPqF1My6rQ2CWEg8wI90AJAGfgKA9RvtJkR3GVfRcQUn4EYrz3wgjw29eybPeIcZ9TjDjSW5DSV4dQoE4yPILqb8L7ZxDhoaN3kpZtOByxpwK38fsjOUeWFHb7NQ3iRAl6H4ms6ggp5WpTomMnoCsEeKg/EnJ9F0Bd39F9Pf/Ybb/wDiN/ypNc9FafuNrlQhaIMcyGlNh5qKgLbJGAoHHUdaX2S8w9QWaNdYK+diSgKHmk90n1ByD8KX0B560vqm7cJL5Msl7gLdiOKC1oQcHPQONk7KBAx26DoQRT7qrjhHn2h2Dp2BLakSUlsvyQlJbB2PKEk5PluMetW3dLNbL0wGLpAjzG0nKUvthXKfMZ6H4UhtmjNNWeQJNvskNh9Jyl0NgqT8CckfKgIZwp4eNWywOTdQWxhyXOUlSWJTKVllsZxkEe6o5JI+GdxU0k6a0+3HWoWK2g9B/VG/5U9UinufRaHxNAVVxai2i1aQSiNbIbEiVIQhK2o6EKAGVE5Az2A+dPfA2EuNoRyQsf8A1cxxxH7oCUfmk1WnES+Oay1ixa7UPaGo6vZowQdnXFEBRHoTgeWE5716A09Z2tP6fg2lkgpishBUBjmV9ZXzOT86AcqKKKAKKKKAKxWaKA1NVRG/9V/2ipDicFNsiHcf9IJP4uEVaUuUzChvS5CwhlhtTjij0SlIyT9wqr+DMd65y9QaslIw5cJJQjvjfnWAfLKkj+zVH0ySyLhDbuFvkwnRluS0tpYPkoEH868ivMuR33GHklDjSihaT2IOCK9hkV5g4k24WviBd2UpIQ4/46cjY+IAs49MqI+VYYeJNEyIxVhcFJEJGtlx5rUdYfir8IuoSSlacKyCenuhVV7RXUVLj46TbNcYVsXDucSRMiPLbWyy8lakpUAckDpgoH31TlKoNquNzUU2+BKlqHUMMqcI+4VK7bwj1jcCCu3tw0H68p5KfwGVfhVXKK7YohVeheClw9s0EmN0MKS418jhef75+6o1bOAizyqut9SNvebis5+5aiP8NWfpfS9t0laRbbYlzw+cuLW4rmW4o4GSdh0AGwHSsZzjNUiyTQ91qU1vRiumyhxKK0LdKMVjlqykVcRN4VAbpTy0coqdiNTilFdAmtsCs7VVsskAFZrFM+r78nTOlbhdjgrYa/VAjILhPKgfDmI+VVLEJ19rG63S+p0PpAkznfdlyUHHhDGSkK7YG6j26DepBozhrZNIsNveEmZcsZXLdTkpP7A+qPhv5mmfg5pwwbC5qKaC5cbuorLi91BvO2/7Ryo+fu+VWNmgNqRotNvbubtzRDZE11ISuRyArIAwBnqBt0FKuajNAbVH9aaTi6x0+7bXyG3QeeO9jJacHQ/A9CPI+eKf80UB5z0tqq9cKtQyLTdoji4inMyI2dwegcbPQ7D4KAHTAIvyyX+1ajgJm2ma3JZP0uU+8g+Sh1SfQ0h1Zouz6xgiPc2SHW8+DJb2caPoe49Dt896pi6cMNa6NnGdYnXpaEA8siAopdxtspvOd/Icw2oD0NRXndjjFrmzqMaelh91HUTYpQsfEJKa6PcddWutlKI9sZJ+shhZI/iWRQF+y5bMOOt55xKEIGSpSgAB5knoKpLiHxURLaetOn3ioOZTImp2yOhSj0/a+7zqP/o3iNxCeT7SifIZJB53x4DA9QMBJ+QJqzND8ILbpxxu4XdbdxuKCFIHL+pZV5gH6RB7n02BGaAbuEHDp21BOpLyyUSnEYiMLG7ST1WryURsB2BPntbNYzRmgM0Vis0AUUVgmgDNGa0KsVzU6BUWWUWyBcZtQKt2lUWiLzKmXdzwkpRkq8MYKsDvk8qcd+Y1KdI2JOmtKwLSAOdhrLpG+XD7yz95PyxTZdNHQLtrK36llSXluQUgIjKwW8jJSR3BCjzd8kCpKHQe9Q2TozqagOvuFzWs7kxcmbj7FIQ2GnOZrnStIJIPUYIyfjt0xU8Cga2rFpp2hRV9u4FWGPyKuFxmzVJ6pRytIV8tz+NSq3cPdJWsJ9msMQqSchb6fGUD55XnFSfFGKzlGcu2ODihpLaAhCQhI6JSMAVuE1vis4qFhFmoFbAVnFGK2jCiLNqKKK3KhRRRQGDWpNZNc1KxUN0SlZsVVjnpOt3Fcy961m5mqxsWc4qG8UNN3jVmnWLdaFMgpkB10OuFHMAkgDpvuc7+QqTJkpUpSQsEp2UAdx8a38am4eM2hx2bfAjwmBysxmktIA7JSAB+Vbl0edJ1vetNt1vcKzwlzJz4aaTtk7lR8gO59Kq5llj+R58UedbJczVao4t2sv8AKq3TUtZ+n7hI9cZ/zqaWm8QrxCRMgSEvMr2yNiD5EHcH0NLa7I1i+h6Cs1sDXBtWa7A1qnZlJUb1zeeajsrefdQ00gcylrUEpSPMk9Kb9Qy7tCsz8iyQGp81AyhhxzkB9R5n0yM+deZdT6v1DqWUsXmY6UoWcRQORtsjtyeY6ZOT61Yqeo2X4N1htyGS1KjOjmQvAUlQ8x5ihuJEYVzMxWWz5obAP4UlssIWqwW+3/8AKxW2jnuUpAP5UpW7iqtlWzsXPWseIKSKfx3rT2gedU3KbC8LrYLpAl/PeuyHc96lSJUhWDms1xSvNdArarpl0zJNaLXihSsUmecwKhs1hGwdex3pE7LCQSVAAbkmklyuTEJhb8h1Lbaeqj/5uari/amkXdSmWuZmJ9jO6/3v5fnWfMnwdT1xq5dkrk8QLczN8BCHXmgcKfRjl+Q7j/wZqQxLkzKZQ8w6lxtYylSTkGqXpwtN6l2d7nYVzNqOVtKPuq/kfWrOHHBlDMr+voudp/PelSF5qJ2S+xrozzsL94fTbV9JHx/nUhYdyKqn8mmTGqtC8b1tiubasiuorRI5HwYxWaKzU0VMUYrNFSAooooAooooDRXSk7qsV3V0pM8Kzmaw7IDr/Wz9icRbbbyiY4jnW6pPMGknIGAdio4PXpjpvVdo1NfJT4RI1BMZbdPK454isIHc8qf8qduJ0N6Pq5UhYV4UtlCm1Hp7oCVAfDAP9oVEKmMVRE5PYtzQkC0WtmSuDeG7lKlFJeWlQB2zj3Mkj6R3O5qSXS9RLNb1zpzhbZQQCQkqJJOAABVGtxgpCT7KXSjfxIrvMoepTvj+7U60M9FvNvnWu4Sn7klKkr8CWjIbSDtg8x7jzGMfGsZwr6mzbHNS+lI6z+LMNOUwba+6c4BfWlsH5DmP5VENSXiXfpDE+c2poNnwVR05Hh/WyAe6knr35fhUwvupLPpbmgWOBFNwPukNNAJbJ6cxG6lfs9fPHeH3BuTDW7+nxJen3FCXQ0CElI5sJUo4PvbEBIGwO+OlWx13VFMl9XY3yLYWZCm0y4qkDcLU6EnBGQcHfoR0BqTcMLg7E1QqClzmYltKBAzgqTuFfcFD51H5zC3IYcVGDLjHKkNlzLnhAYytPXrjfA6+gqWcLLE85PcvbqClhtBaYJH01H6RHoBkfE+hrSdaszheyotpk0qT0pKyKVJ6VWBbJ2RniPqNemNFTJrC+SU6AxGOcELV3HqBzK/s1C9L8JLVL0hapdw8Rq5rcTMU4nf3CQQ0pJ7coHqCT22PfjgpUk6btJJDcyWsqI7Y5Ej/ALhqzHMIHKkAJTsAOwrRujFujR1zcmkL8lKEqUpQSlIySTgAVu+5jNRHiFp69XDT5lxJrLcRhCnpMZZ5CtIGc8/Q4A+icDvnOBWPMnSMeZOkIbzxQtkIrRb2l3BaQffSrkb/AItyfkMetWBFt6ZERl9TqgXEJXgAbZGa862q0zL3OTBgNJceWCrC1pQEpHUkk9AN6dre5dZUiXEc1oqAqKeRtT1yeDLxBI9xSSdttjjoRirqETT24k3b4k29m7yrfcI7sYR5LjIfSedB5VlOSBuM48jUyhzmZTCH2HUOtODmQtCgUqHmCK89OMy1RkXB9l/wpK1BL7iThxfVQ5j1Pn86szhbYL57Eq5CWym1vhXhx+bnUtYJBIxsjcY7k9wNjVXCuUVljrlFktOZpQlWRTYw4eh2NLm1bUjKxBnRxW1N0x7kQpR7DNLXDtTTcT+oc/dP5Umz0cCsqW53uTfHhJfcBbO7aEH3Uj08/jSOmG3vyI0YOpbWuOnlCzynlST036A09MvtyG+dtWR3HcVtVHI23yy2NH6W07M03HkuRWpjzyMvLc3KVd0j7OOm3xqvNQxIcDUE2Lb3PEitOYbPNzY2BIz3wcj5UgQ442FBtxaAsYUEqI5h6+daEhIydgKEHaNKfhyEyIzqmnUdFJ/83FWrpq6LulojzHAlK3AoKCemQopOPuqs7Ppu76makOWxpHhR9lLcXy8ysZ5R6/h0yRmpvoJWdLQiOh8T/uKrOfydPj221/QnLKsilKaRRzsKWpq0TPIqZtRRRVjIKKKKAKKKKAKKKKA0Iri4nIrua1UnNVastF0MF7scC+QzEuEcPN55knOFIPmkjcGoDP4VeGvxLXc9xuG5bYUCfVQH+k1a6280mdarF7R6Ohay7Kfh6BuT9yMe5Q24zIQVCZFcGOYdByk/6RU9tNtbtFvaiIcU8pA955zHOs5PX78D0p2dRiqz1TquVPfettrMmG9DkHmWlzkLoScH4AHffYjc9Kye+V6mq9vCtiT23S1nt11kT2EKclLWV5dUFeCVbnlGNs5O5yfWnK5WxF0gPR+YNOLbUht8JBU0SMZH/wDRVTw787abxIuUN32iXJSfEBB8MqO6vVWD06YHerC0Zq5vULZjSQhme2OZSE5CXE/aTn8RSeKcXtdiGXHJa1RzsPDe225RdmuKuDqklKgtPK3g9fd3z8yfhU4jx0NNpbbQlCEjCUpGAB5AVhlFLG0VpFOXLM5NR4RltOK7CsAYrbFbpUc0nZWfHG3vO6ZhXaOD4ltlAlQ+ole2f4gj76mltujF6s8S6RjlqWyl0emRuPiDkfKlt0t8a7W2Tb5jfiR5LZbcT6EdvI+RqpNJ3eTw71C9ovULuITq/EgzFbIHN0O/RKsb/ZVnPUkJcozlyicamuqrNZJdxShC1sIyhK88qlEgAHHbJFQDWPExWptOM22PEchLcXzTQVgpITgpSk9SCdzkD6IG4NS7iFHW/o+4IT1SELPwStKj+ANU3FdXFkx5oaKktPJUMjCVFBCinP3Z8siqY+mVx9MUXSRapDUFu1xFtJZjBL7rp9590klSsAkAb4HfHXthDThfX5Ey8yJ8mGuGqcr2lDSwfoKJwQSBlJwcHG9N9aGo52uTNlhrT/6SXHgTpLaVpUOdCVFWArHbc74Iz36VKdH6xVoKZd7RcW3ZMdt1YbS1jIeSrlOMnZKgM57YGxzUJhstSJ0dh91LLLryEOOqIAbSVAFRz5DJ+VdZ8WOzcJrVtU7IhRnFBDxAVlsK5QslIwAdsHYbigLp0tqJWprcbkuOiOtTy0qaQoqCcHbc9diKkzR2qv8AhcwpvTK3D0elLWn4AJT+aTVgMjasF9zOdfczov6NNNxT+oc/dP5U8EZFI5LXMDtmrSXB6OCVFUcPtX2G3aWkWW+Dw2zzL3aK0voUkZScA+9tjfqMVAWHlx1hbSlDH2tyR6+dSnVuhJFhU5LghUi3g5IxlbA9fNI8/v8AMq9EaIt+qrHOkPzHmZTb/hNeGRyo91KgpQI3BJI6jptvWye3RzSg4OmM0aWmQwXOUpKdlCtozEm6zmYcZHO8+sIbQPM+f86Sw2Vx2pbDoAcadUhYByOYbH8RUmt9jvdis8fWjJjobYcSpttzJUpKjyAkeR5sdc4OaEC6XL1Bw6iP2BLkRSZ6fHEhsKKkEjkVjON/dHUevwkWgkf+1oWBtlz/ALiqh3hXrX16VNklCEgBCnQghtpI+qkZyTuTjPfcirOslsatkBiGxnw2U4BV1Pck+pOTWc2nwdWBONyfQ8RxsKWJpOynApQmrRMcjtm1FFFWMwooooAooooAooooDFYxW1FAaEVwcRtSk1yWM1WSLxZFdZ2l68aZmwo5UHVI5kJB+mUnPKfjjHzqmEDwlxpEpXguI91bbiFcziBgdMdwSnfHT416GeRVSa30JLYnvXS0x1SI76it1hsZW0o9SB1KT123GfLpnB06ZpkjsrRDzIWLcAy2hkKcKXPDByRgEAkknB97bONqc9DNuua0tvhA5StSlEdk8is5+W3zpsjWe5zHwxGt0p1wnHKGjt8Sdh86tjQujDp5pcuYULnvJ5Ty7hpHXlB7knGT6DyybzkkikItuyZsp6UsQNq4NJxShNVgi2Rm4FFFZrUxNFVHdVaTtOrIbca6MKV4K+dp1s8q0dMgHyIGCP8AMAiRqG1cVpzVWVYxybfGMD2D2dHsvheD4OPd5MY5fhjakmr7FZ7poRyNmLbmoiPEjLVyttsLT0HkAclJ9D54p8ebzUY1XpZjUlvTHdcUy60orZcG4QrGN09x+PrWSerMk9XyVExPF2VbYN6uK4sGG0ppp4R/FUyk7gED3lAHAx2HSsxrKzLukiG3fLWyywdpct4stujOPcBBJPpW140terIpftMJa205w8yCts/MdPnirRh8ItNyITDy37hzONpUcPJxkjP2a2Tvo3TT6KoZlwI1mlxF25Eie+4AmWteUstjB9wD6xIO/kfjm3OFdqtkDSS56ZDEmRN96UUkK8MAe60R5gHcHuo9sVVv9FbpMvc2FbYL62WJTrSHXByoCUrKQSo4B2Hb7qsvR+jWtONrdW74819IS64NkgA5CUjy9TufTpVZTSKymkSKBDjRGwzDjNxmEklDLSQlKMknAA6bmnVpO1cGWsUsbTWcEZxRsE7VydbyKUAbUKTkVrR0QlQzSI2c7VAb3pC4Wx9+6aSkuwpDicPRmVcqXR+z2B9OnljvaDjWe1JXIwPas6ado7FOM46yPPUFK0RpKXUrS4lZCwsEKB75zvn41YVoi3zUOn4dtuqkx7TGCfDbQgpdkBP0eY52SO2wJx8DUwkabtsqcia/DbW+joojr5ZHQ47Z6U4IigHpVnJvozhjjF3LkQwbe1GZQyy0lttAwlKRgAU7MtYArZtnHalCEYqIxJyZbMoTgV0FYArNanK3ZmiiihAUUUUAUUUUAUUUUAUUUUBg1oaKKhko4rSKTqSKKKwkdEDXlFdUJFFFVRaQoQBXUUUV0ROeRtRRRVihiuahRRUMhnFaRSZxA8qKKykZSEy0JzXPkTRRWLMmboQnNKG0J8qKKtEtEVISK7pFFFbo2R0oNFFXLmpArmUiiioZdGvKKyEiiioLM6ACthRRUlGbUUUVJUKKKKAKKKKA/9k=" alt="Thumbnail: Competitive Pokemon may be Impossible to Explain">
+      <div><b>Competitive Pokemon may be Impossible to Explain</b><span>Aaron Traylor · why expert judgment resists being written down (layers 3–5)</span></div></a>
+    <a class="vid" href="https://www.youtube.com/watch?v=VSAeOI0CLx0" target="_blank" rel="noopener">
+      <img src="data:image/jpeg;base64,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" alt="Thumbnail: Bots are Better than Pros at Pokemon. Now What?">
+      <div><b>Bots are Better than Pros at Pokemon. Now What?</b><span>ck49 · what learned bots mean for human play (layer 4 and the RL row above)</span></div></a>
+  </div>
+</section>
+
+<section id="path">
+  <span class="eyebrow">A weekend, in order</span>
+  <h2>Reading path</h2>
+  <ol class="path">
+    <li><b>Saturday morning, layers 1–2.</b> Open the <a href="https://calc.pokemonshowdown.com/" target="_blank" rel="noopener">damage calc</a> and run three calcs you think you know. Then do <a href="https://setosa.io/conditional/" target="_blank" rel="noopener">Conditional probability, visually</a> (10 min) and <a href="https://www.3blue1brown.com/lessons/bayes-theorem" target="_blank" rel="noopener">3Blue1Brown on Bayes</a> (15 min).</li>
+    <li><b>Saturday afternoon, layer 3.</b> Read <a href="https://sahovic.fr/algorithmic-pokemon-teambuilding.html" target="_blank" rel="noopener">Algorithmic Pokémon Teambuilding</a>: strength, synergy and matchup as separate terms. Then skim the <a href="https://www.smogon.com/forums/threads/good-vgc-cores.3684842/" target="_blank" rel="noopener">Smogon VGC cores thread</a> and note every core that needs three pieces.</li>
+    <li><b>Sunday morning, layer 4.</b> Read the rock-paper-scissors part of <a href="http://modelai.gettysburg.edu/2013/cfr/cfr.pdf" target="_blank" rel="noopener">Neller &amp; Lanctot's CFR tutorial</a>; it is the toy above with the code. Then <a href="https://www.quantamagazine.org/in-game-theory-no-clear-path-to-equilibrium-20170718/" target="_blank" rel="noopener">Quanta on why equilibria are hard to reach</a>.</li>
+    <li><b>Sunday afternoon, the bots.</b> Abstracts and figures only: <a href="https://arxiv.org/abs/2503.04094" target="_blank" rel="noopener">PokéChamp</a> (LLM + minimax), <a href="https://arxiv.org/abs/2506.10326" target="_blank" rel="noopener">VGC-Bench</a> (doubles, team diversity), <a href="https://arxiv.org/abs/2504.04395" target="_blank" rel="noopener">Metamon</a> (offline RL). Finish with the <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener">Bitter Lesson</a> as the counterargument to building a graph at all.</li>
+    <li><b>Then build one query.</b> In <code>pokemon-core-lab</code>: for each mechanism edge that threatens your team, multiply by its usage weight and list the top five real threats. Check the top one in the engine.</li>
+  </ol>
+</section>
+</main>
+
+<script>
+// Bayes toy
+(function(){
+  const pr=document.getElementById('prior'),cu=document.getElementById('cue');
+  function upd(){
+    const p=pr.value/100, lr=Math.pow(2,cu.value/10);
+    const o=p/(1-p)*lr, post=o/(1+o);
+    document.getElementById('priorV').textContent=Math.round(p*100)+'%';
+    document.getElementById('cueV').textContent='×'+(lr>=1?lr.toFixed(1):lr.toFixed(2));
+    document.getElementById('post').textContent=Math.round(post*100)+'%';
+  }
+  pr.addEventListener('input',upd);cu.addEventListener('input',upd);upd();
+})();
+
+// Regret matching toy
+(function(){
+  const A=[[-2,1,2],[-1,2,-1],[1,-1,-1]];
+  const me=['Quiver Dance','Rage Powder','Protect'], them=['Attack Volcarona','Attack partner','Set up'];
+  let R1,R2,S1,S2,t;
+  function reset(){R1=[0,0,0];R2=[0,0,0];S1=[0,0,0];S2=[0,0,0];t=0;draw();}
+  const strat=R=>{const p=R.map(r=>Math.max(r,0)),s=p.reduce((a,b)=>a+b,0);return s>0?p.map(x=>x/s):[1/3,1/3,1/3]};
+  function step(n){
+    for(let k=0;k<n;k++){
+      const p=strat(R1),q=strat(R2);
+      for(let i=0;i<3;i++){S1[i]+=p[i];S2[i]+=q[i];}
+      const u1=[0,1,2].map(i=>A[i].reduce((s,a,j)=>s+a*q[j],0));
+      const u2=[0,1,2].map(j=>-A.reduce((s,row,i)=>s+row[j]*p[i],0));
+      const v1=u1.reduce((s,u,i)=>s+u*p[i],0), v2=u2.reduce((s,u,j)=>s+u*q[j],0);
+      for(let i=0;i<3;i++){R1[i]+=u1[i]-v1;R2[i]+=u2[i]-v2;}
+      t++;
+    }
+  }
+  function bars(el,label,names,S,color){
+    const tot=t||1;
+    el.innerHTML='<span class="eyebrow">'+label+'</span>'+names.map((n,i)=>{
+      const v=t?S[i]/tot:1/3;
+      return '<div class="bar" style="--c:'+color+'"><span>'+n+'</span><div class="track"><div class="fill" style="width:'+(v*100).toFixed(1)+'%;transition:width .3s"></div></div><span class="v">'+(v*100).toFixed(0)+'%</span></div>';
+    }).join('');
+  }
+  function draw(){
+    bars(document.getElementById('mine'),'Your average strategy',me,S1,'var(--l4)');
+    bars(document.getElementById('theirs'),'Their average strategy',them,S2,'var(--l5)');
+    document.getElementById('iters').textContent=t.toLocaleString()+' rounds';
+  }
+  document.getElementById('run').addEventListener('click',()=>{
+    let done=0;const go=()=>{step(1000);done+=1000;draw();if(done<20000)requestAnimationFrame(go);};go();
+  });
+  document.getElementById('reset').addEventListener('click',reset);
+  reset();
+})();
+
+// Concept cards
+(function(){
+  const L={1:['Mechanics','var(--l1)'],2:['Beliefs','var(--l2)'],3:['Interactions','var(--l3)'],4:['Decisions','var(--l4)'],5:['Team value','var(--l5)'],0:['Foundations','var(--muted)']};
+  const W='https://en.wikipedia.org/wiki/';
+  const C=[
+    {l:0,t:'Big-O and reductions',pre:'Functions, counting',what:'How cost grows with input size. A ≤ₚ B means "A translates cheaply into B, so B is at least as hard".',hook:'Why nobody enumerates all ~10^354 first-turn states.',alt:'Empirical scaling: just measure how long the search takes.',links:[['Big O notation',W+'Big_O_notation'],['Polynomial-time reduction',W+'Polynomial-time_reduction']]},
+    {l:1,t:'Simulator as ground truth',pre:'Reading a battle log',what:'Rules live in code; the engine resolves order, abilities, items and field exactly.',hook:'Grass types ignore Rage Powder; Stalwart ignores redirection. The engine never forgets either.',alt:'Hand-written rule lists or an LLM recalling rules. Both drift.',links:[['Showdown sim protocol','https://github.com/smogon/pokemon-showdown/blob/master/sim/SIM-PROTOCOL.md'],['Damage calculator','https://calc.pokemonshowdown.com/'],['poke-env (Python bot API)','https://github.com/hsahovic/poke-env']]},
+    {l:2,t:'Conditional probability and Bayes',pre:'Fractions, expected value',what:'Pr(A | B): how likely A is once you know B. Bayes turns a prior plus evidence into a posterior.',hook:'Pr(Stalwart | Archaludon) = 2.4%. Pr(Quiver Dance | Volcarona) ≈ 52% before preview cues.',alt:'Frequentist counting only; or worst-case thinking (assume every possible set).',links:[['Conditional probability, visually','https://setosa.io/conditional/'],['3Blue1Brown: Bayes theorem','https://www.3blue1brown.com/lessons/bayes-theorem'],['Smogon usage stats','https://www.smogon.com/stats/']]},
+    {l:2,t:'Information sets and POSGs',pre:'Game trees',what:'An information set is all the states that look identical to you. A partially observable stochastic game has hidden info, chance and simultaneous moves.',hook:'"I see Incineroar but not its item" is one information set covering every item it could hold.',alt:'Perfect-information games (chess), where minimax alone works.',links:[['Information set',W+'Information_set_(game_theory)'],['Stochastic game',W+'Stochastic_game'],['POMDP',W+'Partially_observable_Markov_decision_process']]},
+    {l:3,t:'Knowledge and property graphs',pre:'Tables and joins',what:'Nodes and typed edges with properties, queried by pattern.',hook:'Species —LEARNS→ Move; Usage —OBSERVED_ABILITY→ Stalwart with weight 0.024 and a snapshot date.',alt:'Relational tables (same facts, joins instead of traversals); or no explicit store, an end-to-end model.',links:[['Neo4j: what a graph DB is','https://neo4j.com/docs/getting-started/graph-database/'],['Knowledge graph',W+'Knowledge_graph']]},
+    {l:3,t:'Hypergraphs and n-ary relations',pre:'Graphs',what:'An edge that joins three or more nodes at once.',hook:'Trick Room setter + redirector + slow attacker form one plan. Remove any one and the plan is gone.',alt:'Pairwise synergy scores summed up (Sahovic-style). Simpler, and misses three-way effects.',links:[['Hypergraph',W+'Hypergraph']]},
+    {l:3,t:'Production rules and Rete',pre:'If-then logic',what:'IF conditions THEN conclusion, matched efficiently against a changing set of facts.',hook:'IF opponent has Grass type AND my plan uses Rage Powder THEN flag "redirection leak".',alt:'Expert systems were the precursor; learned models are the opposite camp.',links:[['Production system',W+'Production_system_(computer_science)'],['Rete algorithm',W+'Rete_algorithm'],['Expert system',W+'Expert_system']]},
+    {l:3,t:'Truth maintenance',pre:'Production rules',what:'Track which conclusions rest on which assumptions, so changing one assumption retracts only what depended on it.',hook:'Assume "their Archaludon is Stamina". Learn it is Stalwart, and only the plans that relied on redirection get rechecked.',alt:'Recompute everything from scratch each time.',links:[['Reason maintenance',W+'Reason_maintenance'],['Argumentation framework',W+'Argumentation_framework']]},
+    {l:3,t:'Causal models and counterfactuals',pre:'Conditional probability',what:'Separate "seen together" from "makes happen". A counterfactual asks what would change if you intervened.',hook:'Swap one slot, replay the same opponents, compare. That is the causal test for "this member makes the team better".',alt:'Correlation from usage and win rates, which Simpson\'s paradox can flip.',links:[['Causal model',W+'Causal_model'],['Simpson\'s paradox',W+'Simpson%27s_paradox'],['Abductive reasoning',W+'Abductive_reasoning']]},
+    {l:4,t:'Normal-form games and mixed strategies',pre:'Expected value',what:'A payoff matrix for simultaneous choices. A mixed strategy is a probability for each action.',hook:'Protect vs. attack vs. set up, every turn.',alt:'Sequential games, where you see their move first.',links:[['Normal-form game',W+'Normal-form_game'],['Zero-sum game',W+'Zero-sum_game'],['Expected value',W+'Expected_value']]},
+    {l:4,t:'Nash equilibrium and PPAD',pre:'Mixed strategies',what:'Strategies where neither side gains by changing alone. One always exists; finding it is PPAD-hard in general.',hook:'Why "unpredictable" is a real property of strong play, not a vibe.',alt:'Exploitative play: abandon equilibrium to punish a specific opponent\'s habits.',links:[['Nash equilibrium',W+'Nash_equilibrium'],['PPAD',W+'PPAD_(complexity)'],['Quanta: no clear path to equilibrium','https://www.quantamagazine.org/in-game-theory-no-clear-path-to-equilibrium-20170718/']]},
+    {l:4,t:'Regret matching and CFR',pre:'Nash, information sets',what:'Shift weight toward actions you regret not playing; the average converges toward equilibrium. CFR does it at every information set.',hook:'The toy above is exactly regret matching.',alt:'Search with a value estimate (minimax, MCTS); or RL self-play.',links:[['Neller & Lanctot: CFR tutorial (PDF)','http://modelai.gettysburg.edu/2013/cfr/cfr.pdf']]},
+    {l:4,t:'Search: minimax and MCTS',pre:'Game trees',what:'Look ahead through possible moves and score the leaves.',hook:'PokéChamp puts an LLM inside minimax: the LLM proposes moves, search checks them.',alt:'Pure policy: act from learned intuition with no lookahead.',links:[['Monte Carlo tree search',W+'Monte_Carlo_tree_search'],['PokéChamp (arXiv)','https://arxiv.org/abs/2503.04094'],['PokéLLMon (arXiv)','https://arxiv.org/abs/2402.01118']]},
+    {l:5,t:'Ratings and matchup models',pre:'Logistic function',what:'Turn win/loss records into strengths. Bradley–Terry: Pr(A beats B) from two strengths.',hook:'Sahovic splits team value into strength + synergy + matchup.',alt:'Full matchup matrix, no single number. More honest, needs more data.',links:[['Algorithmic Pokémon Teambuilding','https://sahovic.fr/algorithmic-pokemon-teambuilding.html'],['Bradley–Terry model',W+'Bradley%E2%80%93Terry_model'],['Elo rating',W+'Elo_rating_system']]},
+    {l:5,t:'Learned intuition (RL at scale)',pre:'Search, value functions',what:'Train a policy and value network on huge numbers of games; intuition comes from data, not rules.',hook:'Metamon reaches human-level singles from replays; VGC-Bench targets doubles across many teams.',alt:'Everything above: explicit structure you can inspect.',links:[['Metamon (arXiv)','https://arxiv.org/abs/2504.04395'],['VGC-Bench (arXiv)','https://arxiv.org/abs/2506.10326'],['The Bitter Lesson','http://www.incompleteideas.net/IncIdeas/BitterLesson.html']]},
+  ];
+  const fEl=document.getElementById('filters'),cEl=document.getElementById('cards');
+  let cur='all';
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  function render(){
+    fEl.innerHTML=['all',0,1,2,3,4,5].map(k=>{
+      const lab=k==='all'?'All':L[k][0], c=k==='all'?'var(--accent)':L[k][1];
+      return '<button type="button" data-k="'+k+'" style="--c:'+c+'" aria-pressed="'+(String(cur)===String(k))+'">'+lab+'</button>';
+    }).join('');
+    cEl.innerHTML=C.filter(c=>cur==='all'||String(c.l)===String(cur)).map(c=>
+      '<article class="card" style="--c:'+L[c.l][1]+'"><span class="k">'+L[c.l][0]+'</span><h3>'+esc(c.t)+'</h3>'+
+      '<p>'+esc(c.what)+'</p>'+
+      '<p><span class="k">Needs first</span><br>'+esc(c.pre)+'</p>'+
+      '<p><span class="k">In Pokémon</span><br>'+esc(c.hook)+'</p>'+
+      '<p><span class="k">Alternative / opposite</span><br>'+esc(c.alt)+'</p>'+
+      '<div class="links">'+c.links.map(([n,u])=>'<a href="'+u+'" target="_blank" rel="noopener">'+esc(n)+' ↗</a>').join('')+'</div></article>'
+    ).join('');
+  }
+  fEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cur=b.dataset.k;render();});
+  render();
+})();
+</script>

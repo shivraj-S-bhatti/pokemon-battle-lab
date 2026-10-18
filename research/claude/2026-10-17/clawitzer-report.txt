@@ -1,0 +1,79 @@
+Worked example: keeping Clawitzer alive and able to fire
+
+Pilot run on 2026-10-17. Format: VGC 2026 Reg M-C doubles (bring 6, pick 4, Open Team Sheets), Showdown Champions mod at commit 7244fe8. All sets are hypothetical, because the Reddit report could not be fetched from this container. They are legal per TeamValidator (exp/legality_matrix.txt). Code and raw outputs are in exp/.
+
+The objective, stated so that alternatives can compete
+
+Plan E: Clawitzer (Mega Launcher, Modest, 32 HP / 32 SpA, Mystic Water; Water Pulse / Dark Pulse / Aura Sphere / Protect) fires pulse attacks and is still standing. Score U = E[Clawitzer attacks over turns 1-3] + P(Clawitzer alive after turn 3), range 0 to 4.
+
+Clawitzer is slow (base 59 Speed, 79 Speed at 0 SP), and three threats dominate it here: Electric attacks, Grass attacks including priority Grassy Glide, and Fake Out.
+
+Alternatives (one lead partner each; Archaludon and Incineroar or Maushold in the back)
+Partner	Stages it acts on	Prerequisites	Predicted failure modes
+Indeedee-F (Follow Me, Psychic Surge)	S2 retarget, S3 priority block	Indeedee alive and acting; Clawitzer grounded	Fake Out (+3) on Indeedee before Follow Me (+2); spread moves; Stalwart; Indeedee dying mid-turn
+Maushold (Follow Me, Friend Guard)	S2, S4 (×0.75 to the ally)	the same; Friend Guard is passive	the same; Mold Breaker ignores Friend Guard
+Sinistcha (Rage Powder, Trick Room)	S2, S6	attacker not Grass or Overcoat	Grass attackers (Rillaboom) ignore Rage Powder; Stalwart; Trick Room costs the turn
+Raichu (Lightning Rod, Fake Out)	S2 for single-target Electric moves only, S1	—	Stalwart; spread Electroweb is not redirected; does nothing against Grass
+Mega Sceptile (Lightning Rod, Quick Guard / Upper Hand)	S2 for Electric, S3 priority block, S1	spends the Mega slot; Lightning Rod is live on the Mega turn; Quick Guard (+3) must move before an opposing Fake Out (+3), so Sceptile has to be the faster one (Thread 3's probe, Kingambit vs Incineroar)	non-priority Grass (Wood Hammer); Stalwart; Quick Guard shares the Protect counter
+Farigiraf (Armor Tail, Trick Room)	S3 priority block, S6	Trick Room only from turn 2	non-priority attacks on turn 1; Trick Room turns run out
+Pawmot (Volt Absorb, Fake Out)	S1 only for the partner; Volt Absorb is holder-only	Fake Out only on its first turn out	does not protect Clawitzer by having Volt Absorb
+Incineroar (Fake Out, Intimidate)	S1, S4 against physical attackers only	—	special and Grass attacks; Stalwart
+available to every row: switch Clawitzer to Archaludon	S0 exposure (Steel/Dragon takes ×0.25 from Grass and ×0.5 from Electric)	Archaludon in the back	gives up the turn; the value only shows over a longer horizon
+
+Opponent leads (sets revealed by Open Team Sheets; Stat Points drawn from two archetypes per Pokémon):
+
+L1 Rillaboom (Fake Out, Grassy Glide, Wood Hammer) + Rotom-Wash (Thunderbolt, Hydro Pump). Grass and Electric pressure, plus Fake Out.
+L2 Archaludon (Stalwart; Thunderbolt, Draco Meteor) + Incineroar (Fake Out, Darkest Lariat). Ignores redirection.
+L3 Pawmot (Fake Out, Electroweb, Supercell Slam) + Garchomp (Rock Slide, Dragon Claw). Spread pressure.
+What was calculated
+
+For each partner and each opponent lead, a matrix game: rows are our turn-1 joint actions (Clawitzer: attack A, attack B, Protect or switch; partner: 3-4 options), and columns are six plausible opponent joint actions. Each cell is the mean over 40 engine battles (seeds × SP archetypes), with turns 2-3 played by a scripted continuation. The value is the Hedge equilibrium value (duality gap ≤ 0.05). In total 8 partners × 3 leads × about 70 cells × 40 seeds × 2 continuations, about 68,000 three-turn battles, roughly 25 minutes on 4 cores. All runs had 0 invalid choices and all advanced the full horizon.
+
+Results (equilibrium U, adversarial "focus slot 1" continuation)
+Partner	L1	L2	L3	mean	worst	naive mean*	bootstrap rank (range)†	mean under greedy continuation (rank)
+Sinistcha	1.24	1.00	2.41	1.55	1.00	1.94	1 (1-1)	1.58 (1)
+Indeedee-F	1.25	1.20	1.52	1.32	1.20	1.70	2 (2-2)	1.29 (3)
+Maushold	1.10	1.16	1.37	1.21	1.10	1.46	4 (3-5)	1.23 (5)
+Raichu	1.01	0.90	1.62	1.18	0.90	1.34	3 (3-5)	1.28 (4)
+Farigiraf	1.12	1.01	1.24	1.12	1.01	1.54	5 (3-7)	1.19 (6)
+Pawmot	0.99	1.34	1.00	1.11	0.99	1.20	6 (3-7)	1.09 (7)
+Mega Sceptile	0.99	1.05	1.04	1.03	0.99	1.29	7 (5-7)	1.31 (2)
+Incineroar	0.99	0.57	0.97	0.85	0.57	1.01	8 (8-8)	0.73 (8)
+
+*Naive mean = our best row against an opponent who picks uniformly at random. The gap to the equilibrium value measures how much a mechanism depends on the opponent cooperating. †A parametric bootstrap (60 re-solves, each cell perturbed by its conservative standard error) is used for rank stability only. Its re-solves use fewer iterations and sit about 0.05 low, so they are not confidence intervals for the values.
+
+Value about 1.0 is the pivot floor: switching Clawitzer to Archaludon keeps it alive but fires nothing in this horizon. A partner is only worth its slot to this plan if it clears that floor.
+
+What the engine showed, cell by cell (focus continuation, 40 battles per cell)
+Cell	U	What happened
+Sinistcha Rage Powder vs L1 Wood Hammer into Clawitzer	0.00	Rillaboom is Grass, so Rage Powder does not redirect it; Clawitzer is OHKO'd before it moves
+Sinistcha Rage Powder vs L3 Supercell Slam + Dragon Claw into Clawitzer	2.05	both redirected; Clawitzer fires twice
+Sinistcha Rage Powder vs L2 Stalwart Thunderbolt + Fake Out	0.95	Stalwart ignores the redirect; Clawitzer fires once, then falls
+Raichu Lightning Rod vs L1 Thunderbolt into Clawitzer	1.03	Lightning Rod fired in 100% of battles, but the Grass attacks remain
+Raichu vs L2 Stalwart Thunderbolt	0.90	Lightning Rod never fired (Stalwart)
+Mega Sceptile Quick Guard vs L1 Fake Out + Thunderbolt into Clawitzer	1.00	Quick Guard and Lightning Rod both fired on the Mega turn; nothing answers the follow-up Grass hits
+Mega Sceptile vs L1 Wood Hammer into Clawitzer	0.00	non-priority Grass passes Quick Guard and Lightning Rod
+Indeedee-F Follow Me vs L1 Grassy Glide + Thunderbolt into Clawitzer	1.78	both redirected; Psychic Terrain replaced Grassy Terrain in 100% of battles (Indeedee's surge resolves second)
+Indeedee-F vs L1 Wood Hammer into Clawitzer	1.20	Indeedee takes Wood Hammer on turn 1 and dies on turn 2; redirection ends mid-turn, so Clawitzer is hit too
+Pawmot (Volt Absorb) Fake Out on Rillaboom vs Fake Out + Thunderbolt into Clawitzer	0.78	Thunderbolt hits Clawitzer; Volt Absorb only protects Pawmot
+Farigiraf Trick Room vs L1 Grassy Glide + Thunderbolt into Clawitzer	1.00	Armor Tail blocked the priority Glide in 100% of battles, but Thunderbolt still lands on turn 1
+Conclusions this pilot supports, and the ones it does not
+
+Supported in both continuations and by the bootstrap:
+
+Stage diversity beats one stage. Sinistcha (S2 + S6) is first under both continuations. Indeedee-F (S2 + S3) is second under the adversarial continuation, with the best worst case, and within 0.02 of second under the greedy one. Every single-stage protector sits near the pivot floor whenever its one stage is bypassed, which is what each "worst" entry shows.
+Each predicted counter showed up in the engine where it was expected: Grass beats Rage Powder, Stalwart beats Lightning Rod and Follow Me, and a redirector dying ends redirection. Volt Absorb on the partner protects only the holder, and Pawmot ranked 6th or 7th.
+Fake Out + Intimidate (Incineroar) is the worst protector of this plan (last in every run), even though it is the most common VGC support. Intimidate does nothing against special or Grass attackers.
+
+Not resolved:
+
+The middle ranks (Maushold, Raichu, Farigiraf, Pawmot, Mega Sceptile) swap places between continuation policies (Kendall τ = 0.57 between focus and greedy). Mega Sceptile moves from 7th to 2nd.
+The objective changes the answer. Adding opponent HP removed to U (the "tempo" objective) puts Mega Sceptile 1st and Pawmot 2nd, with τ = 0.00 against the plan ranking. Protecting Clawitzer and winning the exchange are different questions. The team builder has to choose which one it is asking.
+Trick Room and the pivot are undervalued at H = 3 with scripted turns 2-3. Deciding them needs a longer horizon or a value estimate (see the experiment proposal).
+Opponent options were six hand-picked joint actions per lead, so the equilibrium is only relative to that set. Lead weights are uniform because no dated Champions lead data is in hand yet.
+Calculations that discriminate the alternatives
+Grass and Electric damage rolls on Clawitzer, and on each redirector, across SP archetypes. These decide whether the redirector survives the turns the plan needs.
+The priority and speed brackets on the turn in question: Fake Out (+3) > Follow Me / Rage Powder (+2) > Grassy Glide (+1 in Grassy Terrain only); and which surge resolves last in a speed tie.
+The stage and bypass check for each threat: is it single-target, does it come from a Stalwart, Mold Breaker or Grass-type attacker, does it have priority?
+A depth-limited matrix game per opponent lead, reporting both the equilibrium and the naive value; the gap between them measures exploitability.
+Sensitivity of the ranking to the continuation policy and to the objective. A difference that does not survive both is reported as unresolved.
