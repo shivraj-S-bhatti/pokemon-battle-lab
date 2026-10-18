@@ -7,6 +7,7 @@ const read = p => JSON.parse(fs.readFileSync(new URL(p, import.meta.url)));
 const B = read('./board.json');
 const staraptor = read('./checks/staraptor-memento.json');
 const G = B.graph;
+if (G !== 'gk_board') throw new Error(`Refusing to rebuild ${G}: this loader only owns gk_board.`);
 const toID = s => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
 
 const c = await connect();
@@ -17,12 +18,12 @@ const mon = name => q('MERGE (m:Mon {id:$id}) ON CREATE SET m.name = $name', { i
 for (const s of B.sources) await q('CREATE (:Source {id:$id, label:$label, path:$path})', { id: s.id, label: s.label, path: s.path ?? '' });
 
 for (const p of B.plans) {
-  await q('CREATE (:Plan {id:$id, title:$title, format:$format, status:$status, summary:$summary, verdict:$verdict})',
-    { id: p.id, title: p.title, format: p.format, status: p.status, summary: p.summary, verdict: p.verdict });
+  await q('CREATE (:Plan {id:$id, title:$title, format:$format, status:$status, summary:$summary, verdict:$verdict, concessions:$concessions})',
+    { id: p.id, title: p.title, format: p.format, status: p.status, summary: p.summary, verdict: p.verdict, concessions: p.concessions });
   for (const u of p.uses) { await mon(u.mon); await q('MATCH (p:Plan {id:$p}), (m:Mon {id:$m}) CREATE (p)-[:USES {role:$role}]->(m)', { p: p.id, m: toID(u.mon), role: u.role }); }
   for (const k of p.conditions)
-    await q('MATCH (p:Plan {id:$p}) CREATE (p)-[:NEEDS]->(:Condition {id:$id, text:$text, status:$status, decisive:$decisive})', { p: p.id, ...k });
-  for (const [list, rel] of [[p.targets, 'TARGETS'], [p.acceptedLosses, 'ACCEPTS_LOSS'], [p.notChanged, 'UNCHANGED_BY_PLAN']])
+    await q('MATCH (p:Plan {id:$p}) CREATE (p)-[:NEEDS]->(:Condition {id:$id, text:$text, status:$status, decisive:$decisive, evidence:$evidence})', { p: p.id, ...k, evidence: k.evidence ?? '' });
+  for (const [list, rel] of [[p.targets, 'TARGETS'], [p.notChanged, 'UNCHANGED_BY_PLAN'], [p.weakAgainst || [], 'WEAK_AGAINST'], [p.costs || [], 'COSTS']])
     for (const t of list) { await mon(t.mon); await q(`MATCH (p:Plan {id:$p}), (m:Mon {id:$m}) CREATE (p)-[:${rel} {why:$why, status:$status}]->(m)`, { p: p.id, m: toID(t.mon), why: t.why, status: t.status }); }
   for (const t of p.threats) {
     await q('MATCH (p:Plan {id:$p}) CREATE (p)-[:BLOCKED_BY]->(:Threat {id:$id, name:$name, effect:$effect, status:$status})', { p: p.id, id: `${p.id}:${toID(t.name)}`, name: t.name, effect: t.effect, status: t.status });
@@ -33,14 +34,16 @@ for (const p of B.plans) {
 for (const p of B.plans) for (const a of p.alternatives)
   await q('MATCH (p:Plan {id:$p}), (a:Plan {id:$a}) CREATE (a)-[:ALTERNATIVE_TO]->(p)', { p: p.id, a });
 
-// Native calculator rows, attached to the plan they decide and the defender they test.
+// Native calculator rows, attached to the plan they decide and the defender they test, with set/field scope and a row locator.
+const setLabel = st => `${st.species} @ ${st.item} (${st.ability}) ${st.nature} ${Object.entries(st.evs).filter(([, v]) => v).map(([k, v]) => `${v} ${k}`).join(' / ')}`;
 for (const r of staraptor.rows) {
-  const id = `staraptor:${toID(r.target)}:${r.boost}`;
   await mon(r.target);
   await q(`MATCH (p:Plan {id:'memento-staraptor'}), (m:Mon {id:$m})
-           CREATE (p)-[:CHECKED_BY]->(k:Check {id:$id, question:$question, ko:$ko, fullDesc:$desc, status:$status, calculator:$calc})-[:AGAINST]->(m)`,
-    { m: toID(r.target), id, question: `Mega Staraptor ${r.move} at +${r.boost} Atk into ${r.target}`,
-      ko: r.kochance?.text ?? '', desc: r.fullDesc ?? '', status: r.status === 'calculated' ? 'native_checked' : 'native_partial', calc: staraptor.calculator });
+           CREATE (p)-[:CHECKED_BY]->(k:Check {id:$id, question:$question, ko:$ko, fullDesc:$desc, status:$status, attackerSet:$aset, defenderSet:$dset, field:$field, calculator:$calc, evidence:$ev})-[:AGAINST]->(m)`,
+    { m: toID(r.target), id: `staraptor:${r.id}`, question: `Mega Staraptor ${r.move} at +${r.boost} Atk into ${r.target}`,
+      ko: r.kochance?.text ?? '', desc: r.fullDesc ?? '', status: r.status === 'calculated' ? 'native_checked' : 'native_partial',
+      aset: setLabel(r.input.attacker) + ` +${r.boost} Atk`, dset: setLabel(r.input.defender), field: r.input.field,
+      calc: staraptor.calculator, ev: `workbench/board/checks/staraptor-memento.json rows[id=${r.id}]` });
 }
 
 const counts = await q('MATCH (n) RETURN labels(n)[0] AS l, count(n) ORDER BY l');

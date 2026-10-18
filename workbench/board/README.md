@@ -11,13 +11,13 @@ Edit `board.json` to add or revise a plan; rerun the loader. Mon nodes are keyed
 
 ## What it holds now
 
-- **Gholdengo Memento into Contrary Mega Staraptor** (rejected for now). Works, but Gholdengo moves after Staraptor, so +2 starts on Staraptor's second attack, and opposing Follow Me steals Memento. Native calc: at +0 Staraptor already OHKOs Rillaboom, Sneasler, Incineroar and Archaludon; +2 changes Garchomp (2HKO → OHKO), Pelipper and Gholdengo (3HKO → 2HKO); E7 adds Kingambit (37.5% → guaranteed OHKO). Revisit only for a team that must beat Garchomp and Kingambit.
-- **Alternatives:** Whimsicott Prankster Memento (should move first; hypothesis) and Gholdengo Memento into Malamar (rejected by E7: still only 2HKOs Kingambit at +2).
-- **Simple Beam Snorlax → Psych Up Mega Slowbro** (worth a test). E6's path search found it unprompted. Native calc: at +6 / +6 the strongest top-10 hit does 27.2-32.1%; Body Press OHKOs Rillaboom and Incineroar and has 75% on Sneasler. Accepted losses: five Ghost types immune to Body Press. Base Audino only (engine checked).
-- **Simple Beam Kommo-o Clangorous Soul, copied by Psych Up** (worth a test): +4 in all stats, Stored Power at 420 BP OHKOs every target checked, but without Soundproof Mega Gardevoir's Hyper Voice OHKOs Kommo-o during setup.
-- **Quiver Dance copied** (rejected): same pattern, no Defense, physical hits OHKO the receiver.
-- **E7 worth a test:** partner Swagger into Persim Unburden Sneasler (+2 makes Kingambit, Rillaboom, Farigiraf guaranteed OHKOs), Sash Reversal Rhyperior under Trick Room with Armor Tail Farigiraf, Beat Up into Justified Arcanine (+4 OHKOs Kingambit and Farigiraf), Scarf Ninetales Memento (moves before all of the top 15).
-- **E7 rejected, kept for history:** Audino Simple Beam into Torkoal (+4 Speed costs six Trick Room move-order wins for one KO).
+Opposing matchups a plan concedes are left `undecided` on every plan (`Plan.concessions`) until Shivraj selects them. `COSTS` edges are what our own side pays (a donor fainting, an item, a turn). `WEAK_AGAINST` edges are checked facts about the plan (Ghost types are immune to Body Press), not chosen concessions.
+
+- **Gholdengo Memento into Contrary Mega Staraptor** (engine checked, verdict undecided). With the tested spreads Staraptor attacks before Memento, so +2 starts on its second attack. Opposing Follow Me (tested with Clefable) wastes Gholdengo. Ordinary Fake Out cannot hit Gholdengo; base Scrappy Kangaskhan's can. Native calc over nine selected targets with each target's better move: +2 turns Garchomp, Kingambit, Pelipper and Basculegion into guaranteed OHKOs; Rillaboom, Sneasler, Incineroar and Archaludon are already OHKO at +0.
+- **Alternatives:** Choice Scarf Gholdengo (engine checked: Memento lands before the attack; costs the item), Whimsicott Prankster Memento (hypothesis; Grass type ignores Rage Powder but not Follow Me), Malamar (rejected by E7).
+- **Simple Beam Snorlax → Psych Up Mega Slowbro** (engine checked; viability unknown). Executed over four turns against opponents who Protected every turn: +6 / +6 copied and kept through Mega Evolution; base Audino only. Native thresholds on a neutral field pass (4HKO from the strongest top-10 hit; Body Press OHKOs Rillaboom and Incineroar). Setup under real pressure is untested.
+- **Clangorous Soul copied** (worth a test, with E7's Soundproof caveat) and **Quiver Dance copied** (rejected: no Defense).
+- **E7 worth a test:** Swagger into Persim Unburden Sneasler, Sash Reversal Rhyperior under Trick Room, Beat Up into Justified Arcanine, Scarf Ninetales Memento. **Rejected, kept for history:** Audino Simple Beam into Torkoal.
 
 ## Browser queries (http://localhost:4319, graph `gk_board`)
 
@@ -33,10 +33,10 @@ What decides each plan:
 MATCH (p:Plan)-[:NEEDS]->(c:Condition {decisive:true}) RETURN p.title, c.status, c.text
 ```
 
-Targets, accepted losses and matchups the plan does not change, with status:
+Targets, unchanged matchups, costs and checked weaknesses, with status (concessions stay on the plan as `undecided`):
 
 ```cypher
-MATCH (p:Plan)-[r:TARGETS|ACCEPTS_LOSS|UNCHANGED_BY_PLAN]->(m:Mon) RETURN p.title, type(r), m.name, r.status, r.why
+MATCH (p:Plan)-[r:TARGETS|UNCHANGED_BY_PLAN|COSTS|WEAK_AGAINST]->(m:Mon) RETURN p.title, p.concessions, type(r), m.name, r.status, r.why
 ```
 
 Threats and who carries them:
@@ -54,9 +54,9 @@ MATCH p=(a:Plan)-[:ALTERNATIVE_TO]->(b:Plan) RETURN p
 Native calculator results:
 
 ```cypher
-MATCH (:Plan)-[:CHECKED_BY]->(k:Check)-[:AGAINST]->(m:Mon) RETURN m.name, k.question, k.ko ORDER BY m.name
+MATCH (:Plan)-[:CHECKED_BY]->(k:Check)-[:AGAINST]->(m:Mon) RETURN m.name, k.question, k.ko, k.attackerSet, k.defenderSet, k.field, k.evidence ORDER BY m.name
 ```
 
 ## Numbers observed
 
-11 plans, 27 conditions, 11 threats, 16 native checks stored here (E6's calls are in `research/experiments/E6-boost-chains.md` and `.artifacts/experiments/E6/calc.json`; E7's 140 calls are in `research/experiments/E7-gimmick-outcomes.md` and `.artifacts/experiments/E7/outcomes.json`) (14 calculated; 2 Basculegion rows `native_partial` because Close Combat does not affect a Ghost type and the native description failed), 30 Mon nodes, 6 sources. Sets are `data/meta-sets.json` constructed candidates on a neutral field.
+12 plans, 32 conditions (each with an evidence locator where one exists), 11 threats, 36 native checks for the Memento plan (both Brave Bird and Close Combat per target at +0 and +2; 32 calculated, 4 `native_partial` where Close Combat cannot hit a Ghost type), 31 Mon nodes with sprites, 7 sources. Sets are `data/meta-sets.json` candidates on a neutral field. Rebuilding is refused unless the target graph is exactly `gk_board`. After a reload, hydrate sprites with `node scripts/experiment-sprites.mjs gk_board`.

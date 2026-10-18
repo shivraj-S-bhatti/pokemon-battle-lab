@@ -1,9 +1,11 @@
 {
  "calculator": "workbench/tools/calculator.mjs (native Smogon Champions, c1eb09b)",
- "sets": "data/meta-sets.json candidates (constructed, not observed)",
+ "format": "gen9championsvgc2026regmc",
+ "sets": "data/meta-sets.json candidate sets (marginal modes combined, not observed full sets)",
  "field": "neutral",
  "rows": [
   {
+   "id": "Rillaboom|Brave Bird|+0",
    "target": "Rillaboom",
    "move": "Brave Bird",
    "boost": 0,
@@ -46,7 +48,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -77,10 +79,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Rillaboom|Brave Bird|+2",
    "target": "Rillaboom",
    "move": "Brave Bird",
    "boost": 2,
@@ -123,7 +127,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -154,10 +158,170 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Rillaboom|Close Combat|+0",
+   "target": "Rillaboom",
+   "move": "Close Combat",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Close Combat vs. 2 HP / 0 Def Rillaboom: 118-141 (66.6 - 79.6%) -- guaranteed 2HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 2,
+    "text": "guaranteed 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Rillaboom",
+     "level": 50,
+     "ability": "grassysurge",
+     "item": "miracleseed",
+     "moves": [
+      "grassyglide",
+      "fakeout",
+      "woodhammer",
+      "uturn"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Rillaboom|Close Combat|+2",
+   "target": "Rillaboom",
+   "move": "Close Combat",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Close Combat vs. 2 HP / 0 Def Rillaboom: 237-279 (133.8 - 157.6%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Rillaboom",
+     "level": 50,
+     "ability": "grassysurge",
+     "item": "miracleseed",
+     "moves": [
+      "grassyglide",
+      "fakeout",
+      "woodhammer",
+      "uturn"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Sneasler|Brave Bird|+0",
    "target": "Sneasler",
    "move": "Brave Bird",
    "boost": 0,
@@ -200,7 +364,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -231,10 +395,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Sneasler|Brave Bird|+2",
    "target": "Sneasler",
    "move": "Brave Bird",
    "boost": 2,
@@ -277,7 +443,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -308,10 +474,328 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Sneasler|Close Combat|+0",
+   "target": "Sneasler",
+   "move": "Close Combat",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Close Combat vs. 2 HP / 0 Def Sneasler: 81-96 (51.5 - 61.1%) -- guaranteed 2HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 2,
+    "text": "guaranteed 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Sneasler",
+     "level": 50,
+     "ability": "unburden",
+     "item": "psychicseed",
+     "moves": [
+      "closecombat",
+      "direclaw",
+      "protect",
+      "fakeout"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Sneasler|Close Combat|+2",
+   "target": "Sneasler",
+   "move": "Close Combat",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Close Combat vs. 2 HP / 0 Def Sneasler: 162-191 (103.1 - 121.6%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Sneasler",
+     "level": 50,
+     "ability": "unburden",
+     "item": "psychicseed",
+     "moves": [
+      "closecombat",
+      "direclaw",
+      "protect",
+      "fakeout"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Incineroar|Brave Bird|+0",
+   "target": "Incineroar",
+   "move": "Brave Bird",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 32 HP / 0 Def Incineroar: 118-141 (58.4 - 69.8%) -- guaranteed 2HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 2,
+    "text": "guaranteed 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Incineroar",
+     "level": 50,
+     "ability": "intimidate",
+     "item": "sitrusberry",
+     "moves": [
+      "fakeout",
+      "partingshot",
+      "flareblitz",
+      "throatchop"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 32,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 2,
+      "spe": 0
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Incineroar|Brave Bird|+2",
+   "target": "Incineroar",
+   "move": "Brave Bird",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 32 HP / 0 Def Incineroar: 237-279 (117.3 - 138.1%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Incineroar",
+     "level": 50,
+     "ability": "intimidate",
+     "item": "sitrusberry",
+     "moves": [
+      "fakeout",
+      "partingshot",
+      "flareblitz",
+      "throatchop"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 32,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 2,
+      "spe": 0
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Incineroar|Close Combat|+0",
    "target": "Incineroar",
    "move": "Close Combat",
    "boost": 0,
@@ -354,7 +838,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -385,10 +869,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Incineroar|Close Combat|+2",
    "target": "Incineroar",
    "move": "Close Combat",
    "boost": 2,
@@ -431,7 +917,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -462,10 +948,328 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Kingambit|Brave Bird|+0",
+   "target": "Kingambit",
+   "move": "Brave Bird",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 32 HP / 0 Def Kingambit: 46-55 (22.2 - 26.5%) -- 23.5% chance to 4HKO",
+   "kochance": {
+    "chance": 0.234527587890625,
+    "n": 4,
+    "text": "23.5% chance to 4HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Kingambit",
+     "level": 50,
+     "ability": "defiant",
+     "item": "chopleberry",
+     "moves": [
+      "kowtowcleave",
+      "suckerpunch",
+      "ironhead",
+      "protect"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 32,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 2,
+      "spe": 0
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Kingambit|Brave Bird|+2",
+   "target": "Kingambit",
+   "move": "Brave Bird",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 32 HP / 0 Def Kingambit: 93-109 (44.9 - 52.6%) -- 24.6% chance to 2HKO",
+   "kochance": {
+    "chance": 0.24609375,
+    "n": 2,
+    "text": "24.6% chance to 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Kingambit",
+     "level": 50,
+     "ability": "defiant",
+     "item": "chopleberry",
+     "moves": [
+      "kowtowcleave",
+      "suckerpunch",
+      "ironhead",
+      "protect"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 32,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 2,
+      "spe": 0
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Kingambit|Close Combat|+0",
+   "target": "Kingambit",
+   "move": "Close Combat",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Close Combat vs. 32 HP / 0 Def Chople Berry Kingambit: 186-222 (89.8 - 107.2%) -- 37.5% chance to OHKO",
+   "kochance": {
+    "chance": 0.375,
+    "n": 1,
+    "text": "37.5% chance to OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Kingambit",
+     "level": 50,
+     "ability": "defiant",
+     "item": "chopleberry",
+     "moves": [
+      "kowtowcleave",
+      "suckerpunch",
+      "ironhead",
+      "protect"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 32,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 2,
+      "spe": 0
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Kingambit|Close Combat|+2",
+   "target": "Kingambit",
+   "move": "Close Combat",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Close Combat vs. 32 HP / 0 Def Chople Berry Kingambit: 372-438 (179.7 - 211.5%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Kingambit",
+     "level": 50,
+     "ability": "defiant",
+     "item": "chopleberry",
+     "moves": [
+      "kowtowcleave",
+      "suckerpunch",
+      "ironhead",
+      "protect"
+     ],
+     "nature": "Adamant",
+     "evs": {
+      "hp": 32,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 2,
+      "spe": 0
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Garchomp|Brave Bird|+0",
    "target": "Garchomp",
    "move": "Brave Bird",
    "boost": 0,
@@ -508,7 +1312,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -539,10 +1343,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Garchomp|Brave Bird|+2",
    "target": "Garchomp",
    "move": "Brave Bird",
    "boost": 2,
@@ -585,7 +1391,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -616,92 +1422,17 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
-   "target": "Gholdengo",
-   "move": "Brave Bird",
+   "id": "Garchomp|Close Combat|+0",
+   "target": "Garchomp",
+   "move": "Close Combat",
    "boost": 0,
    "status": "calculated",
-   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Gholdengo: 57-67 (34.7 - 40.8%) -- guaranteed 3HKO",
-   "kochance": {
-    "chance": 1,
-    "n": 3,
-    "text": "guaranteed 3HKO"
-   },
-   "errors": null,
-   "input": {
-    "attacker": {
-     "species": "Staraptor-Mega",
-     "level": 50,
-     "ability": "contrary",
-     "item": "staraptite",
-     "moves": [
-      "closecombat",
-      "protect",
-      "bravebird",
-      "tailwind"
-     ],
-     "nature": "Jolly",
-     "evs": {
-      "hp": 2,
-      "atk": 32,
-      "def": 0,
-      "spa": 0,
-      "spd": 0,
-      "spe": 32
-     },
-     "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 31
-     },
-     "canonicalSpecies": "Staraptor-Mega"
-    },
-    "boosts": {
-     "atk": 0
-    },
-    "defender": {
-     "species": "Gholdengo",
-     "level": 50,
-     "ability": "goodasgold",
-     "item": "lifeorb",
-     "moves": [
-      "shadowball",
-      "makeitrain",
-      "protect",
-      "nastyplot"
-     ],
-     "nature": "Timid",
-     "evs": {
-      "hp": 2,
-      "atk": 0,
-      "def": 0,
-      "spa": 32,
-      "spd": 0,
-      "spe": 32
-     },
-     "ivs": {
-      "hp": 31,
-      "atk": 31,
-      "def": 31,
-      "spa": 31,
-      "spd": 31,
-      "spe": 31
-     }
-    }
-   }
-  },
-  {
-   "target": "Gholdengo",
-   "move": "Brave Bird",
-   "boost": 2,
-   "status": "calculated",
-   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Gholdengo: 113-133 (68.9 - 81%) -- guaranteed 2HKO",
+   "fullDesc": "32 Atk Staraptor-Mega Close Combat vs. 2 HP / 0 Def Garchomp: 114-135 (61.6 - 72.9%) -- guaranteed 2HKO",
    "kochance": {
     "chance": 1,
     "n": 2,
@@ -739,19 +1470,177 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Garchomp",
+     "level": 50,
+     "ability": "roughskin",
+     "item": "lifeorb",
+     "moves": [
+      "dragonclaw",
+      "rockslide",
+      "earthquake",
+      "protect"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Garchomp|Close Combat|+2",
+   "target": "Garchomp",
+   "move": "Close Combat",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Close Combat vs. 2 HP / 0 Def Garchomp: 226-267 (122.1 - 144.3%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
-     "species": "Gholdengo",
+     "species": "Garchomp",
      "level": 50,
-     "ability": "goodasgold",
+     "ability": "roughskin",
      "item": "lifeorb",
      "moves": [
-      "shadowball",
-      "makeitrain",
+      "dragonclaw",
+      "rockslide",
+      "earthquake",
+      "protect"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Archaludon|Brave Bird|+0",
+   "target": "Archaludon",
+   "move": "Brave Bird",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Archaludon: 43-51 (25.7 - 30.5%) -- 5.2% chance to 4HKO after Leftovers recovery",
+   "kochance": {
+    "chance": 0.0521392822265625,
+    "n": 4,
+    "text": "5.2% chance to 4HKO after Leftovers recovery"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
       "protect",
-      "nastyplot"
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Archaludon",
+     "level": 50,
+     "ability": "stamina",
+     "item": "leftovers",
+     "moves": [
+      "electroshot",
+      "protect",
+      "dragonpulse",
+      "flashcannon"
      ],
      "nature": "Timid",
      "evs": {
@@ -770,10 +1659,91 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Archaludon|Brave Bird|+2",
+   "target": "Archaludon",
+   "move": "Brave Bird",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Archaludon: 87-102 (52 - 61%) -- 96.9% chance to 2HKO after Leftovers recovery",
+   "kochance": {
+    "chance": 0.96875,
+    "n": 2,
+    "text": "96.9% chance to 2HKO after Leftovers recovery"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Archaludon",
+     "level": 50,
+     "ability": "stamina",
+     "item": "leftovers",
+     "moves": [
+      "electroshot",
+      "protect",
+      "dragonpulse",
+      "flashcannon"
+     ],
+     "nature": "Timid",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Archaludon|Close Combat|+0",
    "target": "Archaludon",
    "move": "Close Combat",
    "boost": 0,
@@ -816,7 +1786,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -847,10 +1817,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Archaludon|Close Combat|+2",
    "target": "Archaludon",
    "move": "Close Combat",
    "boost": 2,
@@ -893,7 +1865,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -924,10 +1896,170 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Pelipper|Brave Bird|+0",
+   "target": "Pelipper",
+   "move": "Brave Bird",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Pelipper: 109-129 (79.5 - 94.1%) -- guaranteed 2HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 2,
+    "text": "guaranteed 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Pelipper",
+     "level": 50,
+     "ability": "drizzle",
+     "item": "focussash",
+     "moves": [
+      "hurricane",
+      "weatherball",
+      "tailwind",
+      "wideguard"
+     ],
+     "nature": "Modest",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Pelipper|Brave Bird|+2",
+   "target": "Pelipper",
+   "move": "Brave Bird",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Pelipper: 216-255 (157.6 - 186.1%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Pelipper",
+     "level": 50,
+     "ability": "drizzle",
+     "item": "focussash",
+     "moves": [
+      "hurricane",
+      "weatherball",
+      "tailwind",
+      "wideguard"
+     ],
+     "nature": "Modest",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Pelipper|Close Combat|+0",
    "target": "Pelipper",
    "move": "Close Combat",
    "boost": 0,
@@ -970,7 +2102,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -1001,10 +2133,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Pelipper|Close Combat|+2",
    "target": "Pelipper",
    "move": "Close Combat",
    "boost": 2,
@@ -1047,7 +2181,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -1078,10 +2212,484 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Gholdengo|Brave Bird|+0",
+   "target": "Gholdengo",
+   "move": "Brave Bird",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Gholdengo: 57-67 (34.7 - 40.8%) -- guaranteed 3HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 3,
+    "text": "guaranteed 3HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Gholdengo",
+     "level": 50,
+     "ability": "goodasgold",
+     "item": "lifeorb",
+     "moves": [
+      "shadowball",
+      "makeitrain",
+      "protect",
+      "nastyplot"
+     ],
+     "nature": "Timid",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Gholdengo|Brave Bird|+2",
+   "target": "Gholdengo",
+   "move": "Brave Bird",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Gholdengo: 113-133 (68.9 - 81%) -- guaranteed 2HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 2,
+    "text": "guaranteed 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Gholdengo",
+     "level": 50,
+     "ability": "goodasgold",
+     "item": "lifeorb",
+     "moves": [
+      "shadowball",
+      "makeitrain",
+      "protect",
+      "nastyplot"
+     ],
+     "nature": "Timid",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Gholdengo|Close Combat|+0",
+   "target": "Gholdengo",
+   "move": "Close Combat",
+   "boost": 0,
+   "status": "partial",
+   "fullDesc": null,
+   "kochance": null,
+   "errors": {
+    "fullDesc": "damage[damage.length - 1] === 0.",
+    "kochance": "damage[damage.length - 1] === 0."
+   },
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Gholdengo",
+     "level": 50,
+     "ability": "goodasgold",
+     "item": "lifeorb",
+     "moves": [
+      "shadowball",
+      "makeitrain",
+      "protect",
+      "nastyplot"
+     ],
+     "nature": "Timid",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Gholdengo|Close Combat|+2",
+   "target": "Gholdengo",
+   "move": "Close Combat",
+   "boost": 2,
+   "status": "partial",
+   "fullDesc": null,
+   "kochance": null,
+   "errors": {
+    "fullDesc": "damage[damage.length - 1] === 0.",
+    "kochance": "damage[damage.length - 1] === 0."
+   },
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Gholdengo",
+     "level": 50,
+     "ability": "goodasgold",
+     "item": "lifeorb",
+     "moves": [
+      "shadowball",
+      "makeitrain",
+      "protect",
+      "nastyplot"
+     ],
+     "nature": "Timid",
+     "evs": {
+      "hp": 2,
+      "atk": 0,
+      "def": 0,
+      "spa": 32,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Basculegion|Brave Bird|+0",
+   "target": "Basculegion",
+   "move": "Brave Bird",
+   "boost": 0,
+   "status": "calculated",
+   "fullDesc": "32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Basculegion: 153-181 (77.6 - 91.8%) -- guaranteed 2HKO",
+   "kochance": {
+    "chance": 1,
+    "n": 2,
+    "text": "guaranteed 2HKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 0
+    },
+    "defender": {
+     "species": "Basculegion",
+     "level": 50,
+     "ability": "adaptability",
+     "item": "choicescarf",
+     "moves": [
+      "lastrespects",
+      "wavecrash",
+      "aquajet",
+      "protect"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Basculegion|Brave Bird|+2",
+   "target": "Basculegion",
+   "move": "Brave Bird",
+   "boost": 2,
+   "status": "calculated",
+   "fullDesc": "+2 32 Atk Staraptor-Mega Brave Bird vs. 2 HP / 0 Def Basculegion: 306-360 (155.3 - 182.7%) -- guaranteed OHKO",
+   "kochance": {
+    "chance": 1,
+    "n": 1,
+    "text": "guaranteed OHKO"
+   },
+   "errors": null,
+   "input": {
+    "attacker": {
+     "species": "Staraptor-Mega",
+     "level": 50,
+     "ability": "contrary",
+     "item": "staraptite",
+     "moves": [
+      "closecombat",
+      "protect",
+      "bravebird",
+      "tailwind"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     },
+     "canonicalSpecies": "Staraptor-Mega"
+    },
+    "attackerBoosts": {
+     "atk": 2
+    },
+    "defender": {
+     "species": "Basculegion",
+     "level": 50,
+     "ability": "adaptability",
+     "item": "choicescarf",
+     "moves": [
+      "lastrespects",
+      "wavecrash",
+      "aquajet",
+      "protect"
+     ],
+     "nature": "Jolly",
+     "evs": {
+      "hp": 2,
+      "atk": 32,
+      "def": 0,
+      "spa": 0,
+      "spd": 0,
+      "spe": 32
+     },
+     "ivs": {
+      "hp": 31,
+      "atk": 31,
+      "def": 31,
+      "spa": 31,
+      "spd": 31,
+      "spe": 31
+     }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
+   }
+  },
+  {
+   "id": "Basculegion|Close Combat|+0",
    "target": "Basculegion",
    "move": "Close Combat",
    "boost": 0,
@@ -1123,7 +2731,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 0
     },
     "defender": {
@@ -1154,10 +2762,12 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   },
   {
+   "id": "Basculegion|Close Combat|+2",
    "target": "Basculegion",
    "move": "Close Combat",
    "boost": 2,
@@ -1199,7 +2809,7 @@
      },
      "canonicalSpecies": "Staraptor-Mega"
     },
-    "boosts": {
+    "attackerBoosts": {
      "atk": 2
     },
     "defender": {
@@ -1230,7 +2840,8 @@
       "spd": 31,
       "spe": 31
      }
-    }
+    },
+    "field": "neutral (no weather, terrain, screens or Intimidate)"
    }
   }
  ]

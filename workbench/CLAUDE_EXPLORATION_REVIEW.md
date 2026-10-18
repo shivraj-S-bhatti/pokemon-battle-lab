@@ -58,3 +58,12 @@ Decision-changing findings now on the board:
 ## Ownership
 
 Parent: tools, DB, sprites, MCP. Science Codex: calculator adapter and reasoning logic. Claude: experiments under `research/experiments/` and `.artifacts/experiments/`, and the human board once requested. Canvas untouched. No tests written.
+
+## Board corrections after parent and science review (2026-10-18)
+
+- Accepted losses on the board were our own costs (donor fainting, items, turns). They are now `COSTS`. Opposing concessions are `undecided` on every plan until Shivraj selects them.
+- Memento timing is scoped to the tested spreads; the engine-checked Choice Scarf Gholdengo version (Memento before the attack) is on the board as an alternative.
+- The earlier "only Garchomp changes" conclusion was wrong: Pelipper had been calculated with resisted Close Combat. Rerun with both moves per target: +2 turns Garchomp, Kingambit, Pelipper and Basculegion into OHKOs. The Memento verdict is now "undecided; depends on the user's targets".
+- Whimsicott's Grass typing ignores Rage Powder; Follow Me still applies.
+- The Audino chain no longer says it wins: Stockpile +6 and Psych Up execution are engine checked against Protect-only opponents; viability under pressure is unknown.
+- Check nodes carry attacker and defender set, field and a row locator; conditions carry evidence locators. The loader refuses any graph other than `gk_board`.

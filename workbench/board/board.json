@@ -1,9 +1,9 @@
 {
   "graph": "gk_board",
-  "meaning": "Symbolic discussion board for the runthrough. Plans, the mons they use, the matchups they target or concede, the conditions and threats that decide them, alternatives, and checks. Status says where each claim stands; there is no strength score.",
+  "meaning": "Symbolic discussion board for the runthrough. Plans, the mons they use, the costs they pay, the conditions and threats that decide them, alternatives, and checks. Which opposing matchups a plan concedes is the user's choice and stays undecided until selected. Status says where each claim stands; there is no strength score.",
   "statuses": {
     "hypothesis": "Proposed from exploration (E1, E2, E6) or reasoning; not checked.",
-    "engine_checked": "Executed in the pinned Showdown engine by the science agent (workbench/RUNTHROUGH_CHECK.md).",
+    "engine_checked": "Executed in the pinned Showdown engine under controlled choices (workbench/RUNTHROUGH_CHECK.md, workbench/runthrough/summary.json). Shows a mechanism executes, not that it wins.",
     "native_checked": "Native Smogon Champions calculator result, stored with inputs (workbench/board/checks/).",
     "rejected": "Checked and ruled out; kept for history."
   },
@@ -37,6 +37,11 @@
       "id": "e7",
       "label": "E7 gimmick outcomes (native calculator, plan-based)",
       "path": "research/experiments/E7-gimmick-outcomes.md"
+    },
+    {
+      "id": "runthrough-summary",
+      "label": "Runthrough execution branches",
+      "path": "workbench/runthrough/summary.json"
     }
   ],
   "plans": [
@@ -44,8 +49,8 @@
       "id": "memento-staraptor",
       "title": "Gholdengo Memento into Contrary Mega Staraptor",
       "format": "doubles",
-      "status": "rejected",
-      "summary": "Memento's -2 Atk / -2 SpA becomes +2 / +2 on Contrary Mega Staraptor, and Gholdengo's faint opens a free switch. The pair is already common; the Memento line is not.",
+      "status": "engine_checked",
+      "summary": "Memento's -2 Atk / -2 SpA becomes +2 / +2 on Contrary Mega Staraptor; Gholdengo faints and is replaced after the turn. The pair is already common; the Memento line is not.",
       "uses": [
         {
           "mon": "Gholdengo",
@@ -65,89 +70,100 @@
       "conditions": [
         {
           "id": "memento-works",
-          "text": "Ally Memento raises Contrary Mega Staraptor to +2 Atk / +2 SpA",
+          "text": "Ally Memento raises Contrary Mega Staraptor to +2 Atk / +2 SpA and Gholdengo faints",
           "status": "engine_checked",
-          "decisive": false
+          "decisive": false,
+          "evidence": "workbench/runthrough/summary.json branches[name=memento-ally]"
         },
         {
           "id": "memento-order",
-          "text": "Unscarfed Gholdengo moves after Staraptor, so +2 is not on Staraptor's first attack; it starts on the second",
+          "text": "With the tested spreads (Timid 32-Speed Gholdengo, Jolly 32-Speed Staraptor), Staraptor attacks before Memento, so +2 starts on its second attack",
           "status": "engine_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "workbench/runthrough/summary.json branches[name=memento-ally]"
+        },
+        {
+          "id": "memento-scarf",
+          "text": "Choice Scarf Gholdengo uses Memento before Staraptor's attack, so +2 applies on turn one",
+          "status": "engine_checked",
+          "decisive": true,
+          "evidence": "workbench/runthrough/summary.json branches[name=scarf-memento-before-attack]"
         },
         {
           "id": "memento-redirect",
-          "text": "Opposing Follow Me redirects Memento: Gholdengo faints and Staraptor gets nothing",
+          "text": "Opposing Follow Me (tested: Clefable) redirects Memento; Gholdengo faints and Staraptor gets nothing",
           "status": "engine_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "workbench/runthrough/summary.json branches[name=followme-redirection]"
         },
         {
           "id": "memento-rage-powder",
-          "text": "Opposing Rage Powder should redirect Memento the same way (Gholdengo is not powder-immune)",
+          "text": "Opposing Rage Powder should redirect it the same way (Gholdengo is not Grass and not powder-immune)",
           "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": null
         },
         {
           "id": "memento-fakeout",
-          "text": "Ordinary Fake Out cannot hit Ghost-type Gholdengo; Scrappy Kangaskhan's can",
+          "text": "Ordinary Fake Out cannot hit Ghost-type Gholdengo (Memento still lands); base Scrappy Kangaskhan's Fake Out flinches it",
           "status": "engine_checked",
-          "decisive": false
+          "decisive": false,
+          "evidence": "workbench/runthrough/summary.json branches[name=normal-fakeout-gholdengo], branches[name=scrappy-fakeout-gholdengo]"
         },
         {
           "id": "memento-gain",
-          "text": "At +0 Mega Staraptor already OHKOs Rillaboom, Sneasler, Incineroar and Archaludon; +2 flips Garchomp from 2HKO to OHKO and Pelipper and Gholdengo from 3HKO to 2HKO",
+          "text": "Among nine selected targets, using each target's better move: +2 turns Garchomp, Kingambit, Pelipper and Basculegion into guaranteed OHKOs; Rillaboom, Sneasler, Incineroar and Archaludon are already OHKO at +0; Gholdengo goes 3HKO to 2HKO",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "workbench/board/checks/staraptor-memento.json rows (all 36)"
         }
       ],
       "targets": [
         {
           "mon": "Garchomp",
-          "why": "The one common target the +2 changes: 2HKO at +0, OHKO at +2 (Brave Bird)",
-          "status": "native_checked"
-        },
-        {
-          "mon": "Pelipper",
-          "why": "3HKO at +0, 2HKO at +2 (Close Combat)",
-          "status": "native_checked"
-        },
-        {
-          "mon": "Gholdengo",
-          "why": "Opposing Gholdengo: 3HKO at +0, 2HKO at +2 (Brave Bird)",
+          "why": "Brave Bird 61.6-72.9% at +0, OHKO at +2",
           "status": "native_checked"
         },
         {
           "mon": "Kingambit",
-          "why": "E7: 37.5% chance to OHKO at +0, guaranteed at +2 (Close Combat)",
+          "why": "Close Combat 37.5% to OHKO at +0, guaranteed at +2",
           "status": "native_checked"
-        }
-      ],
-      "acceptedLosses": [
+        },
+        {
+          "mon": "Pelipper",
+          "why": "Brave Bird 79.5-94.1% at +0, OHKO at +2",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Basculegion",
+          "why": "Brave Bird 77.6-91.8% at +0, OHKO at +2",
+          "status": "native_checked"
+        },
         {
           "mon": "Gholdengo",
-          "why": "Our own Gholdengo's slot and turn: it faints to deliver the boost",
-          "status": "hypothesis"
+          "why": "Opposing Gholdengo: Brave Bird 3HKO at +0, 2HKO at +2",
+          "status": "native_checked"
         }
       ],
       "notChanged": [
         {
           "mon": "Rillaboom",
-          "why": "Already OHKO at +0 (Brave Bird 133-159%)",
+          "why": "Brave Bird OHKO at +0 (133.3-159.3%)",
           "status": "native_checked"
         },
         {
           "mon": "Sneasler",
-          "why": "Already OHKO at +0",
+          "why": "Brave Bird OHKO at +0 (206.3-244.5%)",
           "status": "native_checked"
         },
         {
           "mon": "Incineroar",
-          "why": "Already OHKO at +0 (Close Combat)",
+          "why": "Close Combat OHKO at +0 (116.8-139.6%)",
           "status": "native_checked"
         },
         {
           "mon": "Archaludon",
-          "why": "Already OHKO at +0 (Close Combat)",
+          "why": "Close Combat OHKO at +0 (104.1-123.3%)",
           "status": "native_checked"
         }
       ],
@@ -155,9 +171,10 @@
         {
           "name": "Follow Me",
           "mons": [
-            "Indeedee-F"
+            "Indeedee-F",
+            "Clefable"
           ],
-          "effect": "Steals Memento; Gholdengo faints for nothing",
+          "effect": "Steals Memento; Gholdengo faints for nothing (tested with Clefable)",
           "status": "engine_checked"
         },
         {
@@ -174,22 +191,32 @@
           "mons": [
             "Kangaskhan"
           ],
-          "effect": "Can flinch Gholdengo before Memento",
+          "effect": "Flinches Gholdengo before Memento",
           "status": "engine_checked"
         }
       ],
       "alternatives": [
+        "memento-scarf",
         "memento-whimsicott",
         "memento-malamar"
       ],
-      "verdict": "Rejected for now (E7 and the board's calc agree). The boost arrives a turn late, Follow Me wastes Gholdengo, and +2 only changes Garchomp and Kingambit. Revisit only for a team that must beat those two."
+      "verdict": "Undecided; depends on the user's targets. If the team must beat Garchomp, Kingambit, Pelipper or Basculegion, +2 changes those KOs. Unscarfed, the boost lands on turn two; the Scarf version is same-turn. Follow Me spends Gholdengo for nothing.",
+      "costs": [
+        {
+          "mon": "Gholdengo",
+          "why": "Donor faints to deliver the boost; its slot is spent",
+          "status": "engine_checked"
+        }
+      ],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "memento-whimsicott",
       "title": "Whimsicott Prankster Memento into Mega Staraptor",
       "format": "doubles",
       "status": "hypothesis",
-      "summary": "Whimsicott learns Memento and has Prankster, so Memento should go first and +2 would land before Staraptor's first attack. Fixes the turn-order condition; redirection still applies.",
+      "summary": "Whimsicott learns Memento and has Prankster, so Memento should go first. Unlike Gholdengo, it ignores Rage Powder as a Grass type; Follow Me still applies.",
       "uses": [
         {
           "mon": "Whimsicott",
@@ -208,33 +235,59 @@
           "id": "whimsi-priority",
           "text": "Prankster gives ally-targeted Memento priority, so +2 applies on turn one",
           "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": null
         },
         {
-          "id": "whimsi-redirect",
-          "text": "Follow Me and Rage Powder still redirect it",
+          "id": "whimsi-followme",
+          "text": "Follow Me should still redirect Whimsicott's Memento",
           "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": null
+        },
+        {
+          "id": "whimsi-ragepowder",
+          "text": "Rage Powder does not: Whimsicott is Grass type, and Grass types are immune to powder redirection",
+          "status": "hypothesis",
+          "decisive": true,
+          "evidence": ".cache/showdown/data/typechart.ts (Grass powder immunity); data/moves.ts ragepowder.onFoeRedirectTarget"
         }
       ],
       "targets": [
         {
           "mon": "Garchomp",
-          "why": "Same +2 OHKO, a turn earlier",
+          "why": "Same +2 thresholds, on turn one",
           "status": "hypothesis"
-        }
-      ],
-      "acceptedLosses": [
+        },
         {
-          "mon": "Whimsicott",
-          "why": "Gives up its own Tailwind turn and faints",
+          "mon": "Kingambit",
+          "why": "Same +2 thresholds, on turn one",
+          "status": "hypothesis"
+        },
+        {
+          "mon": "Pelipper",
+          "why": "Same +2 thresholds, on turn one",
+          "status": "hypothesis"
+        },
+        {
+          "mon": "Basculegion",
+          "why": "Same +2 thresholds, on turn one",
           "status": "hypothesis"
         }
       ],
       "notChanged": [],
       "threats": [],
       "alternatives": [],
-      "verdict": "Worth a test: needs an engine run of Prankster Memento onto the ally."
+      "verdict": "Worth a test: needs an engine run of Prankster Memento onto the ally.",
+      "costs": [
+        {
+          "mon": "Whimsicott",
+          "why": "Gives up its own Tailwind turn and faints",
+          "status": "hypothesis"
+        }
+      ],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "memento-malamar",
@@ -261,22 +314,31 @@
           "id": "malamar-order",
           "text": "Same turn-order and redirection conditions as the Staraptor line",
           "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": null
         }
       ],
       "targets": [],
-      "acceptedLosses": [],
       "notChanged": [],
       "threats": [],
       "alternatives": [],
-      "verdict": "Rejected (E7): Relaxed 0-Atk Malamar at +2 still only 2HKOs Kingambit (70.5-83%) and is a coin flip on Incineroar (91-107.9%), for Gholdengo's life."
+      "verdict": "Rejected (E7): Relaxed 0-Atk Malamar at +2 still only 2HKOs Kingambit (70.5-83%) and is a coin flip on Incineroar (91-107.9%), for Gholdengo's life.",
+      "costs": [
+        {
+          "mon": "Gholdengo",
+          "why": "Donor faints",
+          "status": "hypothesis"
+        }
+      ],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "audino-slowbro",
       "title": "Simple Beam Snorlax, Psych Up into Mega Slowbro",
       "format": "doubles",
-      "status": "native_checked",
-      "summary": "Audino Simple Beams Snorlax; three Stockpiles under Simple reach +6 Def / +6 SpD; Slowbro copies them with Psych Up, Mega Evolves for Shell Armor, Slack Offs, and wins with Body Press. Four setup actions. Found independently by E6's Cypher path search (rank 491 of 62,531 concrete chains).",
+      "status": "engine_checked",
+      "summary": "Base Audino Simple Beams Snorlax; three Stockpiles under Simple reach +6 Def / +6 SpD; Slowbro copies them with Psych Up and Mega Evolves for Shell Armor; Body Press is the intended attack. Executed in the engine over four turns with opponents choosing Protect throughout. Found independently by E6's path search.",
       "uses": [
         {
           "mon": "Audino",
@@ -299,33 +361,45 @@
       "conditions": [
         {
           "id": "audino-base",
-          "text": "Base Audino supports the chain; Mega Audino would spend the one Mega and make Mega Slowbro illegal",
+          "text": "Base Audino supplies Simple Beam; Mega Evolving Audino makes Slowbro's later Mega choice illegal",
           "status": "engine_checked",
-          "decisive": true
-        },
-        {
-          "id": "psychup-copies",
-          "text": "Psych Up copies Snorlax's boost stages onto Slowbro",
-          "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": "workbench/RUNTHROUGH_CHECK.md (Audino / Snorlax / Slowbro chain); workbench/runthrough/summary.json branches[name=base-audino-chain]"
         },
         {
           "id": "stockpile-cap",
-          "text": "Simple doubles each Stockpile, so the 3-use cap and the +6 cap land together",
+          "text": "Three Stockpiles under Simple reach +6 Def / +6 SpD",
+          "status": "engine_checked",
+          "decisive": false,
+          "evidence": "workbench/runthrough/summary.json branches[name=base-audino-chain]"
+        },
+        {
+          "id": "psychup-copies",
+          "text": "Psych Up copies +6 / +6 onto Slowbro, which keeps them through Mega Evolution",
+          "status": "engine_checked",
+          "decisive": true,
+          "evidence": "workbench/runthrough/summary.json branches[name=base-audino-chain]"
+        },
+        {
+          "id": "setup-pressure",
+          "text": "Setup survives real pressure over four turns: untested (the executed trace had opponents Protect every turn)",
           "status": "hypothesis",
-          "decisive": false
+          "decisive": true,
+          "evidence": null
         },
         {
           "id": "slowbro-survives",
           "text": "At +6 / +6 the strongest top-10 hit (Life Orb Gholdengo Shadow Ball) does 27.2-32.1%, a guaranteed 4HKO",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E6-boost-chains.md; .artifacts/experiments/E6/calc.json"
         },
         {
           "id": "bodypress-payoff",
           "text": "Body Press with the usage spread (0 Def points): Rillaboom 123.7-145.7% OHKO, Incineroar 216.8-255.4% OHKO, Sneasler 75% to OHKO",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E6-boost-chains.md; .artifacts/experiments/E6/calc.json"
         }
       ],
       "targets": [
@@ -342,38 +416,6 @@
         {
           "mon": "Sneasler",
           "why": "Body Press 75% to OHKO",
-          "status": "native_checked"
-        }
-      ],
-      "acceptedLosses": [
-        {
-          "mon": "Audino",
-          "why": "A support slot whose job ends after Simple Beam",
-          "status": "hypothesis"
-        },
-        {
-          "mon": "Basculegion",
-          "why": "Ghost type: immune to Body Press",
-          "status": "native_checked"
-        },
-        {
-          "mon": "Gholdengo",
-          "why": "Ghost type: immune to Body Press",
-          "status": "native_checked"
-        },
-        {
-          "mon": "Sinistcha",
-          "why": "Ghost type: immune to Body Press",
-          "status": "native_checked"
-        },
-        {
-          "mon": "Gengar-Mega",
-          "why": "Ghost type: immune to Body Press",
-          "status": "native_checked"
-        },
-        {
-          "mon": "Froslass-Mega",
-          "why": "Ghost type: immune to Body Press",
           "status": "native_checked"
         }
       ],
@@ -407,7 +449,47 @@
         "clangorous-copy",
         "quiverdance-copy"
       ],
-      "verdict": "Worth a test. The bulk threshold holds against the strongest hit, the payoff OHKOs the common Grass and Fire leads, and the meta barely runs the boost removers. Its gaps are the Ghost types and Encore."
+      "verdict": "Mechanism executes; viability unknown. Survival and payoff thresholds pass on a neutral field, but the four setup turns were only tested against Protect.",
+      "costs": [
+        {
+          "mon": "Audino",
+          "why": "A support slot whose job ends after Simple Beam",
+          "status": "hypothesis"
+        },
+        {
+          "mon": "Snorlax",
+          "why": "Spends three turns on Stockpile",
+          "status": "engine_checked"
+        }
+      ],
+      "weakAgainst": [
+        {
+          "mon": "Basculegion",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Gholdengo",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Sinistcha",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Gengar-Mega",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Froslass-Mega",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        }
+      ],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "sneasler-swagger",
@@ -430,13 +512,15 @@
           "id": "sneasler-gain",
           "text": "At +2, Close Combat or Dire Claw turns Kingambit (62.5%), Rillaboom (62.5%) and Farigiraf (2HKO) into guaranteed OHKOs",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         },
         {
           "id": "sneasler-redirect",
           "text": "Opposing Follow Me or Rage Powder can steal the Swagger",
           "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": null
         }
       ],
       "targets": [
@@ -456,13 +540,6 @@
           "status": "native_checked"
         }
       ],
-      "acceptedLosses": [
-        {
-          "mon": "Sneasler",
-          "why": "Gives up the Psychic Seed set; the partner spends its turn on Swagger",
-          "status": "hypothesis"
-        }
-      ],
       "notChanged": [],
       "threats": [
         {
@@ -476,7 +553,16 @@
         }
       ],
       "alternatives": [],
-      "verdict": "Worth a test (E7)."
+      "verdict": "Worth a test (E7).",
+      "costs": [
+        {
+          "mon": "Sneasler",
+          "why": "Gives up the Psychic Seed set; the partner spends its turn on Swagger",
+          "status": "hypothesis"
+        }
+      ],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "rhyperior-reversal",
@@ -503,13 +589,15 @@
           "id": "rhyp-gain",
           "text": "Under Trick Room, Reversal at 1 HP turns Kingambit (2HKO) and Archaludon (43.8%) into guaranteed OHKOs",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         },
         {
           "id": "rhyp-armor",
           "text": "Needs a partner that stops Fake Out and Grassy Glide, such as Armor Tail Farigiraf",
           "status": "hypothesis",
-          "decisive": true
+          "decisive": true,
+          "evidence": null
         }
       ],
       "targets": [
@@ -524,7 +612,6 @@
           "status": "native_checked"
         }
       ],
-      "acceptedLosses": [],
       "notChanged": [],
       "threats": [
         {
@@ -538,7 +625,10 @@
         }
       ],
       "alternatives": [],
-      "verdict": "Worth a test (E7)."
+      "verdict": "Worth a test (E7).",
+      "costs": [],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "arcanine-beatup",
@@ -565,13 +655,15 @@
           "id": "arc-gain",
           "text": "At +4, Flare Blitz turns Kingambit (2HKO) and Farigiraf (3HKO) into guaranteed OHKOs, from a 3-Atk-point spread",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         },
         {
           "id": "arc-spread",
           "text": "Rerun with a full-Attack spread",
           "status": "hypothesis",
-          "decisive": false
+          "decisive": false,
+          "evidence": null
         }
       ],
       "targets": [
@@ -586,17 +678,19 @@
           "status": "native_checked"
         }
       ],
-      "acceptedLosses": [
+      "notChanged": [],
+      "threats": [],
+      "alternatives": [],
+      "verdict": "Worth a test (E7).",
+      "costs": [
         {
           "mon": "Arcanine",
           "why": "Gives up Intimidate for Justified; Farigiraf spends a turn",
           "status": "hypothesis"
         }
       ],
-      "notChanged": [],
-      "threats": [],
-      "alternatives": [],
-      "verdict": "Worth a test (E7)."
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "ninetales-memento",
@@ -619,21 +713,24 @@
           "id": "nt-speed",
           "text": "250 Speed moves first against all of the top 15",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         }
       ],
       "targets": [],
-      "acceptedLosses": [
+      "notChanged": [],
+      "threats": [],
+      "alternatives": [],
+      "verdict": "Worth a test (E7).",
+      "costs": [
         {
           "mon": "Ninetales",
           "why": "Faints on purpose",
           "status": "hypothesis"
         }
       ],
-      "notChanged": [],
-      "threats": [],
-      "alternatives": [],
-      "verdict": "Worth a test (E7)."
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "torkoal-simplebeam",
@@ -660,34 +757,39 @@
           "id": "tork-speed",
           "text": "Quiet 0-Speed Torkoal goes 36 to 108; under Trick Room it now moves after six slow meta sets (Incineroar, Indeedee-F, Kingambit, Golisopod-Mega, Farigiraf, Milotic)",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         },
         {
           "id": "tork-gain",
           "text": "+0 sun Eruption already OHKOs Rillaboom, Kingambit and Gholdengo; only Farigiraf changes, and a plain +2 Shell Smash does that too",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         },
         {
           "id": "tork-def",
           "text": "-2 Def turns Basculegion's Wave Crash from a 2HKO (52-63%) into an OHKO",
           "status": "native_checked",
-          "decisive": false
+          "decisive": false,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
         }
       ],
       "targets": [],
-      "acceptedLosses": [],
       "notChanged": [],
       "threats": [],
       "alternatives": [],
-      "verdict": "Rejected (E7): one KO gained, six Trick Room move-order wins lost."
+      "verdict": "Rejected (E7): one KO gained, six Trick Room move-order wins lost.",
+      "costs": [],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "clangorous-copy",
       "title": "Simple Beam Kommo-o Clangorous Soul, copied with Psych Up",
       "format": "doubles",
       "status": "native_checked",
-      "summary": "Kommo-o under Simple uses Clangorous Soul twice (+4 in all five stats; each use costs 1/3 HP). Farigiraf, Mega Slowbro or Oranguru copies the boosts and attacks with Stored Power (420 BP at +4 x5).",
+      "summary": "Kommo-o under Simple uses Clangorous Soul twice (+4 in all five stats; each use costs 1/3 HP). Farigiraf, Mega Slowbro or Oranguru copies the boosts and Stored Power is the intended attack (420 BP at +4 in five stats).",
       "uses": [
         {
           "mon": "Audino",
@@ -711,23 +813,18 @@
           "id": "clang-power",
           "text": "Stored Power at 420 BP OHKOs every target checked; no top-10 hit does more than 43.5% to the receiver",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E6-boost-chains.md"
         },
         {
           "id": "clang-soundproof",
           "text": "Simple Beam replaces Kommo-o's Soundproof; E7 found Mega Gardevoir's Hyper Voice then OHKOs Kommo-o during setup",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E7-gimmick-outcomes.md"
         }
       ],
       "targets": [],
-      "acceptedLosses": [
-        {
-          "mon": "Kommo-o",
-          "why": "Ends setup at about 1/3 HP",
-          "status": "hypothesis"
-        }
-      ],
       "notChanged": [],
       "threats": [
         {
@@ -748,7 +845,16 @@
         }
       ],
       "alternatives": [],
-      "verdict": "Worth a test if Mega Gardevoir can be kept off Kommo-o during the two setup turns."
+      "verdict": "Worth a test if Mega Gardevoir can be kept off Kommo-o during the two setup turns.",
+      "costs": [
+        {
+          "mon": "Kommo-o",
+          "why": "Ends setup at about 1/3 HP",
+          "status": "hypothesis"
+        }
+      ],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
     },
     {
       "id": "quiverdance-copy",
@@ -774,11 +880,11 @@
           "id": "qd-bulk",
           "text": "With no Defense boost, Kowtow Cleave, Leech Life and Wood Hammer still OHKO the receiver",
           "status": "native_checked",
-          "decisive": true
+          "decisive": true,
+          "evidence": "research/experiments/E6-boost-chains.md"
         }
       ],
       "targets": [],
-      "acceptedLosses": [],
       "notChanged": [],
       "threats": [
         {
@@ -792,7 +898,83 @@
         }
       ],
       "alternatives": [],
-      "verdict": "Rejected against the physical meta: the Defense threshold is what separates it from the Stockpile chain."
+      "verdict": "Rejected against the physical meta: the Defense threshold is what separates it from the Stockpile chain.",
+      "costs": [],
+      "weakAgainst": [],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up"
+    },
+    {
+      "id": "memento-scarf",
+      "title": "Choice Scarf Gholdengo Memento into Mega Staraptor",
+      "format": "doubles",
+      "status": "engine_checked",
+      "summary": "Same line with Choice Scarf on Gholdengo: Memento goes first and +2 applies to Staraptor's first attack.",
+      "uses": [
+        {
+          "mon": "Gholdengo",
+          "role": "enabler: Choice Scarf, Memento"
+        },
+        {
+          "mon": "Staraptor-Mega",
+          "role": "receiver"
+        }
+      ],
+      "sources": [
+        "runthrough",
+        "runthrough-summary",
+        "calc-staraptor"
+      ],
+      "conditions": [
+        {
+          "id": "scarf-order",
+          "text": "Memento and both boosts occur before Brave Bird",
+          "status": "engine_checked",
+          "decisive": true,
+          "evidence": "workbench/runthrough/summary.json branches[name=scarf-memento-before-attack]"
+        },
+        {
+          "id": "scarf-redirect",
+          "text": "Follow Me should still redirect it",
+          "status": "hypothesis",
+          "decisive": true,
+          "evidence": null
+        }
+      ],
+      "targets": [
+        {
+          "mon": "Garchomp",
+          "why": "Same +2 thresholds as the base plan, on turn one",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Kingambit",
+          "why": "Same +2 thresholds as the base plan, on turn one",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Pelipper",
+          "why": "Same +2 thresholds as the base plan, on turn one",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Basculegion",
+          "why": "Same +2 thresholds as the base plan, on turn one",
+          "status": "native_checked"
+        }
+      ],
+      "notChanged": [],
+      "weakAgainst": [],
+      "costs": [
+        {
+          "mon": "Gholdengo",
+          "why": "Spends its item on Choice Scarf and its slot on fainting",
+          "status": "engine_checked"
+        }
+      ],
+      "concessions": "undecided: the user selects which opposing matchups this plan gives up",
+      "threats": [],
+      "alternatives": [],
+      "verdict": "Same-turn version exists. Value against a named opposing lead is untested."
     }
   ]
 }
