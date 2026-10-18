@@ -58,7 +58,7 @@ STEPS = [
       edges=[('indeedeef', 'alcremie', 'BAD'), ('sinistcha', 'alcremie', 'BAD'), ('garchompmegaz', 'sylveon', 'BAD')],
       say='Every plan has counterplay. Follow Me and Rage Powder steal Decorate, so you lead around them. Fairy types ignore Draco Meteor.'),
  dict(title='6  Other supports', nodes=['annihilape'], edges=[('annihilape', 'decorate', 'SUPPORT')],
-      say='Other supports exist, but none raises special attack, so none does this job.'),
+      say='Coaching, Howl and Aromatic Mist support different stats, so they do not replace Decorate here.'),
 ]
 TXT = {'OHKO': 'OHKO at +2', 'NOT': '2HKO at +2', 'BAD': 'counterplay', 'GOOD': 'Sweet Veil', 'CORE': 'core', 'SUPPORT': '', 'ENABLES': ''}
 
@@ -130,8 +130,8 @@ def main():
     hero = os.path.join(ROOT, 'brand/gimmikghoul-hero.png')
     scenes = [
      ('title', 'Gimmikghoul. Find your favourite Pokemon a job in the meta.', lambda t: card([('GIMMIKGHOUL', 120, YEL), ('find your favourite Pokémon a job in the meta', 44, INK)], logo=True)),
-     ('problem', 'Bots now top the Showdown ladders. None of them tells you whether your favourite has a place in the meta.',
-      lambda t: card([('Bots top the ladders now.', 70, INK), ('Nobody tells you where your favourite fits.', 52, YEL)], bgimg=hero, zoom=1.0 + 0.08 * t)),
+     ('problem', 'Bots now top the Showdown ladders. Playing a battle and finding a role for an unusual Pokemon are different problems.',
+      lambda t: card([('Bots top the ladders now.', 70, INK), ('Finding a role for your favourite is a different problem.', 48, YEL)], bgimg=hero, zoom=1.0 + 0.08 * t)),
      ('ask', 'So we ask an agent, with a FalkorDB graph of the whole meta. I like Alcremie. Nobody runs it. Where does it have a job?',
       lambda t: ask_card(t)),
     ]
