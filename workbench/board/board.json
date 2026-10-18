@@ -15,7 +15,7 @@
     },
     {
       "id": "e6",
-      "label": "E6 boost-chain path search",
+      "label": "E6 boost-chain path search (gk_chain), native-calculator checks",
       "path": "research/experiments/E6-boost-chains.md"
     },
     {
@@ -275,8 +275,8 @@
       "id": "audino-slowbro",
       "title": "Simple Beam Snorlax, Psych Up into Mega Slowbro",
       "format": "doubles",
-      "status": "engine_checked",
-      "summary": "Audino Simple Beams Snorlax; Snorlax Stockpiles to large Def / SpD boosts; Slowbro copies them with Psych Up and Mega Evolves for Shell Armor, then wins with Body Press or Stored Power. A long setup, several turns.",
+      "status": "native_checked",
+      "summary": "Audino Simple Beams Snorlax; three Stockpiles under Simple reach +6 Def / +6 SpD; Slowbro copies them with Psych Up, Mega Evolves for Shell Armor, Slack Offs, and wins with Body Press. Four setup actions. Found independently by E6's Cypher path search (rank 491 of 62,531 concrete chains).",
       "uses": [
         {
           "mon": "Audino",
@@ -292,9 +292,9 @@
         }
       ],
       "sources": [
-        "user-audino",
+        "e6",
         "runthrough",
-        "e6"
+        "user-audino"
       ],
       "conditions": [
         {
@@ -304,32 +304,87 @@
           "decisive": true
         },
         {
-          "id": "stockpile-cap",
-          "text": "Three Stockpiles under Simple should reach +6 Def / +6 SpD",
-          "status": "hypothesis",
-          "decisive": false
-        },
-        {
           "id": "psychup-copies",
           "text": "Psych Up copies Snorlax's boost stages onto Slowbro",
           "status": "hypothesis",
           "decisive": true
+        },
+        {
+          "id": "stockpile-cap",
+          "text": "Simple doubles each Stockpile, so the 3-use cap and the +6 cap land together",
+          "status": "hypothesis",
+          "decisive": false
+        },
+        {
+          "id": "slowbro-survives",
+          "text": "At +6 / +6 the strongest top-10 hit (Life Orb Gholdengo Shadow Ball) does 27.2-32.1%, a guaranteed 4HKO",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "bodypress-payoff",
+          "text": "Body Press with the usage spread (0 Def points): Rillaboom 123.7-145.7% OHKO, Incineroar 216.8-255.4% OHKO, Sneasler 75% to OHKO",
+          "status": "native_checked",
+          "decisive": true
         }
       ],
-      "targets": [],
+      "targets": [
+        {
+          "mon": "Rillaboom",
+          "why": "Body Press OHKO (123.7-145.7%)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Incineroar",
+          "why": "Body Press OHKO (216.8-255.4%)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Sneasler",
+          "why": "Body Press 75% to OHKO",
+          "status": "native_checked"
+        }
+      ],
       "acceptedLosses": [
         {
           "mon": "Audino",
           "why": "A support slot whose job ends after Simple Beam",
           "status": "hypothesis"
+        },
+        {
+          "mon": "Basculegion",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Gholdengo",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Sinistcha",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Gengar-Mega",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Froslass-Mega",
+          "why": "Ghost type: immune to Body Press",
+          "status": "native_checked"
         }
       ],
       "notChanged": [],
       "threats": [
         {
           "name": "Encore",
-          "mons": [],
-          "effect": "Locks Snorlax or Slowbro into setup",
+          "mons": [
+            "Whimsicott"
+          ],
+          "effect": "Locks the setup (Encore on 69% of Whimsicott sets)",
           "status": "hypothesis"
         },
         {
@@ -344,54 +399,15 @@
         {
           "name": "Haze / Clear Smog / Unaware",
           "mons": [],
-          "effect": "Removes or ignores the boosts",
-          "status": "hypothesis"
-        },
-        {
-          "name": "Taunt before setup",
-          "mons": [],
-          "effect": "Stops Stockpile and Psych Up",
+          "effect": "No top-60 species runs these on 10% or more of its sets",
           "status": "hypothesis"
         }
       ],
       "alternatives": [
-        "kommo-toucannon"
+        "clangorous-copy",
+        "quiverdance-copy"
       ],
-      "verdict": "Open: name the targets and run the threshold checks (does +6 Mega Slowbro survive the strongest hits it will see; does Body Press then 2HKO them)."
-    },
-    {
-      "id": "kommo-toucannon",
-      "title": "Kommo-o Clangorous Soul, Psych Up onto Toucannon",
-      "format": "doubles",
-      "status": "hypothesis",
-      "summary": "Found by E6's Cypher path search: Kommo-o raises all stats, Toucannon copies them with Psych Up, Roosts, and attacks with Beak Blast.",
-      "uses": [
-        {
-          "mon": "Kommo-o",
-          "role": "booster: Swords Dance / Clangorous Soul"
-        },
-        {
-          "mon": "Toucannon",
-          "role": "receiver: Psych Up, Roost, Beak Blast"
-        }
-      ],
-      "sources": [
-        "e6"
-      ],
-      "conditions": [
-        {
-          "id": "kommo-copy",
-          "text": "Psych Up copies the boosts before Kommo-o is removed",
-          "status": "hypothesis",
-          "decisive": true
-        }
-      ],
-      "targets": [],
-      "acceptedLosses": [],
-      "notChanged": [],
-      "threats": [],
-      "alternatives": [],
-      "verdict": "Open: path-search candidate, no checks yet."
+      "verdict": "Worth a test. The bulk threshold holds against the strongest hit, the payoff OHKOs the common Grass and Fire leads, and the meta barely runs the boost removers. Its gaps are the Ghost types and Encore."
     },
     {
       "id": "sneasler-swagger",
@@ -665,6 +681,118 @@
       "threats": [],
       "alternatives": [],
       "verdict": "Rejected (E7): one KO gained, six Trick Room move-order wins lost."
+    },
+    {
+      "id": "clangorous-copy",
+      "title": "Simple Beam Kommo-o Clangorous Soul, copied with Psych Up",
+      "format": "doubles",
+      "status": "native_checked",
+      "summary": "Kommo-o under Simple uses Clangorous Soul twice (+4 in all five stats; each use costs 1/3 HP). Farigiraf, Mega Slowbro or Oranguru copies the boosts and attacks with Stored Power (420 BP at +4 x5).",
+      "uses": [
+        {
+          "mon": "Audino",
+          "role": "enabler: Simple Beam"
+        },
+        {
+          "mon": "Kommo-o",
+          "role": "booster: Clangorous Soul x2"
+        },
+        {
+          "mon": "Farigiraf",
+          "role": "receiver (one of Farigiraf, Slowbro-Mega, Oranguru): Psych Up, Stored Power"
+        }
+      ],
+      "sources": [
+        "e6",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "clang-power",
+          "text": "Stored Power at 420 BP OHKOs every target checked; no top-10 hit does more than 43.5% to the receiver",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "clang-soundproof",
+          "text": "Simple Beam replaces Kommo-o's Soundproof; E7 found Mega Gardevoir's Hyper Voice then OHKOs Kommo-o during setup",
+          "status": "native_checked",
+          "decisive": true
+        }
+      ],
+      "targets": [],
+      "acceptedLosses": [
+        {
+          "mon": "Kommo-o",
+          "why": "Ends setup at about 1/3 HP",
+          "status": "hypothesis"
+        }
+      ],
+      "notChanged": [],
+      "threats": [
+        {
+          "name": "Hyper Voice",
+          "mons": [
+            "Gardevoir-Mega"
+          ],
+          "effect": "OHKOs Kommo-o once Soundproof is gone",
+          "status": "native_checked"
+        },
+        {
+          "name": "Encore",
+          "mons": [
+            "Whimsicott"
+          ],
+          "effect": "Locks the setup",
+          "status": "hypothesis"
+        }
+      ],
+      "alternatives": [],
+      "verdict": "Worth a test if Mega Gardevoir can be kept off Kommo-o during the two setup turns."
+    },
+    {
+      "id": "quiverdance-copy",
+      "title": "Volcarona Quiver Dance, copied with Psych Up",
+      "format": "doubles",
+      "status": "native_checked",
+      "summary": "Same copy pattern with Quiver Dance; the receiver (Galarian Slowking, Reuniclus or Slowking) hits as hard but gets no Defense.",
+      "uses": [
+        {
+          "mon": "Volcarona",
+          "role": "booster: Quiver Dance"
+        },
+        {
+          "mon": "Slowking-Galar",
+          "role": "receiver (one of Slowking-Galar, Reuniclus, Slowking): Psych Up"
+        }
+      ],
+      "sources": [
+        "e6"
+      ],
+      "conditions": [
+        {
+          "id": "qd-bulk",
+          "text": "With no Defense boost, Kowtow Cleave, Leech Life and Wood Hammer still OHKO the receiver",
+          "status": "native_checked",
+          "decisive": true
+        }
+      ],
+      "targets": [],
+      "acceptedLosses": [],
+      "notChanged": [],
+      "threats": [
+        {
+          "name": "Physical attackers",
+          "mons": [
+            "Kingambit",
+            "Rillaboom"
+          ],
+          "effect": "OHKO the unboosted-Defense receiver",
+          "status": "native_checked"
+        }
+      ],
+      "alternatives": [],
+      "verdict": "Rejected against the physical meta: the Defense threshold is what separates it from the Stockpile chain."
     }
   ]
 }

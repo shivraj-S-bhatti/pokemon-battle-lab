@@ -53,7 +53,7 @@ Decision-changing findings now on the board:
 
 **E7 finished** (native calculator, 140 calls, plan-based): of E2's 45 top gimmicks, 4 worth a test (Swagger Persim Sneasler, Sash Reversal Rhyperior under Trick Room, Beat Up Justified Arcanine, Scarf Ninetales Memento), 2 kept but already standard (No Guard Dynamic Punch), 39 rejected. It rejects Memento → Mega Staraptor (+2 only changes Kingambit) and Malamar, rejects every Simple Beam setup (one Simple turn equals two plain turns and costs the receiver's ability), and finds an E2 mechanic error: Symbiosis passing an item switches Unburden off (`unburden.condition.onModifySpe` requires `!pokemon.item`). These verdicts are on the board.
 
-E6 had not finished when this was written; its partial output was not used for verdicts.
+**E6 finished.** The Cypher path search over `gk_chain` (4,422 effect paths in about 110 ms) found the Audino / Snorlax / Mega Slowbro chain without being told about it. Native checks: at +6 / +6 the strongest top-10 hit does 27.2-32.1%; Body Press OHKOs Rillaboom and Incineroar, 75% on Sneasler; five top-60 Ghost types are immune. Clangorous Soul copied with Psych Up reaches +4 in all stats and Stored Power OHKOs every target checked, but E7's Soundproof finding exposes Kommo-o during setup. Quiver Dance copied fails the Defense threshold. All three are on the board.
 
 ## Ownership
 
