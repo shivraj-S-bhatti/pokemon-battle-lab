@@ -51,7 +51,9 @@ Decision-changing findings now on the board:
 - **Whimsicott Prankster Memento** is the alternative that fixes turn order (Whimsicott learns Memento in Champions). Hypothesis until an engine run.
 - **Audino chain:** base Audino supports Simple Beam → Snorlax → Psych Up → Mega Slowbro; Mega Audino uses the one Mega and makes Mega Slowbro illegal. Your recollection of "Mega Audino" conflicts with this; the board keeps both, with the engine result as the deciding condition.
 
-E6 and E7 had not finished when the board was built; their partial outputs were not used for verdicts. When they finish, add their chains and gimmick verdicts to `board.json` and rerun the loader.
+**E7 finished** (native calculator, 140 calls, plan-based): of E2's 45 top gimmicks, 4 worth a test (Swagger Persim Sneasler, Sash Reversal Rhyperior under Trick Room, Beat Up Justified Arcanine, Scarf Ninetales Memento), 2 kept but already standard (No Guard Dynamic Punch), 39 rejected. It rejects Memento → Mega Staraptor (+2 only changes Kingambit) and Malamar, rejects every Simple Beam setup (one Simple turn equals two plain turns and costs the receiver's ability), and finds an E2 mechanic error: Symbiosis passing an item switches Unburden off (`unburden.condition.onModifySpe` requires `!pokemon.item`). These verdicts are on the board.
+
+E6 had not finished when this was written; its partial output was not used for verdicts.
 
 ## Ownership
 

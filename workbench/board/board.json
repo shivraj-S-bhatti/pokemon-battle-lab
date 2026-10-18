@@ -8,53 +8,181 @@
     "rejected": "Checked and ruled out; kept for history."
   },
   "sources": [
-    {"id": "e2", "label": "E2 gimmick miner", "path": "research/experiments/E2-gimmicks.md"},
-    {"id": "e6", "label": "E6 boost-chain path search", "path": "research/experiments/E6-boost-chains.md"},
-    {"id": "runthrough", "label": "Science engine execution checks", "path": "workbench/RUNTHROUGH_CHECK.md"},
-    {"id": "calc-staraptor", "label": "Native calc: Mega Staraptor at +0 and +2", "path": "workbench/board/checks/staraptor-memento.json"},
-    {"id": "user-audino", "label": "Shivraj: popular Audino / Snorlax / Slowbro team", "path": null}
+    {
+      "id": "e2",
+      "label": "E2 gimmick miner",
+      "path": "research/experiments/E2-gimmicks.md"
+    },
+    {
+      "id": "e6",
+      "label": "E6 boost-chain path search",
+      "path": "research/experiments/E6-boost-chains.md"
+    },
+    {
+      "id": "runthrough",
+      "label": "Science engine execution checks",
+      "path": "workbench/RUNTHROUGH_CHECK.md"
+    },
+    {
+      "id": "calc-staraptor",
+      "label": "Native calc: Mega Staraptor at +0 and +2",
+      "path": "workbench/board/checks/staraptor-memento.json"
+    },
+    {
+      "id": "user-audino",
+      "label": "Shivraj: popular Audino / Snorlax / Slowbro team",
+      "path": null
+    },
+    {
+      "id": "e7",
+      "label": "E7 gimmick outcomes (native calculator, plan-based)",
+      "path": "research/experiments/E7-gimmick-outcomes.md"
+    }
   ],
   "plans": [
     {
       "id": "memento-staraptor",
       "title": "Gholdengo Memento into Contrary Mega Staraptor",
       "format": "doubles",
-      "status": "engine_checked",
+      "status": "rejected",
       "summary": "Memento's -2 Atk / -2 SpA becomes +2 / +2 on Contrary Mega Staraptor, and Gholdengo's faint opens a free switch. The pair is already common; the Memento line is not.",
       "uses": [
-        {"mon": "Gholdengo", "role": "enabler: uses Memento on its ally"},
-        {"mon": "Staraptor-Mega", "role": "receiver: Contrary turns the drops into boosts"}
+        {
+          "mon": "Gholdengo",
+          "role": "enabler: uses Memento on its ally"
+        },
+        {
+          "mon": "Staraptor-Mega",
+          "role": "receiver: Contrary turns the drops into boosts"
+        }
       ],
-      "sources": ["e2", "runthrough", "calc-staraptor"],
+      "sources": [
+        "e2",
+        "runthrough",
+        "calc-staraptor",
+        "e7"
+      ],
       "conditions": [
-        {"id": "memento-works", "text": "Ally Memento raises Contrary Mega Staraptor to +2 Atk / +2 SpA", "status": "engine_checked", "decisive": false},
-        {"id": "memento-order", "text": "Unscarfed Gholdengo moves after Staraptor, so +2 is not on Staraptor's first attack; it starts on the second", "status": "engine_checked", "decisive": true},
-        {"id": "memento-redirect", "text": "Opposing Follow Me redirects Memento: Gholdengo faints and Staraptor gets nothing", "status": "engine_checked", "decisive": true},
-        {"id": "memento-rage-powder", "text": "Opposing Rage Powder should redirect Memento the same way (Gholdengo is not powder-immune)", "status": "hypothesis", "decisive": true},
-        {"id": "memento-fakeout", "text": "Ordinary Fake Out cannot hit Ghost-type Gholdengo; Scrappy Kangaskhan's can", "status": "engine_checked", "decisive": false},
-        {"id": "memento-gain", "text": "At +0 Mega Staraptor already OHKOs Rillaboom, Sneasler, Incineroar and Archaludon; +2 flips Garchomp from 2HKO to OHKO and Pelipper and Gholdengo from 3HKO to 2HKO", "status": "native_checked", "decisive": true}
+        {
+          "id": "memento-works",
+          "text": "Ally Memento raises Contrary Mega Staraptor to +2 Atk / +2 SpA",
+          "status": "engine_checked",
+          "decisive": false
+        },
+        {
+          "id": "memento-order",
+          "text": "Unscarfed Gholdengo moves after Staraptor, so +2 is not on Staraptor's first attack; it starts on the second",
+          "status": "engine_checked",
+          "decisive": true
+        },
+        {
+          "id": "memento-redirect",
+          "text": "Opposing Follow Me redirects Memento: Gholdengo faints and Staraptor gets nothing",
+          "status": "engine_checked",
+          "decisive": true
+        },
+        {
+          "id": "memento-rage-powder",
+          "text": "Opposing Rage Powder should redirect Memento the same way (Gholdengo is not powder-immune)",
+          "status": "hypothesis",
+          "decisive": true
+        },
+        {
+          "id": "memento-fakeout",
+          "text": "Ordinary Fake Out cannot hit Ghost-type Gholdengo; Scrappy Kangaskhan's can",
+          "status": "engine_checked",
+          "decisive": false
+        },
+        {
+          "id": "memento-gain",
+          "text": "At +0 Mega Staraptor already OHKOs Rillaboom, Sneasler, Incineroar and Archaludon; +2 flips Garchomp from 2HKO to OHKO and Pelipper and Gholdengo from 3HKO to 2HKO",
+          "status": "native_checked",
+          "decisive": true
+        }
       ],
       "targets": [
-        {"mon": "Garchomp", "why": "The one common target the +2 changes: 2HKO at +0, OHKO at +2 (Brave Bird)", "status": "native_checked"},
-        {"mon": "Pelipper", "why": "3HKO at +0, 2HKO at +2 (Close Combat)", "status": "native_checked"},
-        {"mon": "Gholdengo", "why": "Opposing Gholdengo: 3HKO at +0, 2HKO at +2 (Brave Bird)", "status": "native_checked"}
+        {
+          "mon": "Garchomp",
+          "why": "The one common target the +2 changes: 2HKO at +0, OHKO at +2 (Brave Bird)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Pelipper",
+          "why": "3HKO at +0, 2HKO at +2 (Close Combat)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Gholdengo",
+          "why": "Opposing Gholdengo: 3HKO at +0, 2HKO at +2 (Brave Bird)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Kingambit",
+          "why": "E7: 37.5% chance to OHKO at +0, guaranteed at +2 (Close Combat)",
+          "status": "native_checked"
+        }
       ],
       "acceptedLosses": [
-        {"mon": "Gholdengo", "why": "Our own Gholdengo's slot and turn: it faints to deliver the boost", "status": "hypothesis"}
+        {
+          "mon": "Gholdengo",
+          "why": "Our own Gholdengo's slot and turn: it faints to deliver the boost",
+          "status": "hypothesis"
+        }
       ],
       "notChanged": [
-        {"mon": "Rillaboom", "why": "Already OHKO at +0 (Brave Bird 133-159%)", "status": "native_checked"},
-        {"mon": "Sneasler", "why": "Already OHKO at +0", "status": "native_checked"},
-        {"mon": "Incineroar", "why": "Already OHKO at +0 (Close Combat)", "status": "native_checked"},
-        {"mon": "Archaludon", "why": "Already OHKO at +0 (Close Combat)", "status": "native_checked"}
+        {
+          "mon": "Rillaboom",
+          "why": "Already OHKO at +0 (Brave Bird 133-159%)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Sneasler",
+          "why": "Already OHKO at +0",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Incineroar",
+          "why": "Already OHKO at +0 (Close Combat)",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Archaludon",
+          "why": "Already OHKO at +0 (Close Combat)",
+          "status": "native_checked"
+        }
       ],
       "threats": [
-        {"name": "Follow Me", "mons": ["Indeedee-F"], "effect": "Steals Memento; Gholdengo faints for nothing", "status": "engine_checked"},
-        {"name": "Rage Powder", "mons": ["Sinistcha", "Volcarona"], "effect": "Should steal Memento the same way", "status": "hypothesis"},
-        {"name": "Scrappy Fake Out", "mons": ["Kangaskhan"], "effect": "Can flinch Gholdengo before Memento", "status": "engine_checked"}
+        {
+          "name": "Follow Me",
+          "mons": [
+            "Indeedee-F"
+          ],
+          "effect": "Steals Memento; Gholdengo faints for nothing",
+          "status": "engine_checked"
+        },
+        {
+          "name": "Rage Powder",
+          "mons": [
+            "Sinistcha",
+            "Volcarona"
+          ],
+          "effect": "Should steal Memento the same way",
+          "status": "hypothesis"
+        },
+        {
+          "name": "Scrappy Fake Out",
+          "mons": [
+            "Kangaskhan"
+          ],
+          "effect": "Can flinch Gholdengo before Memento",
+          "status": "engine_checked"
+        }
       ],
-      "alternatives": ["memento-whimsicott", "memento-malamar"],
-      "verdict": "Narrow. The boost arrives a turn late and mainly buys the Garchomp OHKO; Follow Me turns it into a lost Gholdengo. Worth a test only if Garchomp is a matchup the team must win."
+      "alternatives": [
+        "memento-whimsicott",
+        "memento-malamar"
+      ],
+      "verdict": "Rejected for now (E7 and the board's calc agree). The boost arrives a turn late, Follow Me wastes Gholdengo, and +2 only changes Garchomp and Kingambit. Revisit only for a team that must beat those two."
     },
     {
       "id": "memento-whimsicott",
@@ -63,16 +191,46 @@
       "status": "hypothesis",
       "summary": "Whimsicott learns Memento and has Prankster, so Memento should go first and +2 would land before Staraptor's first attack. Fixes the turn-order condition; redirection still applies.",
       "uses": [
-        {"mon": "Whimsicott", "role": "enabler: Prankster Memento"},
-        {"mon": "Staraptor-Mega", "role": "receiver"}
+        {
+          "mon": "Whimsicott",
+          "role": "enabler: Prankster Memento"
+        },
+        {
+          "mon": "Staraptor-Mega",
+          "role": "receiver"
+        }
       ],
-      "sources": ["e2"],
+      "sources": [
+        "e2"
+      ],
       "conditions": [
-        {"id": "whimsi-priority", "text": "Prankster gives ally-targeted Memento priority, so +2 applies on turn one", "status": "hypothesis", "decisive": true},
-        {"id": "whimsi-redirect", "text": "Follow Me and Rage Powder still redirect it", "status": "hypothesis", "decisive": true}
+        {
+          "id": "whimsi-priority",
+          "text": "Prankster gives ally-targeted Memento priority, so +2 applies on turn one",
+          "status": "hypothesis",
+          "decisive": true
+        },
+        {
+          "id": "whimsi-redirect",
+          "text": "Follow Me and Rage Powder still redirect it",
+          "status": "hypothesis",
+          "decisive": true
+        }
       ],
-      "targets": [{"mon": "Garchomp", "why": "Same +2 OHKO, a turn earlier", "status": "hypothesis"}],
-      "acceptedLosses": [{"mon": "Whimsicott", "why": "Gives up its own Tailwind turn and faints", "status": "hypothesis"}],
+      "targets": [
+        {
+          "mon": "Garchomp",
+          "why": "Same +2 OHKO, a turn earlier",
+          "status": "hypothesis"
+        }
+      ],
+      "acceptedLosses": [
+        {
+          "mon": "Whimsicott",
+          "why": "Gives up its own Tailwind turn and faints",
+          "status": "hypothesis"
+        }
+      ],
       "notChanged": [],
       "threats": [],
       "alternatives": [],
@@ -82,20 +240,36 @@
       "id": "memento-malamar",
       "title": "Gholdengo Memento into Contrary Malamar",
       "format": "doubles",
-      "status": "hypothesis",
+      "status": "rejected",
       "summary": "Same Contrary flip on a non-Mega receiver, which keeps the team's one Mega free.",
       "uses": [
-        {"mon": "Gholdengo", "role": "enabler"},
-        {"mon": "Malamar", "role": "receiver: Contrary"}
+        {
+          "mon": "Gholdengo",
+          "role": "enabler"
+        },
+        {
+          "mon": "Malamar",
+          "role": "receiver: Contrary"
+        }
       ],
-      "sources": ["e2"],
-      "conditions": [{"id": "malamar-order", "text": "Same turn-order and redirection conditions as the Staraptor line", "status": "hypothesis", "decisive": true}],
+      "sources": [
+        "e2",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "malamar-order",
+          "text": "Same turn-order and redirection conditions as the Staraptor line",
+          "status": "hypothesis",
+          "decisive": true
+        }
+      ],
       "targets": [],
       "acceptedLosses": [],
       "notChanged": [],
       "threats": [],
       "alternatives": [],
-      "verdict": "Open: needs its own targets and a native check."
+      "verdict": "Rejected (E7): Relaxed 0-Atk Malamar at +2 still only 2HKOs Kingambit (70.5-83%) and is a coin flip on Incineroar (91-107.9%), for Gholdengo's life."
     },
     {
       "id": "audino-slowbro",
@@ -104,26 +278,85 @@
       "status": "engine_checked",
       "summary": "Audino Simple Beams Snorlax; Snorlax Stockpiles to large Def / SpD boosts; Slowbro copies them with Psych Up and Mega Evolves for Shell Armor, then wins with Body Press or Stored Power. A long setup, several turns.",
       "uses": [
-        {"mon": "Audino", "role": "enabler: Simple Beam (stays base form)"},
-        {"mon": "Snorlax", "role": "booster: Stockpile under Simple; can also Body Press"},
-        {"mon": "Slowbro-Mega", "role": "receiver: Psych Up, then Mega Evolve for Shell Armor; Body Press / Stored Power"}
+        {
+          "mon": "Audino",
+          "role": "enabler: Simple Beam (stays base form)"
+        },
+        {
+          "mon": "Snorlax",
+          "role": "booster: Stockpile under Simple; can also Body Press"
+        },
+        {
+          "mon": "Slowbro-Mega",
+          "role": "receiver: Psych Up, then Mega Evolve for Shell Armor; Body Press / Stored Power"
+        }
       ],
-      "sources": ["user-audino", "runthrough", "e6"],
+      "sources": [
+        "user-audino",
+        "runthrough",
+        "e6"
+      ],
       "conditions": [
-        {"id": "audino-base", "text": "Base Audino supports the chain; Mega Audino would spend the one Mega and make Mega Slowbro illegal", "status": "engine_checked", "decisive": true},
-        {"id": "stockpile-cap", "text": "Three Stockpiles under Simple should reach +6 Def / +6 SpD", "status": "hypothesis", "decisive": false},
-        {"id": "psychup-copies", "text": "Psych Up copies Snorlax's boost stages onto Slowbro", "status": "hypothesis", "decisive": true}
+        {
+          "id": "audino-base",
+          "text": "Base Audino supports the chain; Mega Audino would spend the one Mega and make Mega Slowbro illegal",
+          "status": "engine_checked",
+          "decisive": true
+        },
+        {
+          "id": "stockpile-cap",
+          "text": "Three Stockpiles under Simple should reach +6 Def / +6 SpD",
+          "status": "hypothesis",
+          "decisive": false
+        },
+        {
+          "id": "psychup-copies",
+          "text": "Psych Up copies Snorlax's boost stages onto Slowbro",
+          "status": "hypothesis",
+          "decisive": true
+        }
       ],
       "targets": [],
-      "acceptedLosses": [{"mon": "Audino", "why": "A support slot whose job ends after Simple Beam", "status": "hypothesis"}],
+      "acceptedLosses": [
+        {
+          "mon": "Audino",
+          "why": "A support slot whose job ends after Simple Beam",
+          "status": "hypothesis"
+        }
+      ],
       "notChanged": [],
       "threats": [
-        {"name": "Encore", "mons": [], "effect": "Locks Snorlax or Slowbro into setup", "status": "hypothesis"},
-        {"name": "Perish Song", "mons": ["Gengar-Mega", "Politoed"], "effect": "Ignores boosts entirely", "status": "hypothesis"},
-        {"name": "Haze / Clear Smog / Unaware", "mons": [], "effect": "Removes or ignores the boosts", "status": "hypothesis"},
-        {"name": "Taunt before setup", "mons": [], "effect": "Stops Stockpile and Psych Up", "status": "hypothesis"}
+        {
+          "name": "Encore",
+          "mons": [],
+          "effect": "Locks Snorlax or Slowbro into setup",
+          "status": "hypothesis"
+        },
+        {
+          "name": "Perish Song",
+          "mons": [
+            "Gengar-Mega",
+            "Politoed"
+          ],
+          "effect": "Ignores boosts entirely",
+          "status": "hypothesis"
+        },
+        {
+          "name": "Haze / Clear Smog / Unaware",
+          "mons": [],
+          "effect": "Removes or ignores the boosts",
+          "status": "hypothesis"
+        },
+        {
+          "name": "Taunt before setup",
+          "mons": [],
+          "effect": "Stops Stockpile and Psych Up",
+          "status": "hypothesis"
+        }
       ],
-      "alternatives": ["kommo-toucannon"],
+      "alternatives": [
+        "kommo-toucannon"
+      ],
       "verdict": "Open: name the targets and run the threshold checks (does +6 Mega Slowbro survive the strongest hits it will see; does Body Press then 2HKO them)."
     },
     {
@@ -133,17 +366,305 @@
       "status": "hypothesis",
       "summary": "Found by E6's Cypher path search: Kommo-o raises all stats, Toucannon copies them with Psych Up, Roosts, and attacks with Beak Blast.",
       "uses": [
-        {"mon": "Kommo-o", "role": "booster: Swords Dance / Clangorous Soul"},
-        {"mon": "Toucannon", "role": "receiver: Psych Up, Roost, Beak Blast"}
+        {
+          "mon": "Kommo-o",
+          "role": "booster: Swords Dance / Clangorous Soul"
+        },
+        {
+          "mon": "Toucannon",
+          "role": "receiver: Psych Up, Roost, Beak Blast"
+        }
       ],
-      "sources": ["e6"],
-      "conditions": [{"id": "kommo-copy", "text": "Psych Up copies the boosts before Kommo-o is removed", "status": "hypothesis", "decisive": true}],
+      "sources": [
+        "e6"
+      ],
+      "conditions": [
+        {
+          "id": "kommo-copy",
+          "text": "Psych Up copies the boosts before Kommo-o is removed",
+          "status": "hypothesis",
+          "decisive": true
+        }
+      ],
       "targets": [],
       "acceptedLosses": [],
       "notChanged": [],
       "threats": [],
       "alternatives": [],
       "verdict": "Open: path-search candidate, no checks yet."
+    },
+    {
+      "id": "sneasler-swagger",
+      "title": "Partner Swagger into Persim Berry Unburden Sneasler",
+      "format": "doubles",
+      "status": "native_checked",
+      "summary": "A partner Swaggers Sneasler: +2 Attack, Persim Berry cures the confusion and triggers Unburden. The doubled Speed is not new (meta Psychic Seed Sneasler already reaches 344); the Swagger buys the +2.",
+      "uses": [
+        {
+          "mon": "Sneasler",
+          "role": "receiver: Unburden, Persim Berry"
+        }
+      ],
+      "sources": [
+        "e2",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "sneasler-gain",
+          "text": "At +2, Close Combat or Dire Claw turns Kingambit (62.5%), Rillaboom (62.5%) and Farigiraf (2HKO) into guaranteed OHKOs",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "sneasler-redirect",
+          "text": "Opposing Follow Me or Rage Powder can steal the Swagger",
+          "status": "hypothesis",
+          "decisive": true
+        }
+      ],
+      "targets": [
+        {
+          "mon": "Kingambit",
+          "why": "62.5% OHKO at +0, guaranteed at +2",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Rillaboom",
+          "why": "62.5% OHKO at +0, guaranteed at +2",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Farigiraf",
+          "why": "2HKO at +0, OHKO at +2",
+          "status": "native_checked"
+        }
+      ],
+      "acceptedLosses": [
+        {
+          "mon": "Sneasler",
+          "why": "Gives up the Psychic Seed set; the partner spends its turn on Swagger",
+          "status": "hypothesis"
+        }
+      ],
+      "notChanged": [],
+      "threats": [
+        {
+          "name": "Follow Me / Rage Powder",
+          "mons": [
+            "Indeedee-F",
+            "Sinistcha"
+          ],
+          "effect": "Steal the ally-targeted Swagger",
+          "status": "hypothesis"
+        }
+      ],
+      "alternatives": [],
+      "verdict": "Worth a test (E7)."
+    },
+    {
+      "id": "rhyperior-reversal",
+      "title": "Focus Sash Reversal Rhyperior under Trick Room",
+      "format": "doubles",
+      "status": "native_checked",
+      "summary": "Rhyperior survives on Sash at 1 HP, then Reversal under Trick Room.",
+      "uses": [
+        {
+          "mon": "Rhyperior",
+          "role": "attacker: Focus Sash, Reversal"
+        },
+        {
+          "mon": "Farigiraf",
+          "role": "partner: Armor Tail blocks Fake Out and Grassy Glide"
+        }
+      ],
+      "sources": [
+        "e2",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "rhyp-gain",
+          "text": "Under Trick Room, Reversal at 1 HP turns Kingambit (2HKO) and Archaludon (43.8%) into guaranteed OHKOs",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "rhyp-armor",
+          "text": "Needs a partner that stops Fake Out and Grassy Glide, such as Armor Tail Farigiraf",
+          "status": "hypothesis",
+          "decisive": true
+        }
+      ],
+      "targets": [
+        {
+          "mon": "Kingambit",
+          "why": "2HKO before, OHKO at 1 HP",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Archaludon",
+          "why": "43.8% before, OHKO at 1 HP",
+          "status": "native_checked"
+        }
+      ],
+      "acceptedLosses": [],
+      "notChanged": [],
+      "threats": [
+        {
+          "name": "Fake Out / priority",
+          "mons": [
+            "Rillaboom",
+            "Incineroar"
+          ],
+          "effect": "Breaks the Sash or finishes Rhyperior before it moves",
+          "status": "hypothesis"
+        }
+      ],
+      "alternatives": [],
+      "verdict": "Worth a test (E7)."
+    },
+    {
+      "id": "arcanine-beatup",
+      "title": "Farigiraf Beat Up into Justified Arcanine",
+      "format": "doubles",
+      "status": "native_checked",
+      "summary": "Beat Up hits Arcanine once per healthy party member; each Dark hit raises Attack through Justified.",
+      "uses": [
+        {
+          "mon": "Farigiraf",
+          "role": "enabler: Beat Up"
+        },
+        {
+          "mon": "Arcanine",
+          "role": "receiver: Justified"
+        }
+      ],
+      "sources": [
+        "e2",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "arc-gain",
+          "text": "At +4, Flare Blitz turns Kingambit (2HKO) and Farigiraf (3HKO) into guaranteed OHKOs, from a 3-Atk-point spread",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "arc-spread",
+          "text": "Rerun with a full-Attack spread",
+          "status": "hypothesis",
+          "decisive": false
+        }
+      ],
+      "targets": [
+        {
+          "mon": "Kingambit",
+          "why": "2HKO before, OHKO at +4",
+          "status": "native_checked"
+        },
+        {
+          "mon": "Farigiraf",
+          "why": "3HKO before, OHKO at +4",
+          "status": "native_checked"
+        }
+      ],
+      "acceptedLosses": [
+        {
+          "mon": "Arcanine",
+          "why": "Gives up Intimidate for Justified; Farigiraf spends a turn",
+          "status": "hypothesis"
+        }
+      ],
+      "notChanged": [],
+      "threats": [],
+      "alternatives": [],
+      "verdict": "Worth a test (E7)."
+    },
+    {
+      "id": "ninetales-memento",
+      "title": "Choice Scarf Ninetales Memento",
+      "format": "doubles",
+      "status": "native_checked",
+      "summary": "Scarf Ninetales at 250 Speed moves before everything in the top 15 (fastest Basculegion, 214), so Memento always lands before the foe acts and brings a sun sweeper in.",
+      "uses": [
+        {
+          "mon": "Ninetales",
+          "role": "enabler: Scarf Memento"
+        }
+      ],
+      "sources": [
+        "e2",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "nt-speed",
+          "text": "250 Speed moves first against all of the top 15",
+          "status": "native_checked",
+          "decisive": true
+        }
+      ],
+      "targets": [],
+      "acceptedLosses": [
+        {
+          "mon": "Ninetales",
+          "why": "Faints on purpose",
+          "status": "hypothesis"
+        }
+      ],
+      "notChanged": [],
+      "threats": [],
+      "alternatives": [],
+      "verdict": "Worth a test (E7)."
+    },
+    {
+      "id": "torkoal-simplebeam",
+      "title": "Audino Simple Beam into Torkoal, then Shell Smash",
+      "format": "doubles",
+      "status": "rejected",
+      "summary": "Kept as the example of a big effect with no outcome.",
+      "uses": [
+        {
+          "mon": "Audino",
+          "role": "enabler"
+        },
+        {
+          "mon": "Torkoal",
+          "role": "receiver"
+        }
+      ],
+      "sources": [
+        "e2",
+        "e7"
+      ],
+      "conditions": [
+        {
+          "id": "tork-speed",
+          "text": "Quiet 0-Speed Torkoal goes 36 to 108; under Trick Room it now moves after six slow meta sets (Incineroar, Indeedee-F, Kingambit, Golisopod-Mega, Farigiraf, Milotic)",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "tork-gain",
+          "text": "+0 sun Eruption already OHKOs Rillaboom, Kingambit and Gholdengo; only Farigiraf changes, and a plain +2 Shell Smash does that too",
+          "status": "native_checked",
+          "decisive": true
+        },
+        {
+          "id": "tork-def",
+          "text": "-2 Def turns Basculegion's Wave Crash from a 2HKO (52-63%) into an OHKO",
+          "status": "native_checked",
+          "decisive": false
+        }
+      ],
+      "targets": [],
+      "acceptedLosses": [],
+      "notChanged": [],
+      "threats": [],
+      "alternatives": [],
+      "verdict": "Rejected (E7): one KO gained, six Trick Room move-order wins lost."
     }
   ]
 }
