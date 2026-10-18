@@ -26,6 +26,10 @@ Open [FalkorDB Browser](http://localhost:4319). The database remains writable at
 
 The earlier [authored-case workbench](workbench/README.md) and [scripted demo](workbench/DEMO.md) remain available as historical experiments. The user rejected dependency checking as the main product direction. See [the database recovery record](workbench/DB_RECOVERY.md) for the persistence correction and unrecovered prior run history.
 
+## AI assistance
+
+Built with Claude Code and Codex as coding assistants. Shivraj selected the problem, cases and scope, reviewed the graph and calculations, and corrected the agents’ mechanics and claims.
+
 ## Earlier ingestion experiment
 
 An ingestion experiment for finding uncommon Pokémon cores with FalkorDB. The first result is that five mechanical retrieval queries give identical answers in the graph and in plain JavaScript. Graph storage has not yet demonstrated a discovery advantage.

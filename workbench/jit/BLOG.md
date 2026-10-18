@@ -6,7 +6,7 @@ That became Gimmikghoul, a Pokémon team-exploration workspace built around Falk
 
 ## Start with one question
 
-Our demo starts with an attributed Alcremie team discussed in a creator's video. We reconstruct the explanation rather than claim we invented the core. The question is concrete: what does Alcremie's Decorate actually buy Mega Garchomp Z?
+Our demo starts with London Faust's Alcremie team, presented by Aaron Zheng (Cybertron) in a video supplied for analysis. We reconstruct the explanation rather than claim we invented the core. The question is concrete: what does Alcremie's Decorate actually buy Mega Garchomp Z?
 
 Decorate raises its target's Attack and Special Attack by two stages. The agent can retrieve other ally-support moves from engine target and stat-effect data, then compare their jobs. Coaching raises Attack and Defense. Aromatic Mist raises Special Defense. Neither replaces Decorate's Special Attack boost for this attacker.
 
