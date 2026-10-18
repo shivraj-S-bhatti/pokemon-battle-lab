@@ -10,3 +10,5 @@ node_modules/
 *.quill.md
 research/evidence/claude-project-handoff.json
 research/evidence/local-claude-sessions.json
+*.excalidraw.prev
+*.excalidraw.tmp

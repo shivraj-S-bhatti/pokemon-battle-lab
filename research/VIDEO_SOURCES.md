@@ -84,3 +84,21 @@ Both speakers separate battling from team building and place the hard, unsolved 
 | 9:07 | Weaknesses: Swagger is 85% accurate; redirection (Sinistcha) steals the Swagger; Focus Sash; two leads that each OHKO Sneasler; Ghost, Dark and Normal types wall Banette. Showdown's Rage Powder handler redirects ally-targeted single-target moves from the opposing side, which matches this read. |
 | 20:21 | Respects Sinistcha's Rage Powder on turn one instead of clicking Swagger, then loses Banette. A live example of a belief changing the best move. |
 | 1:04:33 | Pulls a damage calc to explain a missed KO: Jolly vs Adamant Sneasler and max-HP Dragonite. |
+
+## V04. THATSAplusONE, "I can't believe this combo actually works!"
+
+- Link: https://www.youtube.com/watch?v=XZrc4W-711Y
+- Pokémon Champions VGC, Reg M-C ranked. Transcript and team sheets supplied by Shivraj.
+- Team: Alcremie (Aroma Veil, Focus Sash: Protect, Decorate, Psych Up, Dazzling Gleam) · Mega Chimecho (Levitate, Chimechite: Trick Room, Heal Pulse, Calm Mind, Dazzling Gleam) · Arbok (Intimidate, Leftovers: Coil, Leech Life, Earthquake, Gunk Shot) · Farfetch'd (Inner Focus, Choice Scarf: U-turn, Simple Beam, Close Combat, Brave Bird) · Farigiraf (Armor Tail, Air Balloon: Ally Switch, Trick Room, Helping Hand, Twin Beam) · Torterra (Shell Armor, White Herb: Protect, Shell Smash, Rock Slide, Earthquake).
+- Why it matters to us: the cleanest "why is this on here" team in the bank. Every odd slot exists to enable one combo, and the creator names each reason.
+
+| Time | Point |
+|---|---|
+| 0:00 | Base Farfetch'd over Sirfetch'd for Inner Focus, so Fake Out cannot flinch the Simple Beam user. |
+| 0:20 | Simple Beam onto Torterra, then Shell Smash: +4 Attack, Special Attack and Speed; White Herb clears the doubled defence drops. |
+| 0:56 | Each support slot protects the setup: Alcremie Decorate through Protect, Mega Chimecho Heal Pulse, Farigiraf Ally Switch, Air Balloon Farigiraf so Torterra can Earthquake. |
+| 1:09 | Plan B: Simple Beam onto Arbok and Coil for +2 Attack, Defense and accuracy. |
+| 1:40 | "I think we cooked too hard." Community vocabulary for exactly our signal. |
+| 7:22 | Uses Farigiraf + Torterra Trick Room line instead of the combo when Charizard leads are likely: the team has a second mode. |
+| 23:16 | Idea: Simple Beam the opposing Malamar so its Skill Swap hands Simple to Charizard, whose Overheat then drops it to -4. |
+| 37:23 | "we got so close to burning the kitchen down with this one": the overcooking side, in the creator's words. |
