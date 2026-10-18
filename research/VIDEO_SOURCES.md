@@ -67,3 +67,20 @@ He says his next video tackles a team-building problem with an unknown metagame 
 ## Cross-reading
 
 Both speakers separate battling from team building and place the hard, unsolved part in team building, metagame estimation and team preview. V02 reports that battling is now bot-favoured with a one-turn search over a learned value. V01 explains why a learned value is needed: the four elements make explicit lookahead impractical for humans. Neither claims a method for judging whether a team is generally good or only good in the current field.
+
+## V03. Aaron "Cybertron" Zheng, "Let me show you MEGA BANETTE's true potential"
+
+- Link: https://www.youtube.com/watch?v=QS7GtlEbcDg
+- Road to Ranked episode, Pokémon Champions VGC. Team ID 43T0PE8TL8, built by another player and finished Champion tier at the end of Reg M-B's first ranked season. Transcript supplied by Shivraj; team sheet and combination slides from his screenshots.
+- Why it matters to us: Cybertron does live, out loud, what we want a tool to do. He takes an off-meta team, names the plan, names what breaks it, and judges each odd slot choice.
+
+| Time | Point |
+|---|---|
+| 0:16 | Core: Mega Banette's Prankster Swagger onto Lum Berry Sneasler gives +2 Attack, the Lum Berry cures confusion and triggers Unburden, so Sneasler outspeeds the format and takes turn-one KOs. |
+| 2:04 | Frisk before Mega Evolution reveals items in closed-sheet Bo1. |
+| 2:39 | Throat Chop over Dire Claw to OHKO Ghost types (Sinistcha, Basculegion, Gholdengo); Rock Slide for Charizard. |
+| 4:37 | Archaludon runs Snarl over Dragon Pulse for special bulk and Perish endgames. |
+| 6:28 | Lead Banette + Sneasler in 90%+ of games, Politoed in back, flex the fourth by matchup. Fixed leads simplify team preview. |
+| 9:07 | Weaknesses: Swagger is 85% accurate; redirection (Sinistcha) steals the Swagger; Focus Sash; two leads that each OHKO Sneasler; Ghost, Dark and Normal types wall Banette. Showdown's Rage Powder handler redirects ally-targeted single-target moves from the opposing side, which matches this read. |
+| 20:21 | Respects Sinistcha's Rage Powder on turn one instead of clicking Swagger, then loses Banette. A live example of a belief changing the best move. |
+| 1:04:33 | Pulls a damage calc to explain a missed KO: Jolly vs Adamant Sneasler and max-HP Dragonite. |
