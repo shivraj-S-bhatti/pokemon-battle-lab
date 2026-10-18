@@ -57,7 +57,9 @@ if (step === 1) {
 if (step === 2) {
   // Capability index from engine data: status moves that raise a target's stats can boost an ally;
   // status moves that lower a target's stats become boosts on a Contrary ally. Nothing here is a hand list.
-  const moves = dex.moves.all().filter(m => !m.isNonstandard && m.category === 'Status' && m.boosts && m.target !== 'self');
+  // Engine target semantics: only these target types can land on an adjacent ally in doubles. allAdjacentFoes / foeSide moves cannot.
+  const ALLY_TARGETS = ['normal', 'any', 'adjacentAlly', 'adjacentAllyOrSelf', 'allies', 'allAdjacent'];
+  const moves = dex.moves.all().filter(m => !m.isNonstandard && m.category === 'Status' && m.boosts && ALLY_TARGETS.includes(m.target));
   const raise = moves.filter(m => Object.values(m.boosts).some(v => v > 0) && Object.values(m.boosts).every(v => v >= 0));
   const lower = moves.filter(m => Object.values(m.boosts).every(v => v < 0) && Object.values(m.boosts).reduce((a, v) => a + v, 0) <= -2);
   const contrary = legal.filter(n => Object.values(dex.species.get(n).abilities).includes('Contrary'));
@@ -65,19 +67,19 @@ if (step === 2) {
   let edges = 0;
   for (const m of raise) {
     const who = topLearners(m); if (!who.length) continue;
-    await q('MERGE (x:Move {id:$id}) SET x.name=$name, x.kind="ally-boost", x.boosts=$b, x.confuses=$cf', { id: m.id, name: m.name, b: JSON.stringify(m.boosts), cf: m.volatileStatus === 'confusion' });
+    await q('MERGE (x:Move {id:$id}) SET x.name=$name, x.kind="ally-boost", x.boosts=$b, x.confuses=$cf, x.target=$t', { id: m.id, name: m.name, b: JSON.stringify(m.boosts), cf: m.volatileStatus === 'confusion', t: m.target });
     for (const n of who) { await mon(n); await q('MATCH (a:Mon {id:$a}), (x:Move {id:$m}) CREATE (a)-[:CAN_LEARN {status:"learnset_candidate", note:"in the Champions learnset; set not validated"}]->(x)', { a: toID(n), m: m.id }); edges++; }
   }
   for (const m of lower) {
     const who = topLearners(m); if (!who.length || !contrary.length) continue;
-    await q('MERGE (x:Move {id:$id}) SET x.name=$name, x.kind="drop-inverted-by-contrary", x.boosts=$b', { id: m.id, name: m.name, b: JSON.stringify(m.boosts) });
+    await q('MERGE (x:Move {id:$id}) SET x.name=$name, x.kind="drop-inverted-by-contrary", x.boosts=$b, x.target=$t', { id: m.id, name: m.name, b: JSON.stringify(m.boosts), t: m.target });
     for (const n of who.slice(0, 2)) { await mon(n); await q('MATCH (a:Mon {id:$a}), (x:Move {id:$m}) CREATE (a)-[:CAN_LEARN {status:"learnset_candidate", note:"in the Champions learnset; set not validated"}]->(x)', { a: toID(n), m: m.id }); edges++; }
     for (const r of contrary) { await mon(r, { ability: 'Contrary' }); await q('MATCH (x:Move {id:$m}), (r:Mon {id:$r}) CREATE (x)-[:ENABLES {via:"Contrary turns the drop into a boost", status:"rule_candidate", note:"Contrary is a legal ability of this species; ally targeting and set not checked here"}]->(r)', { m: m.id, r: toID(r) }); edges++; }
   }
   if (learns('Alcremie', 'Decorate')) await q('MATCH (a:Mon {id:"alcremie"}), (x:Move {id:"decorate"}) MERGE (a)-[:CAN_LEARN {status:"on_source_set", note:"on the rental set from the source"}]->(x)');
   await q('MATCH (x:Move {id:"decorate"}), (g:Mon {id:"garchompmegaz"}) CREATE (x)-[:ENABLES {via:"+2 Atk/SpA on the ally", status:"source_claim_and_move_data", source:"cybertron-alcremie"}]->(g)');
   say('Index ally boosters and Contrary-inverted drops from engine data',
-    [`${raise.length} ally-boosting status moves, ${lower.length} stat-lowering moves of -2 or more`, `Contrary users in the meta: ${contrary.join(', ') || 'none'}`, `${edges} ENABLES edges (top learners by usage)`],
+    [`${raise.length} ally-targetable stat-raising status moves, ${lower.length} ally-targetable stat-lowering moves of -2 or more (engine target types ${ALLY_TARGETS.join(', ')})`, `Contrary users in the meta: ${contrary.join(', ') || 'none'}`, `${edges} ENABLES edges (top learners by usage)`],
     "MATCH p=(:Mon)-[:CAN_LEARN]->(:Move)-[:ENABLES]->(:Mon) RETURN p");
 }
 
@@ -87,22 +89,32 @@ if (step === 3) {
     ['Garchomp-Mega-Z', 'Draco Meteor', {}, ['Salamence-Mega', 'Rillaboom', 'Incineroar', 'Kingambit', 'Gholdengo', 'Archaludon', 'Charizard-Mega-Y', 'Sylveon']],
     ['Torkoal', 'Eruption', { weather: 'Sun' }, ['Rillaboom', 'Kingambit', 'Gholdengo', 'Incineroar', 'Basculegion', 'Milotic']],
   ];
+  const pins = { calculator: JSON.parse(fs.readFileSync(new URL('../../.cache/champions-calculator/manifest.json', import.meta.url))),
+    engineRevision: JSON.parse(fs.readFileSync(new URL('../../.artifacts/source-manifest.json', import.meta.url))).revision, adapter: 'workbench/tools/calculator.mjs' };
+  const receipt = { step: 3, format: FORMAT, pins, source: SOURCE.id, rows: [] };
   const out = [];
   for (const [atk, move, field, targets] of plan) for (const t of targets) {
     const def = metaSet(t); if (!def) continue;
-    const r = b => calculateRow({ format: FORMAT, attacker: { set: fullSet(TEAM[atk]), state: { boosts: { atk: b, spa: b } } }, defender: def, move, field });
-    const [r0, r2] = [await r(0), await r(2)];
-    const k0 = r0.native?.kochance?.text ?? 'no damage', k2 = r2.native?.kochance?.text ?? 'no damage';
+    const input = b => ({ format: FORMAT, attacker: { set: fullSet(TEAM[atk]), state: { boosts: { atk: b, spa: b } } }, defender: def, move, field });
+    const [r0, r2] = [await calculateRow(input(0)), await calculateRow(input(2))];
+    const rowId = `${toID(atk)}|${toID(move)}|${toID(t)}`;
+    receipt.rows.push({ id: rowId, input0: input(0), output0: r0, input2: input(2), output2: r2 });
+    const label = r => r.status === 'calculated' ? r.native.kochance.text : `${r.status}${r.native?.range ? ` (damage ${JSON.stringify(r.native.range)})` : ''}`;
+    const k0 = label(r0), k2 = label(r2);
     const flips = !/guaranteed OHKO/.test(k0) && /guaranteed OHKO/.test(k2);
-    const rel = k2 === 'no damage' ? 'NO_EFFECT' : /guaranteed OHKO/.test(k2) ? 'OHKO_AT_PLUS2' : 'NOT_OHKO_AT_PLUS2';
+    const rel = r2.status !== 'calculated' ? 'CALC_NOT_COMPLETED' : /guaranteed OHKO/.test(k2) ? 'OHKO_AT_PLUS2' : 'NOT_OHKO_AT_PLUS2';
     await mon(t);
-    await q(`MATCH (a:Mon {id:$a}), (d:Mon {id:$d}) CREATE (a)-[:${rel} {move:$move, at0:$k0, atPlus2:$k2, decorateFlips:$flips, desc2:$desc2, attackerSet:$aset, defenderSet:$dset, conditions:$cond, status:"native_checked", calculator:"workbench/tools/calculator.mjs (native Smogon Champions)"}]->(d)`,
+    await q(`MATCH (a:Mon {id:$a}), (d:Mon {id:$d}) CREATE (a)-[:${rel} {move:$move, at0:$k0, atPlus2:$k2, decorateFlips:$flips, desc2:$desc2, attackerSet:$aset, defenderSet:$dset, field:$fieldText, conditions:$cond, status:$st, receipt:$rc}]->(d)`,
       { a: toID(atk), d: toID(t), move, k0, k2, flips, desc2: r2.native?.fullDesc ?? '', aset: setText(TEAM[atk]) + ' [source: rental screen]',
         dset: setText({ ...def, item: def.item, ability: def.ability, nature: def.nature, evs: def.evs, moves: def.moves }) + ' [data/meta-sets.json candidate, constructed]',
-        cond: `+0 vs +2 Atk and SpA (Decorate); field ${Object.keys(field).length ? JSON.stringify(field) : 'neutral'}; no Intimidate, screens or terrain` });
+        fieldText: Object.keys(field).length ? JSON.stringify(field) : 'neutral', st: r2.status === 'calculated' ? 'native_checked' : `native_${r2.status}`,
+        rc: `workbench/jit/checks/step3-decorate.json rows[id=${rowId}]`,
+        cond: `+0 vs +2 Atk and SpA (Decorate); no Intimidate, screens or terrain` });
     out.push(`${atk} ${move} -> ${t}: +0 ${k0} | +2 ${k2}${flips ? '   <- Decorate flips it' : ''}`);
   }
-  say('Native calcs on selected targets: what Decorate buys', out, "MATCH p=(:Mon {onTeam:true})-[r:OHKO_AT_PLUS2|NOT_OHKO_AT_PLUS2|NO_EFFECT]->(:Mon) RETURN p");
+  fs.mkdirSync(new URL('./checks/', import.meta.url), { recursive: true });
+  fs.writeFileSync(new URL('./checks/step3-decorate.json', import.meta.url), JSON.stringify(receipt, null, 1) + '\n');
+  say('Native calcs on selected targets: what Decorate buys', [...out, 'Receipt: workbench/jit/checks/step3-decorate.json (full inputs, outputs, calculator and engine pins)'], "MATCH p=(:Mon {onTeam:true})-[r:OHKO_AT_PLUS2|NOT_OHKO_AT_PLUS2|CALC_NOT_COMPLETED]->(:Mon) RETURN p");
 }
 
 if (step === 4) {
@@ -110,7 +122,7 @@ if (step === 4) {
   const redirect = ['Follow Me', 'Rage Powder'];
   const users = META.species.filter(s => s.candidate?.set?.moves?.some(m => redirect.map(toID).includes(toID(m)))).map(s => s.name);
   await q('CREATE (:Threat {id:"redirection", name:"Redirection steals Decorate", status:"source_claim"})');
-  for (const u of users) { await mon(u); await q('MATCH (u:Mon {id:$u}), (t:Threat {id:"redirection"}), (a:Mon {id:"alcremie"}) CREATE (u)-[:CARRIES]->(t), (t)-[:COUNTERPLAY {status:"meta_candidate_set", note:"move on the meta candidate set; that redirection steals Decorate is claimed by the source", source:"cybertron-alcremie"}]->(a)', { u: toID(u) }); }
+  for (const u of users) { await mon(u); await q('MATCH (u:Mon {id:$u}), (t:Threat {id:"redirection"}), (a:Mon {id:"alcremie"}) CREATE (u)-[:CARRIES]->(t), (t)-[:COUNTERPLAY {status:"meta_candidate_set", note:"move on the meta candidate set; that redirection steals Decorate is claimed by the source", policy:"Condition to play around, not a dismissal: the source uses Helping Hand or attacks instead of Decorate, or skips the Alcremie lead into Indeedee", source:"cybertron-alcremie"}]->(a)', { u: toID(u) }); }
   const claims = [['faster-garchomp', 'Faster Garchomp (Timid Draco, Scarf)', 'garchompmegaz'], ['bulky-charizard', 'Specially bulky Mega Charizard survives Power Gem', 'garchompmegaz'],
     ['focus-sash', 'Focus Sash survives +2 attacks', 'alcremie'], ['rain', 'Opposing rain beats Torkoal', 'torkoal'], ['taunt-tr', 'Taunt / reversing Trick Room', 'farigiraf']];
   for (const [id, name, target] of claims)
@@ -131,10 +143,10 @@ if (step === 5) {
   for (const s of META.species.slice(0, 30)) {
     const contact = (s.candidate?.set?.moves || []).filter(m => dex.moves.get(m).flags?.contact && dex.moves.get(m).category !== 'Status');
     if (contact.length >= 2) { helmet.push(`${s.name} (${contact.join(', ')})`); await mon(s.name);
-      await q('MATCH (a:Mon {id:"alcremie"}), (d:Mon {id:$d}) CREATE (a)-[:HELMET_CHIPS {why:"Rocky Helmet damages contact attackers", moves:$mv, defenderSet:"data/meta-sets.json candidate", status:"engine_move_flags"}]->(d)', { d: toID(s.name), mv: contact.join(', ') }); }
+      await q('MATCH (a:Mon {id:"alcremie"}), (d:Mon {id:$d}) CREATE (a)-[:HELMET_OPPORTUNITY {why:"Rocky Helmet chips a contact attacker that hits Alcremie", moves:$mv, setSource:"data/meta-sets.json candidate", status:"engine_move_flags", limits:"Only if that move targets Alcremie and connects; not checked: target choice, Protect, Long Reach / Protective Pads, sets that differ from the candidate"}]->(d)', { d: toID(s.name), mv: contact.join(', ') }); }
   }
-  say('Sleep hole and Rocky Helmet value', [`Sleep users among meta candidates: ${sleepers.join(', ')}`, `Top-30 meta sets with 2+ contact attacks (Rocky Helmet chip): ${helmet.length}`, ...helmet.slice(0, 8)],
-    "MATCH p=(:Mon {id:'alcremie'})-[:BLOCKS|HELMET_CHIPS]->() RETURN p");
+  say('Sleep hole and Rocky Helmet value', [`Sleep users among meta candidates: ${sleepers.join(', ')}`, `Top-30 meta candidate sets with 2+ contact attacks (Rocky Helmet opportunities, not matchup results): ${helmet.length}`, ...helmet.slice(0, 8)],
+    "MATCH p=(:Mon {id:'alcremie'})-[:BLOCKS|HELMET_OPPORTUNITY]->() RETURN p");
 }
 
 if (step === 6) {
