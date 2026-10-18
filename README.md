@@ -1,5 +1,7 @@
 # Gimmikghoul · Pokémon Battle Lab
 
+[Hackathon blog](workbench/jit/BLOG.md) · [Demo runbook](workbench/jit/README.md) · [Submission answers](workbench/jit/SUBMISSION_KIT.md)
+
 ## Current workflow: team exploration beside the graph
 
 The [six-step graph demo](workbench/jit/README.md) builds a discussion graph around Alcremie support, selected attack thresholds, counterplay and alternative partners. Run it beside Codex or Claude and inspect its candidates in native FalkorDB Browser. The scripted example is a starting point for investigation, not an autonomous team optimizer.

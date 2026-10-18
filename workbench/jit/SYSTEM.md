@@ -6,13 +6,13 @@ Find the gaps in the meta that give your unemployed favourites a job.
 
 I like Alcremie. Almost nobody runs it. I ask the agent: where does Alcremie have work right now?
 
-1. The agent checks the meta in the graph. Venusaur's Sleep Powder is everywhere and almost nothing answers sleep.
+1. The agent checks the meta in the graph. It identifies sleep pressure as a question to investigate in the selected usage snapshot.
 2. It finds that Alcremie's Sweet Veil keeps itself and its partner awake, and that Decorate gives the partner +2 Attack and Special Attack.
 3. It runs the damage calculator: with Decorate, Mega Garchomp Z's Draco Meteor now one-shots Rillaboom, Incineroar, Archaludon and Mega Charizard Y.
 4. It lists what the pilot has to play around: Follow Me and Rage Powder users, Fairy types, faster Garchomp.
 5. I get a core, its leads, and what it is weak to. I decide which bad matchups I accept.
 
-A real player took this exact core to top 16 at Louisville Regionals. The graph gets there from the data.
+A real player took this exact core to top 16 at Louisville Regionals. This demo reconstructs an attributed team with engine-derived candidates and selected calculator checks.
 
 ## System
 

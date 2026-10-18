@@ -6,7 +6,7 @@ It does not promise the agent invents winning teams, and no edge is a win rate.
 
 ## Run (about 30 seconds of compute)
 
-Prerequisites: `docker compose up -d --wait` (FalkorDB on 6388, Browser on http://localhost:4319), the Showdown cache (`npm run prepare:data`) and the native calculator (`node workbench/tools/prepare-calculator.mjs`).
+Prerequisites: `docker compose --profile explore up -d --build --wait` (FalkorDB on 6388, Browser on http://localhost:4319), the Showdown cache (`npm run prepare:data`) and the native calculator (`node workbench/tools/prepare-calculator.mjs`).
 
 ```sh
 node workbench/jit/build-jit.mjs 1   # resets gk_jit
