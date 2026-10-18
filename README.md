@@ -2,7 +2,9 @@
 
 ## Current workflow: team exploration beside the graph
 
-The next increment is the [minimal theory harness proposal](workbench/MINIMAL_HARNESS.md), alongside [Claude's adversarial assessment](workbench/CLAUDE_HARNESS_ASSESSMENT.md). It is a design proposal; the current runnable tools are below.
+The [six-step graph demo](workbench/jit/README.md) builds a discussion graph around Alcremie support, selected attack thresholds, counterplay and alternative partners. Run it beside Codex or Claude and inspect its candidates in native FalkorDB Browser. The scripted example is a starting point for investigation, not an autonomous team optimizer.
+
+The [minimal theory loop](data/theories/memento-staraptor/README.md) is also runnable: save an idea, attach a native calculator receipt, revise it, and see which evidence is stale. It uses Git and one small script. Its [design](workbench/MINIMAL_HARNESS.md) and [adversarial review](workbench/CLAUDE_HARNESS_ASSESSMENT.md) record the scope and tradeoffs. The JIT discussion graph and theory receipts remain separate entry points in this increment.
 
 Start with [the exploration handoff](workbench/EXPERIMENT_UNBLOCKS.md). Choose an idea, target matchups and acceptable losses; use Codex or Claude to retrieve alternatives and request the few checks that could change a team decision. The native FalkorDB Browser shows Pokémon sprites and a compact human reasoning map. Agent runtime graphs may contain different structures.
 
