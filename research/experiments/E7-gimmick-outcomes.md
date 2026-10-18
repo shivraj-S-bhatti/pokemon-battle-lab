@@ -1,6 +1,6 @@
 # E7: What E2's gimmicks buy in battle
 
-Four of E2's 45 top gimmicks (30 doubles, 15 BSS) are worth a test, two are already the standard set, and 39 fail at the threshold that decides whether to use them. Usually the failure is that the receiver's real set either already wins the target matchup without the gimmick, or cannot use the effect at all.
+Four of E2's 45 top gimmicks (30 doubles, 15 BSS) are worth a test, two are already the standard set, and 39 are deprioritized for the selected sets and targets: on the targets checked, the receiver's selected set usually already won the matchup without the gimmick, or could not use the effect. A different set, target, move order or partner can change these verdicts.
 
 ## Re-ranked top 10
 
@@ -11,12 +11,12 @@ Score = target matchups flipped per turn invested, times E2 novelty. A flip is a
 | 1 | doubles-03 Sneasler, partner Swagger + Persim + Unburden | +0 Close Combat on Kingambit 62.5% OHKO; Dire Claw on Rillaboom 62.5%; Farigiraf 2HKO; Speed 172 | +2: all three guaranteed OHKO; Speed 344 | 1 | worth a test |
 | 2 | doubles-13 Rhyperior, Sash Reversal (Trick Room) | High Horsepower: Kingambit 2HKO, Archaludon 43.8% OHKO | Reversal at 1 HP: both guaranteed OHKO (109-129%, 127-150%) | 1 | worth a test |
 | 3 | doubles-17 Arcanine, Farigiraf Beat Up into Justified | 3-Atk-point Flare Blitz: Kingambit 2HKO, Farigiraf 3HKO | +4: both guaranteed OHKO | 1 | worth a test |
-| 4 | doubles-18 Gallade, Beat Up into Justified | Sharpness Sacred Sword already OHKOs Kingambit, Incineroar, Archaludon | +4 adds only Rillaboom (Psycho Cut) | 1 | reject |
-| 5 | doubles-24 Slowking-Galar, Grimmsnarl Flatter + Own Tempo | Sludge Bomb 2HKOs Gardevoir-Mega (80-96.5%) | +1 OHKOs it (121-145%); Rillaboom, Whimsicott fall either way | 1 | reject |
-| 6 | doubles-01 Malamar, Gholdengo Memento + Contrary | 0-Atk Relaxed set: Kingambit 3HKO, Incineroar 2HKO, Gholdengo 2HKO | +2: Kingambit still 2HKO, Incineroar 50% OHKO, Gholdengo OHKO | 2 | reject |
-| 7 | doubles-02 Staraptor-Mega, Gholdengo Memento + Contrary | +0 already OHKOs Rillaboom, Sneasler, Incineroar; Kingambit 37.5% | +2: Kingambit guaranteed | 2 | reject |
-| 8 | singles-14 Staraptor, Final Gambit | n/a | 160 damage: OHKOs Lucario-Mega-Z, Meowscarada; Garchomp 86% | 2 | reject |
-| 9 | doubles-21 Ninetales, Choice Scarf Memento | n/a | 250 Speed moves first vs all of the top 15 (fastest Basculegion 214) | 2 | worth a test |
+| 4 | doubles-18 Gallade, Beat Up into Justified | Sharpness Sacred Sword already OHKOs Kingambit, Incineroar, Archaludon | +4 adds only Rillaboom (Psycho Cut) | 1 | deprioritized |
+| 5 | doubles-24 Slowking-Galar, Grimmsnarl Flatter + Own Tempo | Sludge Bomb 2HKOs Gardevoir-Mega (80-96.5%) | +1 OHKOs it (121-145%); Rillaboom, Whimsicott fall either way | 1 | deprioritized |
+| 6 | doubles-01 Malamar, Gholdengo Memento + Contrary | 0-Atk Relaxed set: Kingambit 3HKO, Incineroar 2HKO, Gholdengo 2HKO | +2: Kingambit still 2HKO, Incineroar 50% OHKO, Gholdengo OHKO | 2 | deprioritized |
+| 7 | doubles-02 Staraptor-Mega, Gholdengo Memento + Contrary | +0 already OHKOs Rillaboom, Sneasler, Incineroar; Kingambit 37.5% | +2: Kingambit guaranteed | 2 | deprioritized |
+| 8 | singles-14 Staraptor, Final Gambit | n/a | 160 damage: OHKOs Lucario-Mega-Z, Meowscarada; Garchomp 86% | 2 | deprioritized |
+| 9 | doubles-21 Ninetales, Choice Scarf Memento | n/a | 250 Speed is above the unboosted Speed of all of the top 15 (fastest Basculegion 214); priority, Trick Room and Speed boosts were not checked | 2 | worth a test |
 | 10 | doubles-30 Machamp, No Guard Dynamic Punch | n/a | OHKOs Incineroar, 62.5% on Kingambit | 0 | keep (already standard) |
 
 Sneasler is the only E2 top-5 entry that survives, and it survives for a narrower reason than E2 gave. The doubled Speed is not new: meta Sneasler already reaches 344 when its Psychic Seed pops under Indeedee-F. The Swagger buys only the +2 Attack, and that +2 is what turns three coin-flip KOs into guaranteed ones.
@@ -27,7 +27,15 @@ Rhyperior needs a partner that blocks Fake Out and Grassy Glide, since either ki
 
 **Torkoal (doubles-08), Simple Beam then Shell Smash.** Torkoal runs Quiet with 0 Speed points, so it has 36 Speed. Under Trick Room that beats all of the top 15 doubles sets. At +4 (x3) it has 108 Speed and moves after six of them in Trick Room: Incineroar (80), Indeedee-F (94), Kingambit (70), Golisopod-Mega (60), Farigiraf (80) and Milotic (101). Outside Trick Room, 108 outspeeds only those same six slow sets and nothing fast. The SpA gain changes almost nothing: +0 Eruption in sun already OHKOs Rillaboom (215-254%), Kingambit (155-184%) and Gholdengo (190-224%). The only target that flips is Farigiraf (70-83% to an OHKO), and a plain +2 Shell Smash flips it too (141-166%) without the Audino turn. The -2 Def is a real cost: Basculegion's Wave Crash goes from a 2HKO (52-63%) to an OHKO (104-124%). Net: one flip gained, six Trick Room move-order wins lost. Usage data shows no Torkoal running Shell Smash in its top moves.
 
-The other Simple Beam entries fail the same way. Simple plus one setup turn reaches the same stage on the same turn as two plain setup turns, while spending Audino's action and the receiver's ability.
+The other Simple Beam entries showed limited benefit for the selected sets on the checked targets. Their accounting has three separate parts:
+
+- **Battle turns.** Simple Beam before the ally's setup doubles that setup within one battle turn. Reaching the same stage without Simple takes the receiver two of its own setup turns.
+- **Actions.** Audino spends its action on Simple Beam that turn.
+- **Ability.** The receiver loses its own ability for the rest of its time on the field.
+
+The stage reached is not always equivalent. Stockpile is capped at three uses, so plain Stockpile tops out at +3 while Simple reaches +6. For multi-stat moves the same comparison depends on how many uses the receiver can afford.
+
+For the selected sets: Mega Blastoise's boosted Water Spout added little on the checked targets; Kommo-o without Soundproof is OHKOd by Mega Gardevoir's Hyper Voice; Toxtricity without Punk Rock drops from a guaranteed OHKO on Basculegion to 12.5%; meta Volcarona is a Bold support set with 0 SpA points; Vivillon without Compound Eyes has 75% Sleep Powder. Whether a Simple Beam line is worth it depends on move order, the threshold gained on the chosen targets, and whether a partner can do the job another way.
 
 - **Blastoise-Mega (07):** plain +2 Water Spout already OHKOs Incineroar, Kingambit and Garchomp, and +2 Speed (260) already clears the unboosted top 15 (fastest is 214). Simple also removes Mega Launcher, and at -2 Def Rillaboom's Wood Hammer OHKOs (342-404%).
 - **Kommo-o (09):** plain +1 already OHKOs Salamence-Mega, Garchomp and Kingambit. Simple replaces Soundproof, so Gardevoir-Mega's Hyper Voice now lands and OHKOs a +2 SpD Kommo-o at 2/3 HP (105-126%).
@@ -50,7 +58,7 @@ The other entries in this list fail on a mechanic or on the receiver's real set:
 
 These are worth a test: Sneasler Swagger + Persim (doubles-03), Rhyperior Sash Reversal under Trick Room with Armor Tail cover (doubles-13), Arcanine Beat Up + Justified (doubles-17), and Choice Scarf Ninetales Memento (doubles-21). Machamp and Golurk No Guard Dynamic Punch are kept, but they are the standard sets, not discoveries.
 
-Everything else is rejected. Eight of the rejects (Healing Wish on Lopunny-Mega and Gardevoir-Mega in both formats, Memento on Glimmora-Mega in both formats and on Chandelure-Mega, Destiny Bond on Houndoom-Mega) spend the team's only Mega on a sacrifice. Gengar's Destiny Bond (178 Speed) moves after every sweeper worth trading with: Salamence-Mega 189, Raichu-Mega-Y 200, Basculegion 214, and seeded Sneasler 344. The two Arboliva Harvest Lum entries (doubles-16, singles-07) change no damage or Speed result.
+The rest are deprioritized for the selected sets and targets. Eight of them (Healing Wish on Lopunny-Mega and Gardevoir-Mega in both formats, Memento on Glimmora-Mega in both formats and on Chandelure-Mega, Destiny Bond on Houndoom-Mega) spend the team's only Mega on a sacrifice. Gengar's Destiny Bond (178 Speed) moves after every sweeper worth trading with: Salamence-Mega 189, Raichu-Mega-Y 200, Basculegion 214, and seeded Sneasler 344. The two Arboliva Harvest Lum entries (doubles-16, singles-07) change no damage or Speed result.
 
 ## Method
 

@@ -1,6 +1,6 @@
 # gk_board: the discussion board
 
-A small symbolic graph for the runthrough: plans, the mons they use, what they target or concede, the conditions and threats that decide them, alternatives, and checks. Every claim carries a status: `hypothesis`, `engine_checked` (science agent's Showdown execution, `workbench/RUNTHROUGH_CHECK.md`), `native_checked` (native Smogon Champions calculator, stored with inputs in `checks/`), or `rejected`. There is no strength score. Runtime graphs (`gk_meta`, `gk_chain`) stay separate.
+A small symbolic graph for the runthrough: plans, the mons they use, what they target or concede, the conditions and threats that decide them, alternatives, and checks. Every claim carries a status: `hypothesis`, `engine_checked` (science agent's Showdown execution, `workbench/RUNTHROUGH_CHECK.md`), `native_checked` (native Smogon Champions calculator, stored with inputs in `checks/`), or `deprioritized` (set aside for the selected sets and targets). There is no strength score. Runtime graphs (`gk_meta`, `gk_chain`) stay separate.
 
 ```sh
 node workbench/board/checks/staraptor-memento.mjs   # reruns the native calc, writes checks/staraptor-memento.json
@@ -14,10 +14,10 @@ Edit `board.json` to add or revise a plan; rerun the loader. Mon nodes are keyed
 Opposing matchups a plan concedes are left `undecided` on every plan (`Plan.concessions`) until Shivraj selects them. `COSTS` edges are what our own side pays (a donor fainting, an item, a turn). `WEAK_AGAINST` edges are checked facts about the plan (Ghost types are immune to Body Press), not chosen concessions.
 
 - **Gholdengo Memento into Contrary Mega Staraptor** (engine checked, verdict undecided). With the tested spreads Staraptor attacks before Memento, so +2 starts on its second attack. Opposing Follow Me (tested with Clefable) wastes Gholdengo. Ordinary Fake Out cannot hit Gholdengo; base Scrappy Kangaskhan's can. Native calc over nine selected targets with each target's better move: +2 turns Garchomp, Kingambit, Pelipper and Basculegion into guaranteed OHKOs; Rillaboom, Sneasler, Incineroar and Archaludon are already OHKO at +0.
-- **Alternatives:** Choice Scarf Gholdengo (engine checked: Memento lands before the attack; costs the item), Whimsicott Prankster Memento (hypothesis; Grass type ignores Rage Powder but not Follow Me), Malamar (rejected by E7).
-- **Simple Beam Snorlax → Psych Up Mega Slowbro** (engine checked; viability unknown). Executed over four turns against opponents who Protected every turn: +6 / +6 copied and kept through Mega Evolution; base Audino only. Native thresholds on a neutral field pass (4HKO from the strongest top-10 hit; Body Press OHKOs Rillaboom and Incineroar). Setup under real pressure is untested.
-- **Clangorous Soul copied** (worth a test, with E7's Soundproof caveat) and **Quiver Dance copied** (rejected: no Defense).
-- **E7 worth a test:** Swagger into Persim Unburden Sneasler, Sash Reversal Rhyperior under Trick Room, Beat Up into Justified Arcanine, Scarf Ninetales Memento. **Rejected, kept for history:** Audino Simple Beam into Torkoal.
+- **Alternatives:** Choice Scarf Gholdengo (engine checked: Memento lands before the attack; costs the item), Whimsicott Prankster Memento (hypothesis; Grass type ignores Rage Powder but not Follow Me), Malamar (deprioritized by E7 for its selected set).
+- **Simple Beam Snorlax → Psych Up Mega Slowbro** (engine checked; viability unknown). Executed route: five setup moves plus a switch over three turns, first attack on turn four, against opponents who Protected every turn: +6 / +6 copied and kept through Mega Evolution; base Audino only. Post-setup native thresholds on a neutral field pass (4HKO from the strongest top-10 hit; Body Press OHKOs Rillaboom and Incineroar). Setup under real pressure is untested.
+- **Clangorous Soul copied** (worth a test, with E7's Soundproof caveat) and **Quiver Dance copied** (deprioritized for the selected receivers: no Defense).
+- **E7 worth a test:** Swagger into Persim Unburden Sneasler, Sash Reversal Rhyperior under Trick Room, Beat Up into Justified Arcanine, Scarf Ninetales Memento (above every top-15 set's unboosted Speed; priority, Trick Room and boosts unchecked). **Deprioritized for the selected set, kept for history:** Audino Simple Beam into Torkoal.
 
 ## Browser queries (http://localhost:4319, graph `gk_board`)
 

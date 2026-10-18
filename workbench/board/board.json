@@ -5,7 +5,7 @@
     "hypothesis": "Proposed from exploration (E1, E2, E6) or reasoning; not checked.",
     "engine_checked": "Executed in the pinned Showdown engine under controlled choices (workbench/RUNTHROUGH_CHECK.md, workbench/runthrough/summary.json). Shows a mechanism executes, not that it wins.",
     "native_checked": "Native Smogon Champions calculator result, stored with inputs (workbench/board/checks/).",
-    "rejected": "Checked and ruled out; kept for history."
+    "deprioritized": "Checked for the selected sets and targets and set aside; a different set, target, move order or partner can reopen it."
   },
   "sources": [
     {
@@ -293,7 +293,7 @@
       "id": "memento-malamar",
       "title": "Gholdengo Memento into Contrary Malamar",
       "format": "doubles",
-      "status": "rejected",
+      "status": "deprioritized",
       "summary": "Same Contrary flip on a non-Mega receiver, which keeps the team's one Mega free.",
       "uses": [
         {
@@ -322,7 +322,7 @@
       "notChanged": [],
       "threats": [],
       "alternatives": [],
-      "verdict": "Rejected (E7): Relaxed 0-Atk Malamar at +2 still only 2HKOs Kingambit (70.5-83%) and is a coin flip on Incineroar (91-107.9%), for Gholdengo's life.",
+      "verdict": "Deprioritized for the selected set (Relaxed 0-Atk Malamar, E7): at +2 it still only 2HKOs Kingambit and is a coin flip on Incineroar.",
       "costs": [
         {
           "mon": "Gholdengo",
@@ -338,7 +338,7 @@
       "title": "Simple Beam Snorlax, Psych Up into Mega Slowbro",
       "format": "doubles",
       "status": "engine_checked",
-      "summary": "Base Audino Simple Beams Snorlax; three Stockpiles under Simple reach +6 Def / +6 SpD; Slowbro copies them with Psych Up and Mega Evolves for Shell Armor; Body Press is the intended attack. Executed in the engine over four turns with opponents choosing Protect throughout. Found independently by E6's path search.",
+      "summary": "Base Audino Simple Beams Snorlax; three Stockpiles under Simple reach +6 Def / +6 SpD; Slowbro copies them with Psych Up and Mega Evolves for Shell Armor; Body Press is the intended attack. The executed route used five setup moves (Simple Beam, three Stockpiles, Psych Up) plus a switch over three turns, with the first attack on turn four, against opponents who chose Protect throughout. Found independently by E6's path search.",
       "uses": [
         {
           "mon": "Audino",
@@ -382,14 +382,14 @@
         },
         {
           "id": "setup-pressure",
-          "text": "Setup survives real pressure over four turns: untested (the executed trace had opponents Protect every turn)",
+          "text": "Setup survives real pressure over the three setup turns: untested (the executed trace had opponents Protect every turn)",
           "status": "hypothesis",
           "decisive": true,
           "evidence": null
         },
         {
           "id": "slowbro-survives",
-          "text": "At +6 / +6 the strongest top-10 hit (Life Orb Gholdengo Shadow Ball) does 27.2-32.1%, a guaranteed 4HKO",
+          "text": "Post-setup bulk (not setup viability): at +6 / +6 the strongest top-10 hit (Life Orb Gholdengo Shadow Ball) does 27.2-32.1%, a guaranteed 4HKO",
           "status": "native_checked",
           "decisive": true,
           "evidence": "research/experiments/E6-boost-chains.md; .artifacts/experiments/E6/calc.json"
@@ -449,7 +449,7 @@
         "clangorous-copy",
         "quiverdance-copy"
       ],
-      "verdict": "Mechanism executes; viability unknown. Survival and payoff thresholds pass on a neutral field, but the four setup turns were only tested against Protect.",
+      "verdict": "Mechanism executes; viability unknown. Post-setup survival and payoff thresholds pass on a neutral field, but the three setup turns were only tested against Protect.",
       "costs": [
         {
           "mon": "Audino",
@@ -697,7 +697,7 @@
       "title": "Choice Scarf Ninetales Memento",
       "format": "doubles",
       "status": "native_checked",
-      "summary": "Scarf Ninetales at 250 Speed moves before everything in the top 15 (fastest Basculegion, 214), so Memento always lands before the foe acts and brings a sun sweeper in.",
+      "summary": "Scarf Ninetales at 250 Speed is above the unboosted Speed of every top-15 set (fastest Basculegion, 214), so Memento should usually land before the foe acts and bring a sun sweeper in. Priority moves, Trick Room and opposing Speed boosts were not checked.",
       "uses": [
         {
           "mon": "Ninetales",
@@ -711,7 +711,7 @@
       "conditions": [
         {
           "id": "nt-speed",
-          "text": "250 Speed moves first against all of the top 15",
+          "text": "250 Speed is above the unboosted Speed of all top-15 sets; priority, Trick Room and Speed boosts unchecked",
           "status": "native_checked",
           "decisive": true,
           "evidence": "research/experiments/E7-gimmick-outcomes.md; .artifacts/experiments/E7/outcomes.json"
@@ -719,7 +719,14 @@
       ],
       "targets": [],
       "notChanged": [],
-      "threats": [],
+      "threats": [
+        {
+          "name": "Priority / Trick Room / Speed boosts",
+          "mons": [],
+          "effect": "Can move before Scarf Ninetales; not checked",
+          "status": "hypothesis"
+        }
+      ],
       "alternatives": [],
       "verdict": "Worth a test (E7).",
       "costs": [
@@ -736,7 +743,7 @@
       "id": "torkoal-simplebeam",
       "title": "Audino Simple Beam into Torkoal, then Shell Smash",
       "format": "doubles",
-      "status": "rejected",
+      "status": "deprioritized",
       "summary": "Kept as the example of a big effect with no outcome.",
       "uses": [
         {
@@ -779,7 +786,7 @@
       "notChanged": [],
       "threats": [],
       "alternatives": [],
-      "verdict": "Rejected (E7): one KO gained, six Trick Room move-order wins lost.",
+      "verdict": "Deprioritized for the selected set (Quiet, 0-Speed Torkoal) on the checked targets: +4 Speed costs six Trick Room move-order wins and the SpA gain flips only Farigiraf, which a plain +2 Shell Smash also flips.",
       "costs": [],
       "weakAgainst": [],
       "concessions": "undecided: the user selects which opposing matchups this plan gives up"
@@ -789,7 +796,7 @@
       "title": "Simple Beam Kommo-o Clangorous Soul, copied with Psych Up",
       "format": "doubles",
       "status": "native_checked",
-      "summary": "Kommo-o under Simple uses Clangorous Soul twice (+4 in all five stats; each use costs 1/3 HP). Farigiraf, Mega Slowbro or Oranguru copies the boosts and Stored Power is the intended attack (420 BP at +4 in five stats).",
+      "summary": "Kommo-o under Simple uses Clangorous Soul twice (+4 in all five stats; each use costs 1/3 HP). Farigiraf, Mega Slowbro or Oranguru copies the boosts and Stored Power is the intended attack (420 BP at +4 in five stats). Simple Beam doubles each Clangorous Soul within the same battle turn; Audino's action and Kommo-o's ability are separate costs.",
       "uses": [
         {
           "mon": "Audino",
@@ -860,7 +867,7 @@
       "id": "quiverdance-copy",
       "title": "Volcarona Quiver Dance, copied with Psych Up",
       "format": "doubles",
-      "status": "native_checked",
+      "status": "deprioritized",
       "summary": "Same copy pattern with Quiver Dance; the receiver (Galarian Slowking, Reuniclus or Slowking) hits as hard but gets no Defense.",
       "uses": [
         {
@@ -898,7 +905,7 @@
         }
       ],
       "alternatives": [],
-      "verdict": "Rejected against the physical meta: the Defense threshold is what separates it from the Stockpile chain.",
+      "verdict": "Deprioritized for the selected receivers: with no Defense boost, physical hits on the checked targets OHKO them. The Defense threshold is what separates it from the Stockpile chain.",
       "costs": [],
       "weakAgainst": [],
       "concessions": "undecided: the user selects which opposing matchups this plan gives up"
