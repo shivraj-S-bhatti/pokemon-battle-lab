@@ -1,6 +1,6 @@
 # Minimal harness: adversarial assessment
 
-Claude, 2026-10-18, for the parent integrating `MINIMAL_HARNESS.md` (designed by the persistent Codex collaborator; not edited here, and not yet present when this was written). Scope of the user's direction: a minimal harness in which agents build and revise team theories with deterministic revision history and evidence replay. Creative reasoning is not guaranteed by any of this; the harness only makes what an agent claimed, and why, reproducible and checkable.
+Claude, 2026-10-18, for the parent integrating `MINIMAL_HARNESS.md` (designed by the persistent Codex collaborator; not edited here). The requirements below were written before the proposal landed; the last section checks the proposal against them. Scope of the user's direction: a minimal harness in which agents build and revise team theories with deterministic revision history and evidence replay. Creative reasoning is not guaranteed by any of this; the harness only makes what an agent claimed, and why, reproducible and checkable.
 
 ## What "deterministic" can honestly cover
 
@@ -59,3 +59,17 @@ Each item names the failure it prevents. If the proposal drops one, that failure
 
 - `gk_board` meets 1, 5, 6, 7 and 8. It partially meets 2 (history is kept by status, not a revision log) and 4 (it has no `source_claim` or `legality_checked` status yet). It fails 3.
 - E1 to E7 write-ups are exploration records. They should be cited as sources of hypotheses, not imported as checked facts.
+
+## Against `MINIMAL_HARNESS.md` as written
+
+The proposal covers requirements 1, 2, 5, 6, 7 and 10 well: files as truth, immutable revisions with heads and command IDs, receipts with resolved inputs and pins, costs separate from concessions with `undecided` allowed, checks tied to claims, and replay without rerunning tools. Its staleness rules are the strongest part. What I would push on:
+
+1. **Full-document replacement can drop things silently.** `revise` takes a complete replacement document. An agent that rewrites the document can omit an alternative, a cost or a counterplay entry without saying so; history keeps it, but the current theory loses it. The `revise` result should list every claim, alternative, cost and concession removed, and the reason field should have to address each removal.
+2. **Concessions need an owner rule.** The proposal allows "accepted concessions or explicitly `undecided`" but does not say who may change them. Make `revise` reject a concession change whose author is not the user, or mark it `proposed` until the user accepts it.
+3. **Unreviewed model extractions need their own label.** Source-derived claims carry the source hash and extraction revision, but a model extraction nobody has read should be distinguishable from a human-confirmed quote, since today's guide extractions already produced wrong creators, mixed stat units and invented formats.
+4. **No score field, stated as a rule.** The proposal never introduces a score, but it should say the theory schema has none, and any ordering in prose is labeled a heuristic. E7's denominator is the precedent.
+5. **Team-level validation is decision-changing now, not later.** The one-Mega rule decided the Audino chain today. Calling the existing upstream `TeamValidator.validateTeam` as a fourth checker is small and prevents theories that are individually legal but impossible together.
+6. **A check request should name the decision it could change.** `check` takes a claim ID; adding a short "would change" field (for example "keep or drop Scarf") keeps agents from drifting back into calculating everything, which is the failure the user keeps correcting.
+7. **Sets need stable identity across revisions.** The stale rule depends on "a changed referenced set". Give each set a local ID plus a content hash, so an alternate set (Scarf vs Timid Gholdengo) is a separate reference rather than an edit to one.
+
+Nothing here argues for more components. Each item is a field or a validation rule inside the proposed `theory.mjs`.
