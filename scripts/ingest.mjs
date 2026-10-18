@@ -10,6 +10,9 @@ async function index(label) {
   catch(error) { if (!error.message.includes("already indexed")) throw error; }
 }
 try {
+  // Clear readiness before touching an existing import; publish only once all
+  // relationship batches and final count validation have succeeded.
+  await query(client,graph,'MATCH (s:Snapshot) SET s.importComplete=false');
   for (const label of Object.keys(data.counts)) {
     await index(label);
     const selected=data.nodes.filter(n=>n.label===label).map(({label,...n})=>n);
@@ -33,5 +36,6 @@ try {
     expectedNodes:data.nodes.length,expectedEdges:data.edges.length};
   await fs.writeFile('.artifacts/ingest-report.json',JSON.stringify(report,null,2));
   if (report.nodes!==report.expectedNodes || report.edges!==report.expectedEdges) throw new Error(`Count mismatch: ${JSON.stringify(report)}`);
+  await query(client,graph,'MATCH (s:Snapshot) SET s.importComplete=true');
   console.log(JSON.stringify(report));
 } finally { await client.quit(); }

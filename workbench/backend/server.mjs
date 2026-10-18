@@ -17,7 +17,7 @@ function validateInput(input){
  if(input.interventions!==undefined&&(!Array.isArray(input.interventions)||input.interventions.length>100||input.interventions.some(e=>!e||typeof e!=='object')))throw fail('Invalid intervention history');
  if(input.conditions!==undefined&&(!input.conditions||typeof input.conditions!=='object'||Array.isArray(input.conditions)||Object.keys(input.conditions).length>300))throw fail('Invalid conditions');
 }
-export async function createWorkbench({client,graph,seed=true}={}){
+export async function createWorkbench({client,graph,catalogGraph='pokemon_mc_202609',seed=true}={}){
  const evaluatorRevision=createHash('sha256');
  // Hash the evaluator module tree, not the imported game-engine revision.
  const {readdir}=await import('node:fs/promises');
@@ -56,9 +56,14 @@ export async function createWorkbench({client,graph,seed=true}={}){
     const move=url.searchParams.get('move'),ability=url.searchParams.get('ability');
     if(!move&&!ability)throw fail('Supply move or ability');
     for(const x of [move,ability])if(x&&!/^[a-z0-9]{1,60}$/.test(x))throw fail('Use canonical move/ability IDs');
-    const matches=await rows(await query(client,'pokemon_mc_202609',`MATCH (s:Species) ${move?'MATCH (s)-[:LEARNS]->(m:Move) WHERE m.id=$move':''} ${ability?'MATCH (s)-[:HAS_ABILITY]->(a:Ability) WHERE a.id=$ability':''} RETURN DISTINCT s.id,s.name LIMIT 50`,{...(move?{move:'Move:'+move}:{}),...(ability?{ability:'Ability:'+ability}:{})}));
-    const snapshots=rows(await query(client,'pokemon_mc_202609','MATCH (s:Snapshot) RETURN s.name,s.revision,s.usageMonth,s.cutoff,s.createdAt'));
-    return json({catalog:{graph:'pokemon_mc_202609',snapshots:snapshots.map(([format,engineRevision,usageMonth,cutoff,createdAt])=>({format,engineRevision,usageMonth,cutoff,createdAt}))},candidates:matches.map(([id,name])=>({id:id.replace(/^Species:/,''),name})),scope:'Catalog retrieval only; not a legal or effective set recommendation.'});
+    const unavailable=()=>fail('Catalog not initialized. Run npm run prepare:data, npm run export:data, and npm run ingest. The case workbench works without the catalog.',503);
+    // GRAPH.QUERY creates a missing graph. Check existence before reading so
+    // an absent import cannot masquerade as a successful search with no matches.
+    if(!(await client.sendCommand(['GRAPH.LIST'])).includes(catalogGraph))throw unavailable();
+    const snapshots=rows(await query(client,catalogGraph,'MATCH (s:Snapshot) WHERE s.importComplete=true RETURN s.name,s.revision,s.usageMonth,s.cutoff,s.createdAt'));
+    if(!snapshots.length)throw unavailable();
+    const matches=rows(await query(client,catalogGraph,`MATCH (s:Species) ${move?'MATCH (s)-[:LEARNS]->(m:Move) WHERE m.id=$move':''} ${ability?'MATCH (s)-[:HAS_ABILITY]->(a:Ability) WHERE a.id=$ability':''} RETURN DISTINCT s.id,s.name LIMIT 50`,{...(move?{move:'Move:'+move}:{}),...(ability?{ability:'Ability:'+ability}:{})}));
+    return json({catalog:{graph:catalogGraph,snapshots:snapshots.map(([format,engineRevision,usageMonth,cutoff,createdAt])=>({format,engineRevision,usageMonth,cutoff,createdAt}))},candidates:matches.map(([id,name])=>({id:id.replace(/^Species:/,''),name})),scope:'Catalog retrieval only; not a legal or effective set recommendation.'});
    }
    if(url.pathname.startsWith('/api/'))throw fail('Unknown endpoint',404);
    if(req.method!=='GET')throw fail('Method not allowed',405);

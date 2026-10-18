@@ -12,7 +12,7 @@ docker compose up -d --wait
 npm run workbench
 ```
 
-Open http://127.0.0.1:4318. The three included case records seed `pokemon_workbench_v1`; no model key is needed to explore the workbench. `GRAPH_URL` changes the database connection; `PORT` changes the web port. The existing catalog search additionally requires `prepare:data`, `export:data` and `ingest` from the root README. Without the catalog import the case workbench still runs, but catalog discovery is unavailable.
+Open http://127.0.0.1:4318. The three included case records seed `pokemon_workbench_v1`; no model key is needed to explore the workbench. `GRAPH_URL` changes the database connection; `PORT` changes the web port. The existing catalog search additionally requires `prepare:data`, `export:data` and `ingest` from the root README. Without the catalog import the case workbench still runs; catalog requests return HTTP 503 with the import steps. Imports created before the completion-marker update need `npm run ingest` once more. A completed catalog with no matching candidates returns HTTP 200 and an empty list.
 
 ```sh
 npm run test:workbench
@@ -63,7 +63,7 @@ WHERE g.scope = $scope AND m.key = $memberKey
 RETURN DISTINCT g.json, r.json, p.json
 ```
 
-The integration test changes an expression stored in the graph and verifies that the analysis changes. Separate tests check interventions, context persistence, dependency retrieval, catalog retrieval and local request boundaries.
+The test suite creates its own catalog fixture and does not require a full catalog import. The integration test changes an expression stored in the graph and verifies that the analysis changes. Separate tests check interventions, context persistence, dependency retrieval, catalog retrieval and local request boundaries.
 
 For the recording script, runnable API walkthrough and submission handoff, see [DEMO.md](DEMO.md).
 
