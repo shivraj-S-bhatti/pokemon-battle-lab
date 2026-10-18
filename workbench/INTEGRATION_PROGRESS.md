@@ -45,3 +45,13 @@ Browser evidence against the real server:
 The final suite passed 56 tests: 44 reasoning, ten backend, and two frontend boundary checks. The scoped reviewer reproduced and then verified the loading callback fix: old repair/tray actions cannot mutate or save while another case loads. No material findings remain open from that scoped review; see `logic/UI_FIX_HANDOFF.md`.
 
 Remaining delivery work: Claude's final design review, a clearer presentation frame, demo video and submission package. Native Claude is inaccessible while the Mac is locked; the IAB workbench remains testable. The heartbeat stays active. This checkpoint does not establish competitive efficacy or complete the hackathon submission.
+
+## Reproducible demonstration: October 18, 07:45 UTC
+
+`npm run demo:workbench` now exercises eight scenarios through the actual HTTP handlers and a new temporary FalkorDB graph. It leaves the live UI graph and its saved runs untouched. The passing report is committed at `evidence/demo-run.json`: BSS third-slot uncertainty, pinned rejection, broken amplification with surviving alternatives, a labeled hypothetical setup assumption, and two distinct doubles move changes. Each scenario verifies that a subsequent context request retrieves the same accepted run.
+
+The first fixture attempted to replace Wide Guard with Protect, which the source set already contained. The evaluator rejected the duplicate move; the fixture was corrected to Earthquake. No failed proposal was presented as an accepted configuration.
+
+The logic collaborator supplied `logic/DEMO_EXPECTATIONS.md`, independently evaluated against the actual logic. `DEMO.md` now contains the recording script, agent handoff, graph explanation, entry track and submission checklist. The root README points to the workbench first while retaining the earlier ingestion result and its lack of demonstrated discovery advantage.
+
+The official rules were rechecked. The repo is public. No numerical scoring rubric was present on the inspected page. Native Claude remains locked, so `CLAUDE_NEXT_REVIEW.md` is a queued local handoff, not a sent message. Final visual review, recording and submission remain open. The API walkthrough is scripted and does not call an LLM.

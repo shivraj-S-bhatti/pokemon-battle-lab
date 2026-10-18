@@ -1,0 +1,1183 @@
+{
+  "recordedAt": "2026-10-18T07:39:35.225Z",
+  "kind": "scripted API walkthrough",
+  "storage": "FalkorDB",
+  "graph": "pokemon_workbench_demo_17164_1792309175204",
+  "scope": "Authored conditional plans and typed interventions. No LLM call, battle simulation, win-rate estimate, or edited-team legality certification.",
+  "steps": [
+    {
+      "title": "1. Two defensive members leave an actual third-slot gap",
+      "request": {
+        "caseId": "sableye-slowking-bss",
+        "expectedGraphRevision": "70e7aad6de749684afc0",
+        "interventions": [],
+        "pinned": []
+      },
+      "run": {
+        "runId": "6bf5e814-47f9-4968-a69b-a8087dcaa4d3",
+        "createdAt": "2026-10-18T07:39:35.382Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "70e7aad6de749684afc0",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "sableyemega",
+        "slowkinggalar"
+      ],
+      "assessments": {},
+      "proposalResults": [],
+      "goals": [
+        {
+          "id": "three-slot-progress",
+          "status": "blocked",
+          "routes": [
+            {
+              "id": "three-slot-progress:design",
+              "status": "blocked",
+              "outcomes": [
+                "The selected third member has a checked progress line against the specified opposing six."
+              ],
+              "unresolved": [
+                "three-slot-progress:opponent",
+                "three-slot-progress:bring",
+                "three-slot-progress:progress"
+              ],
+              "missing": [
+                "three-slot-progress:third-member"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "singles-2026-09-1500",
+                  "sourceIds": [
+                    "usage-singles"
+                  ],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "open_team_design",
+                  "claim": "Select a third that forces progress"
+                },
+                "hypothesis": {
+                  "status": "open_team_design",
+                  "claim": "Select a third that forces progress"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "2. Add Garchomp: structure improves; matchup checks stay unknown",
+      "request": {
+        "caseId": "sableye-slowking-bss",
+        "expectedGraphRevision": "70e7aad6de749684afc0",
+        "interventions": [
+          {
+            "type": "add_member",
+            "speciesId": "garchomp"
+          }
+        ],
+        "pinned": []
+      },
+      "run": {
+        "runId": "9974fecd-5f8b-4443-b871-15525cc73ed2",
+        "createdAt": "2026-10-18T07:39:35.453Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "70e7aad6de749684afc0",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "sableyemega",
+        "slowkinggalar",
+        "garchomp"
+      ],
+      "assessments": {},
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "add_member",
+            "speciesId": "garchomp"
+          },
+          "applied": true,
+          "invalidated": []
+        }
+      ],
+      "goals": [
+        {
+          "id": "three-slot-progress",
+          "status": "unknown",
+          "routes": [
+            {
+              "id": "three-slot-progress:design",
+              "status": "unknown",
+              "outcomes": [
+                "The selected third member has a checked progress line against the specified opposing six."
+              ],
+              "unresolved": [
+                "three-slot-progress:opponent",
+                "three-slot-progress:bring",
+                "three-slot-progress:progress"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "singles-2026-09-1500",
+                  "sourceIds": [
+                    "usage-singles"
+                  ],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "open_team_design",
+                  "claim": "Select a third that forces progress"
+                },
+                "hypothesis": {
+                  "status": "open_team_design",
+                  "claim": "Select a third that forces progress"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "3. A pinned removal stays a rejected proposal",
+      "request": {
+        "caseId": "sableye-slowking-bss",
+        "expectedGraphRevision": "70e7aad6de749684afc0",
+        "interventions": [
+          {
+            "type": "remove_member",
+            "speciesId": "sableyemega"
+          }
+        ],
+        "pinned": [
+          "sableyemega"
+        ]
+      },
+      "run": {
+        "runId": "8bdc5f29-2291-4d49-876c-4d56eec7818e",
+        "createdAt": "2026-10-18T07:39:35.507Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "70e7aad6de749684afc0",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "sableyemega",
+        "slowkinggalar"
+      ],
+      "assessments": {},
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "remove_member",
+            "speciesId": "sableyemega"
+          },
+          "applied": false,
+          "reason": "This member or set is pinned."
+        }
+      ],
+      "goals": [
+        {
+          "id": "fairy-pivot",
+          "status": "unknown",
+          "routes": [
+            {
+              "id": "fairy-pivot:reception",
+              "status": "unknown",
+              "outcomes": [
+                "Slowking exits through Chilly Reception and Regenerator restores health on switching out."
+              ],
+              "unresolved": [
+                "fairy-pivot:fairy-line",
+                "fairy-pivot:survival",
+                "fairy-pivot:reception-window"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "splashplate"
+                ],
+                "datedMeta": {
+                  "snapshotId": "singles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Turn Fairy pressure into a recoverable pivot"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Turn Fairy pressure into a recoverable pivot"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "fairy-pivot:switch",
+              "status": "unknown",
+              "outcomes": [
+                "Slowking switches manually to the checked destination and Regenerator restores health on switching out."
+              ],
+              "unresolved": [
+                "fairy-pivot:fairy-line",
+                "fairy-pivot:survival",
+                "fairy-pivot:switch-window"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "splashplate"
+                ],
+                "datedMeta": {
+                  "snapshotId": "singles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Turn Fairy pressure into a recoverable pivot"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Turn Fairy pressure into a recoverable pivot"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "4. Lose amplification, retain ordinary setup and Decorate",
+      "request": {
+        "caseId": "simplebeam-torterra",
+        "expectedGraphRevision": "d49029420f47c6371443",
+        "interventions": [
+          {
+            "type": "remove_member",
+            "speciesId": "farfetchd"
+          }
+        ],
+        "pinned": []
+      },
+      "run": {
+        "runId": "76bdf39a-4020-4c67-ab1d-0e5378944f2e",
+        "createdAt": "2026-10-18T07:39:35.575Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "d49029420f47c6371443",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "torterra",
+        "farigiraf",
+        "chimechomega",
+        "alcremie",
+        "arbok"
+      ],
+      "assessments": {},
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "remove_member",
+            "speciesId": "farfetchd"
+          },
+          "applied": true,
+          "invalidated": []
+        }
+      ],
+      "goals": [
+        {
+          "id": "beam-smash",
+          "status": "blocked",
+          "routes": [
+            {
+              "id": "beam-smash:amplified",
+              "status": "blocked",
+              "outcomes": [
+                "Simple amplifies Shell Smash to +4 Attack, Special Attack and Speed; defense drops are -2 before any clearing effect."
+              ],
+              "unresolved": [
+                "beam-smash:order",
+                "beam-smash:survival",
+                "beam-smash:beam-connects"
+              ],
+              "missing": [
+                "member:farfetchd"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Land Simple Beam before Shell Smash"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        },
+        {
+          "id": "purpose:boost-torterra",
+          "status": "unknown",
+          "routes": [
+            {
+              "id": "purpose:boost-torterra:beam",
+              "status": "blocked",
+              "outcomes": [
+                "Simple amplifies Shell Smash to +4 Attack, Special Attack and Speed; defense drops are -2 before any clearing effect."
+              ],
+              "unresolved": [
+                "beam-smash:order",
+                "beam-smash:survival",
+                "beam-smash:beam-connects"
+              ],
+              "missing": [
+                "member:farfetchd"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Land Simple Beam before Shell Smash"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "purpose:boost-torterra:direct",
+              "status": "unknown",
+              "outcomes": [
+                "Ordinary Shell Smash boosts Attack, Special Attack and Speed without Simple amplification."
+              ],
+              "unresolved": [
+                "direct-smash:window"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Land Simple Beam before Shell Smash"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "purpose:boost-torterra:decorate",
+              "status": "unknown",
+              "outcomes": [
+                "Decorate boosts its ally and can pass through Protect. Amplification requires Simple to be active."
+              ],
+              "unresolved": [
+                "decorate-mode:execution"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Use another boost route"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "5. Hypothetical safe setup enables only the ordinary route",
+      "request": {
+        "caseId": "simplebeam-torterra",
+        "expectedGraphRevision": "d49029420f47c6371443",
+        "interventions": [
+          {
+            "type": "remove_member",
+            "speciesId": "farfetchd"
+          },
+          {
+            "type": "set_condition",
+            "conditionId": "direct-smash:window",
+            "truth": true
+          }
+        ],
+        "pinned": []
+      },
+      "run": {
+        "runId": "655d953e-c702-4bc0-b262-53386d6af506",
+        "createdAt": "2026-10-18T07:39:35.747Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "d49029420f47c6371443",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "torterra",
+        "farigiraf",
+        "chimechomega",
+        "alcremie",
+        "arbok"
+      ],
+      "assessments": {
+        "direct-smash:window": {
+          "truth": true,
+          "basis": "scenario_assumption"
+        }
+      },
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "remove_member",
+            "speciesId": "farfetchd"
+          },
+          "applied": true,
+          "invalidated": []
+        },
+        {
+          "edit": {
+            "type": "set_condition",
+            "conditionId": "direct-smash:window",
+            "truth": true
+          },
+          "applied": true,
+          "invalidated": []
+        }
+      ],
+      "goals": [
+        {
+          "id": "beam-smash",
+          "status": "blocked",
+          "routes": [
+            {
+              "id": "beam-smash:amplified",
+              "status": "blocked",
+              "outcomes": [
+                "Simple amplifies Shell Smash to +4 Attack, Special Attack and Speed; defense drops are -2 before any clearing effect."
+              ],
+              "unresolved": [
+                "beam-smash:order",
+                "beam-smash:survival",
+                "beam-smash:beam-connects"
+              ],
+              "missing": [
+                "member:farfetchd"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Land Simple Beam before Shell Smash"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        },
+        {
+          "id": "purpose:boost-torterra",
+          "status": "enabled",
+          "routes": [
+            {
+              "id": "purpose:boost-torterra:beam",
+              "status": "blocked",
+              "outcomes": [
+                "Simple amplifies Shell Smash to +4 Attack, Special Attack and Speed; defense drops are -2 before any clearing effect."
+              ],
+              "unresolved": [
+                "beam-smash:order",
+                "beam-smash:survival",
+                "beam-smash:beam-connects"
+              ],
+              "missing": [
+                "member:farfetchd"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Land Simple Beam before Shell Smash"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "purpose:boost-torterra:direct",
+              "status": "enabled",
+              "outcomes": [
+                "Ordinary Shell Smash boosts Attack, Special Attack and Speed without Simple amplification."
+              ],
+              "unresolved": [],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Land Simple Beam before Shell Smash"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "purpose:boost-torterra:decorate",
+              "status": "unknown",
+              "outcomes": [
+                "Decorate boosts its ally and can pass through Protect. Amplification requires Simple to be active."
+              ],
+              "unresolved": [
+                "decorate-mode:execution"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Use another boost route"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "6. Change the Ground move: preserve purpose, lose spread route",
+      "request": {
+        "caseId": "simplebeam-torterra",
+        "expectedGraphRevision": "d49029420f47c6371443",
+        "interventions": [
+          {
+            "type": "replace_move",
+            "setId": "torterra-smash",
+            "from": "earthquake",
+            "to": "headlongrush"
+          }
+        ],
+        "pinned": []
+      },
+      "run": {
+        "runId": "5d03c6f1-f943-42ed-bccf-a3bdb5804609",
+        "createdAt": "2026-10-18T07:39:35.840Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "d49029420f47c6371443",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "farfetchd",
+        "torterra",
+        "farigiraf",
+        "chimechomega",
+        "alcremie",
+        "arbok"
+      ],
+      "assessments": {},
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "replace_move",
+            "setId": "torterra-smash",
+            "from": "earthquake",
+            "to": "headlongrush"
+          },
+          "applied": true,
+          "invalidated": []
+        }
+      ],
+      "goals": [
+        {
+          "id": "earthquake-partner",
+          "status": "blocked",
+          "routes": [
+            {
+              "id": "earthquake-partner:levitate",
+              "status": "blocked",
+              "outcomes": [
+                "Earthquake does not damage the active partner while its Ground immunity holds."
+              ],
+              "unresolved": [
+                "earthquake-partner:attack",
+                "earthquake-partner:levitate-board"
+              ],
+              "missing": [
+                "move:torterra:earthquake"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Attack beside a Ground-immune partner"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "earthquake-partner:balloon",
+              "status": "blocked",
+              "outcomes": [
+                "Earthquake does not damage the active partner while its Ground immunity holds."
+              ],
+              "unresolved": [
+                "earthquake-partner:attack",
+                "earthquake-partner:balloon-board"
+              ],
+              "missing": [
+                "move:torterra:earthquake"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Attack beside a Ground-immune partner"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        },
+        {
+          "id": "purpose:ground-without-friendly-fire",
+          "status": "unknown",
+          "routes": [
+            {
+              "id": "ground:earthquake-partner:levitate",
+              "status": "blocked",
+              "outcomes": [
+                "Earthquake does not damage the active partner while its Ground immunity holds."
+              ],
+              "unresolved": [
+                "earthquake-partner:attack",
+                "earthquake-partner:levitate-board"
+              ],
+              "missing": [
+                "move:torterra:earthquake"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Attack beside a Ground-immune partner"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "ground:earthquake-partner:balloon",
+              "status": "blocked",
+              "outcomes": [
+                "Earthquake does not damage the active partner while its Ground immunity holds."
+              ],
+              "unresolved": [
+                "earthquake-partner:attack",
+                "earthquake-partner:balloon-board"
+              ],
+              "missing": [
+                "move:torterra:earthquake"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Attack beside a Ground-immune partner"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "purpose:ground-without-friendly-fire:targeted",
+              "status": "unknown",
+              "outcomes": [
+                "Single-target Ground pressure avoids allied Earthquake damage."
+              ],
+              "unresolved": [
+                "ground-targeted:legality",
+                "ground-targeted:action"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [
+                  "torterra-video"
+                ],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "source_reported_plan_mechanics_checked",
+                  "claim": "Attack beside a Ground-immune partner"
+                },
+                "hypothesis": null,
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "7. Doubles: same goal status, different surviving Ground route",
+      "request": {
+        "caseId": "torterra-raichuy-milotic",
+        "expectedGraphRevision": "14bc231ea5a6a2c3a06d",
+        "interventions": [
+          {
+            "type": "replace_move",
+            "setId": "torterra-guard",
+            "from": "headlongrush",
+            "to": "earthquake"
+          }
+        ],
+        "pinned": []
+      },
+      "run": {
+        "runId": "6cceadb6-b9bc-4831-9e7a-72a0b1433161",
+        "createdAt": "2026-10-18T07:39:35.891Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "14bc231ea5a6a2c3a06d",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "torterra",
+        "raichumegay",
+        "milotic"
+      ],
+      "assessments": {},
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "replace_move",
+            "setId": "torterra-guard",
+            "from": "headlongrush",
+            "to": "earthquake"
+          },
+          "applied": true,
+          "invalidated": []
+        }
+      ],
+      "goals": [
+        {
+          "id": "avoid-friendly-fire",
+          "status": "unknown",
+          "routes": [
+            {
+              "id": "avoid-friendly-fire:headlong",
+              "status": "blocked",
+              "outcomes": [
+                "The chosen Ground move does not damage the ally. This does not establish a KO."
+              ],
+              "unresolved": [
+                "avoid-friendly-fire:ground-action"
+              ],
+              "missing": [
+                "move:torterra:headlongrush"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "avoid-friendly-fire:protect",
+              "status": "unknown",
+              "outcomes": [
+                "The protected ally avoids this Earthquake if its protection remains effective."
+              ],
+              "unresolved": [
+                "avoid-friendly-fire:ground-action",
+                "avoid-friendly-fire:protect-execution"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    },
+    {
+      "title": "8. Doubles: losing Wide Guard does not erase single-target Ground play",
+      "request": {
+        "caseId": "torterra-raichuy-milotic",
+        "expectedGraphRevision": "14bc231ea5a6a2c3a06d",
+        "interventions": [
+          {
+            "type": "replace_move",
+            "setId": "torterra-guard",
+            "from": "wideguard",
+            "to": "earthquake"
+          }
+        ],
+        "pinned": []
+      },
+      "run": {
+        "runId": "c1412c38-64cf-4f47-b900-87cf5c987a72",
+        "createdAt": "2026-10-18T07:39:35.924Z"
+      },
+      "graph": {
+        "name": "pokemon_workbench_demo_17164_1792309175204",
+        "revision": "14bc231ea5a6a2c3a06d",
+        "evaluatorRevision": "6e05d456f8724bf175aba1849f89ebdd839d29f42cffbafc3049cbb4a84c4de5",
+        "storage": "FalkorDB"
+      },
+      "acceptedTeam": [
+        "torterra",
+        "raichumegay",
+        "milotic"
+      ],
+      "assessments": {},
+      "proposalResults": [
+        {
+          "edit": {
+            "type": "replace_move",
+            "setId": "torterra-guard",
+            "from": "wideguard",
+            "to": "earthquake"
+          },
+          "applied": true,
+          "invalidated": []
+        }
+      ],
+      "goals": [
+        {
+          "id": "wideguard-window",
+          "status": "blocked",
+          "routes": [
+            {
+              "id": "wideguard-window:spread",
+              "status": "blocked",
+              "outcomes": [
+                "Wide Guard blocks the specified opposing spread move for the side.",
+                "Mega Raichu Y executes Zap Cannon against the susceptible target with No Guard removing its accuracy check."
+              ],
+              "unresolved": [
+                "wideguard-window:spread",
+                "wideguard-window:guard-action",
+                "wideguard-window:raichu-action",
+                "wideguard-window:target"
+              ],
+              "missing": [
+                "move:torterra:wideguard"
+              ],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Buy Y-chu a turn against spread attacks"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Buy Y-chu a turn against spread attacks"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        },
+        {
+          "id": "avoid-friendly-fire",
+          "status": "unknown",
+          "routes": [
+            {
+              "id": "avoid-friendly-fire:headlong",
+              "status": "unknown",
+              "outcomes": [
+                "The chosen Ground move does not damage the ally. This does not establish a KO."
+              ],
+              "unresolved": [
+                "avoid-friendly-fire:ground-action"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            },
+            {
+              "id": "avoid-friendly-fire:protect",
+              "status": "unknown",
+              "outcomes": [
+                "The protected ally avoids this Earthquake if its protection remains effective."
+              ],
+              "unresolved": [
+                "avoid-friendly-fire:ground-action",
+                "avoid-friendly-fire:protect-execution"
+              ],
+              "missing": [],
+              "evidence": {
+                "staticMechanics": [
+                  "engine"
+                ],
+                "sourceReports": [],
+                "datedMeta": {
+                  "snapshotId": "doubles-2026-09-1500",
+                  "sourceIds": [],
+                  "use": "Historical exposure only; not a route prerequisite or strength estimate."
+                },
+                "planClaim": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "hypothesis": {
+                  "status": "mechanics_grounded_hypothesis",
+                  "claim": "Keep Ground pressure without damaging the ally"
+                },
+                "reportScope": "Source reports retain their original inspection limits; no battle outcome is independently reproduced by this evaluator."
+              }
+            }
+          ]
+        }
+      ],
+      "battleSimulations": 0
+    }
+  ],
+  "affectedByFarfetchd": [
+    "purpose:boost-torterra",
+    "purpose:restore-smash-defenses",
+    "beam-smash"
+  ],
+  "graphSize": {
+    "nodes": 218,
+    "edges": 635
+  },
+  "checks": "passed"
+}

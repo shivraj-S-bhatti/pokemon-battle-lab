@@ -65,6 +65,8 @@ RETURN DISTINCT g.json, r.json, p.json
 
 The integration test changes an expression stored in the graph and verifies that the analysis changes. Separate tests check interventions, context persistence, dependency retrieval, catalog retrieval and local request boundaries.
 
+For the recording script, runnable API walkthrough and submission handoff, see [DEMO.md](DEMO.md).
+
 ## Demo sequence
 
 1. Start with Mega Sableye / Galarian Slowking. The third-slot goal is blocked. Try Garchomp, Corviknight or Primarina: the structural gap closes while opponent-specific progress remains unchecked.

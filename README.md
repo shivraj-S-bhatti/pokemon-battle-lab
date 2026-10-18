@@ -1,12 +1,16 @@
-# Pokémon Battle Lab
-
-An ingestion experiment for finding uncommon Pokémon cores with FalkorDB. The first result is that five mechanical retrieval queries give identical answers in the graph and in plain JavaScript. Graph storage has not yet demonstrated a discovery advantage.
-
-See [the measured results](research/INGESTION_RESULT.md) and the [experiment log](research/EXPERIMENT_LOG.md). The local working folder is still named `pokemon-core-lab`; its GitHub home is `shivraj-S-bhatti/pokemon-battle-lab`. Earlier [reading](research/reading-list.md), [complexity](research/complexity-notes.md), and [bot-history](research/bot-history.md) notes are preserved. This is separate from Hivemind; the ContextPlane implementation and research remain there.
+# Gimmikghoul · Pokémon Battle Lab
 
 ## Gimmikghoul interactive workbench
 
 The new [workbench](workbench/README.md) connects Claude's clickable team/plan interface to FalkorDB-backed conditional reasoning. Run `npm run workbench` after starting Docker to explore three cases, intervene on sets, inspect alternative routes and export context for Codex or Claude. Start with the workbench guide for setup, graph queries, scope and the demo sequence. The ingestion experiment below remains reproducible.
+
+[Three-minute demo and submission handoff](workbench/DEMO.md). Run `npm run demo:workbench` to verify eight API scenarios against an isolated real FalkorDB graph.
+
+## Earlier ingestion experiment
+
+An ingestion experiment for finding uncommon Pokémon cores with FalkorDB. The first result is that five mechanical retrieval queries give identical answers in the graph and in plain JavaScript. Graph storage has not yet demonstrated a discovery advantage.
+
+See [the measured results](research/INGESTION_RESULT.md) and the [experiment log](research/EXPERIMENT_LOG.md). The local working folder is still named `pokemon-core-lab`; its GitHub home is `shivraj-S-bhatti/pokemon-battle-lab`. Earlier [reading](research/reading-list.md), [complexity](research/complexity-notes.md), and [bot-history](research/bot-history.md) notes are preserved. This is separate from Hivemind; the ContextPlane implementation and research remain there.
 
 ## Small evidence demo
 
