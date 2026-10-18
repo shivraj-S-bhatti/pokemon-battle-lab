@@ -1,10 +1,24 @@
 # Gimmikghoul · Pokémon Battle Lab
 
-## Gimmikghoul interactive workbench
+## Current workflow: team exploration beside the graph
 
-The new [workbench](workbench/README.md) connects Claude's clickable team/plan interface to FalkorDB-backed conditional reasoning. Run `npm run workbench` after starting Docker to explore three cases, intervene on sets, inspect alternative routes and export context for Codex or Claude. Start with the workbench guide for setup, graph queries, scope and the demo sequence. The ingestion experiment below remains reproducible.
+Start with [the exploration handoff](workbench/EXPERIMENT_UNBLOCKS.md). Choose an idea, target matchups and acceptable losses; use Codex or Claude to retrieve alternatives and request the few checks that could change a team decision. The native FalkorDB Browser shows Pokémon sprites and a compact human reasoning map. Agent runtime graphs may contain different structures.
 
-[Three-minute demo and submission handoff](workbench/DEMO.md). Run `npm run demo:workbench` to verify eight API scenarios against an isolated real FalkorDB graph.
+After the catalog setup below:
+
+```sh
+docker compose --profile explore up -d --build browser
+node scripts/pokemon-sprites.mjs --apply-only
+node scripts/graph.mjs list
+node workbench/tools/prepare-calculator.mjs
+node workbench/tools/damage.mjs < workbench/tools/damage-examples.json
+```
+
+Open [FalkorDB Browser](http://localhost:4319). The database remains writable at localhost:6388. [Official MCP setup](workbench/mcp/README.md) connects agents directly. [Calculator and legality adapters](workbench/tools/README.md) reuse existing Champions implementations; [sprite metadata](workbench/SPRITES.md) includes exact form mappings. Experiment graphs use `gk_*`; the catalog is `pokemon_mc_202609`. The [discussion board](workbench/board/README.md) holds plans, alternatives and evidence. [Controlled execution checks](workbench/RUNTHROUGH_CHECK.md) distinguish a legal sequence from a team that wins its intended matchups.
+
+[Teambuilding guide analyses](research/experiments/team-guide-signals.md) and [JoeUX9's anti-meta walkthrough](research/experiments/JOEUX9_ANTI_META_GUIDE.md) inform the representation: retain alternatives, intended roles, conditions, and revisions. Historical video examples and usage marginals are evidence to investigate, not current team-win predictions.
+
+The earlier [authored-case workbench](workbench/README.md) and [scripted demo](workbench/DEMO.md) remain available as historical experiments. The user rejected dependency checking as the main product direction. See [the database recovery record](workbench/DB_RECOVERY.md) for the persistence correction and unrecovered prior run history.
 
 ## Earlier ingestion experiment
 
@@ -43,7 +57,7 @@ The default graph is `pokemon_mc_202609`. Importing the same dataset twice prese
 | [Official regulation roster](https://web-view.app.pokemonchampions.jp/battle/pages/events/rs178955680104qaiodg/en/pokemon.html) | 262 roster entries, including form names |
 | [September 2026 Showdown M-C usage, cutoff 1500](https://www.smogon.com/stats/2026-09/chaos/gen9championsvgc2026regmc-1500.json) | Usage, teammates, move/item/ability weights, spread distributions and checks/counters; complete per-species source records retained as JSON |
 
-`prepare:data` downloads and hashes sources into `.cache/` and records provenance in `.artifacts/source-manifest.json`. Existing cache files are reused. The official roster and statistics URLs can change; compare their hashes with `research/evidence/source-manifest.json` when reproducing this run. Downloaded third-party source and data retain their original licenses and attribution; they are not included in Git.
+`prepare:data` downloads and hashes sources into `.cache/` and records provenance in `.artifacts/source-manifest.json`. Existing cache files are reused. The official roster and statistics URLs can change; compare their hashes with `research/evidence/source-manifest.json` when reproducing this run. Downloaded third-party source and data retain their original licenses and attribution. Raw source caches stay outside Git; selected marginal tables and sprite assets are committed with provenance.
 
 ```text
 Species --LEARNS---------> Move --OF_TYPE--> Type
