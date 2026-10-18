@@ -8,13 +8,16 @@ Gimmikghoul helps a player and a coding agent inspect an unusual Pokémon core, 
 
 | Time | On screen | Say |
 | --- | --- | --- |
-| 0:00–0:20 | BSS case, source team of Mega Sableye and Galarian Slowking | “A team is a collection of plans. These two defensive Pokémon leave one question: who actually makes progress?” |
-| 0:20–0:45 | Try Garchomp. Open the third-slot goal. | “Adding a third member closes the structural gap. It does not prove the matchup. The graph keeps the opponent, chosen three and progress checks visible.” |
-| 0:45–1:15 | Simple Beam Torterra case. Remove Farfetch’d. Open Create a boosted Torterra. | “This breaks the amplified setup. Ordinary Shell Smash and Decorate still offer routes to the broader goal, with different conditions and outcomes.” |
-| 1:15–1:40 | Inspect Keep Ground pressure without hurting the ally. Try the Headlong Rush repair. | “We can preserve the purpose by changing the mechanism. Single-target Ground damage avoids friendly fire, but gives up spread damage and lowers defenses. The edited set still needs validation.” |
-| 1:40–2:10 | Collect the Shell Smash condition, export collected context. | “One condition belongs to several goals. The export retains every affected route, source, accepted edit and unresolved assumption. A coding agent can inspect this through the same API.” |
-| 2:10–2:40 | Terminal: `node workbench/agent.mjs affected simplebeam-torterra farfetchd`; then the typed proposal below | “The agent follows dependencies in FalkorDB and submits a proposed edit. The evaluator checks the stored graph. Every result carries its model revision.” |
-| 2:40–3:00 | Return to the inspected route and its conditions | “The current workbench has three authored cases. Our next experiment is whether retrieving and validating more mechanisms helps players find useful unfamiliar cores.” |
+| 0:00–0:20 | BSS case, Mega Sableye and Galarian Slowking | “A team is a collection of plans. These two defensive Pokémon leave one question: who actually makes progress? We currently model three authored cases.” |
+| 0:20–0:40 | Try Garchomp. Open the third-slot goal. | “Adding a third member closes the structural gap. It does not prove the matchup.” |
+| 0:40–1:10 | Simple Beam Torterra. Replace White Herb. Compare amplified setup and defense restoration. | “Same Pokémon, same types, same moves. Losing White Herb breaks defense clearing, but does not prevent amplified boosts. Timing and survival still need checking.” |
+| 1:10–1:35 | Reset, then remove Farfetch’d. Inspect Create a boosted Torterra. | “This breaks amplified setup. Ordinary Shell Smash and Decorate remain different routes to the broader goal.” |
+| 1:35–2:00 | Inspect Keep Ground pressure without hurting the ally. Try Headlong Rush. | “We can preserve the purpose by changing the mechanism. We lose spread damage and lower our defenses; the edited set still needs validation.” |
+| 2:00–2:20 | Collect the Shell Smash condition, export context. | “One condition belongs to several goals. Export keeps the routes, sources, accepted edits and unresolved assumptions together.” |
+| 2:20–2:50 | Terminal: affected-dependencies CLI, then typed proposal below | “This API exposes graph dependencies to a coding agent and checks its proposed edits against the stored model.” |
+| 2:50–3:00 | Return to the inspected route | “Next we test whether a broader evidence-backed mechanism library helps players find useful unfamiliar cores.” |
+
+The terminal segment alone demonstrates an API client, not an LLM decision. To show an actual agent interaction, use the handoff prompt below in Codex or Claude and record its tool calls. API proposals do not automatically update the browser’s local scenario.
 
 Before recording, reset each demo case and unpin any members left from testing. Keep the browser wide enough to show team, map and inspector together. Do not present a script-driven walkthrough as autonomous discovery or describe a condition set by the presenter as a battle measurement.
 
@@ -71,4 +74,5 @@ The [official rules](https://www.wemakedevs.org/hackathons/falkordb/rules), chec
 - Track: Agents That Act on Connected Data.
 - Original work: the workbench, typed route reasoning, interventions, graph integration and reviews were implemented during the event. Earlier research remains in the repository as background.
 - AI assistance: Codex implemented reasoning and integration; Claude implemented the interface and adversarially reviewed logic. Shivraj supplied the problem framing, Pokémon cases and product direction. The participant must be able to explain the implementation.
+- Prepared project description: [submission copy](SUBMISSION.md).
 - Pending: record and attach the working demo video; complete final visual review; confirm registration/team details and submit through the event panel. No submission is claimed here.

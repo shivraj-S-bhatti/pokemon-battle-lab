@@ -1,8 +1,8 @@
 # Next Claude desktop check-in
 
-For the existing “Pokémon lab mathematical notation” chat. Claude retains UI/UX ownership. Native desktop contact was unavailable at 07:36 UTC because the Mac was locked. This file is a queued handoff, not a delivered message.
+For the existing “Pokémon lab mathematical notation” chat. Claude retains UI/UX ownership. Native desktop contact was unavailable at 08:36 UTC because the Mac was locked. This file is a queued handoff, not a delivered message.
 
-Current workbench: http://127.0.0.1:4318. Correctness milestone: `261cf18`. Read `logic/UI_FIX_HANDOFF.md` for the scoped review closure. Parent made narrow semantic integration fixes in `public/app.js`; no visual redesign.
+Current workbench: http://127.0.0.1:4318. Current pushed milestone: `0920a5f`, with 58 tests and clean-install verification. Read `logic/UI_FIX_HANDOFF.md` for the scoped review closure. Parent made narrow semantic integration fixes in `public/app.js`; no visual redesign.
 
 Please finish the presentation review against `DEMO.md`: make the changed route and its surviving alternatives easy to understand in one screen, with the inspected node visibly connected to its owning goals. Verify readable team/map/inspector layout at a normal desktop width. Keep BSS and VGC cases clearly separate.
 
